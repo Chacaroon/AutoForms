@@ -16,7 +16,10 @@ namespace FormBuilder.Strategies
 
         internal override Node Process(string name, Type type)
         {
-            throw new NotImplementedException();
+            return new FormControl()
+            {
+                Name = name
+            };
         }
     }
 }

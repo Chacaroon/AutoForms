@@ -4,7 +4,6 @@
 namespace FormBuilder.Strategies
 {
     using System;
-    using System.Collections;
     using FormBuilder.Helpers;
     using FormBuilder.Models;
 
@@ -16,7 +15,12 @@ namespace FormBuilder.Strategies
         
         internal override Node Process(string name, Type type)
         {
-            throw new NotImplementedException();
+            var formArray = new FormArray
+            {
+                Name = name
+            };
+
+            return formArray;
         }
     }
 }
