@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("FormBuilder.UnitTests")]
-namespace FormBuilder.Strategies
+﻿namespace FormBuilder.Strategies
 {
     using System;
     using FormBuilder.Helpers;

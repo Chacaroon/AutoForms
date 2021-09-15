@@ -1,4 +1,7 @@
-﻿namespace FormBuilder
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("FormBuilder.UnitTests")]
+namespace FormBuilder
 {
     using System;
     using FormBuilder.Models;

@@ -9,7 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    internal class FormResolverTests
+    internal class ResolveFormByTypeTests
     {
         private IServiceProvider _serviceProvider;
 
