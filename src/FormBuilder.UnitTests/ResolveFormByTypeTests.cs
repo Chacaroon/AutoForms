@@ -57,7 +57,7 @@
         }
 
         [Test]
-        public void Resolve_ComplexTypeArray_ReturnsFromArrayWithoutChildNodes()
+        public void Resolve_ComplexTypeArrayAsGenericParameter_ReturnsFromArrayWithoutChildNodes()
         {
             // Assert
             var formResolver = _serviceProvider.GetRequiredService<FormResolver>();
@@ -71,10 +71,16 @@
             Assert.IsEmpty(node.Nodes);
         }
 
+        #region Helpers
+
         private Node FindNode(FormGroup node, string nodeName, NodeType nodeType)
         {
             return node.Nodes.FirstOrDefault(x => x.Name == nodeName && x.Type == nodeType);
         }
+
+        #endregion
+
+        #region TestData
 
         private class ComplexType
         {
@@ -86,5 +92,7 @@
         }
 
         private class NestedComplexType { }
+
+        #endregion
     }
 }

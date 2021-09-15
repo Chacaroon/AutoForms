@@ -66,8 +66,12 @@
             Assert.AreEqual(typeof(FormGroupStrategy), strategy.GetType());
         }
 
+        #region TestData
+
         private enum TestEnum { }
 
         private class TestClass { }
+
+        #endregion
     }
 }

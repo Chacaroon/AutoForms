@@ -7,7 +7,5 @@
         public abstract NodeType Type { get; }
 
         public string Name { get; set; }
-
-        public object Value { get; set; }
     }
 }
