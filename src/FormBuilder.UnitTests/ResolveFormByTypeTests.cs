@@ -23,13 +23,30 @@
         }
 
         [Test]
-        public void Resolve_ComplexType_ReturnsFormGroupWithItsChildNodes()
+        public void Resolve_ComplexTypeAsGenericParameter_ReturnsFormGroupWithItsChildNodes()
         {
             // Assert
             var formResolver = _serviceProvider.GetRequiredService<FormResolver>();
 
             // Act
             var node = formResolver.Resolve<ComplexType>() as FormGroup;
+
+            // Arrange
+            Assert.NotNull(node);
+
+            Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty), NodeType.Control));
+            Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty), NodeType.Array));
+            Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty), NodeType.Group));
+        }
+
+        [Test]
+        public void Resolve_ComplexTypeAsMethodParameter_ReturnsFormGroupWithItsChildNodes()
+        {
+            // Assert
+            var formResolver = _serviceProvider.GetRequiredService<FormResolver>();
+
+            // Act
+            var node = formResolver.Resolve(typeof(ComplexType)) as FormGroup;
 
             // Arrange
             Assert.NotNull(node);
