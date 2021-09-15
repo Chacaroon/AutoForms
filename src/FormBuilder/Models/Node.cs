@@ -5,7 +5,5 @@
     internal abstract class Node
     {
         public abstract NodeType Type { get; }
-
-        public string Name { get; set; }
     }
 }

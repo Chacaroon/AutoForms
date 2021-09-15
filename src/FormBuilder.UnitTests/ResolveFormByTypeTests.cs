@@ -1,8 +1,8 @@
 ﻿namespace FormBuilder.UnitTests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-    using FormBuilder.Enums;
     using FormBuilder.Extensions;
     using FormBuilder.Models;
     using Microsoft.Extensions.DependencyInjection;
@@ -34,9 +34,9 @@
             // Arrange
             Assert.NotNull(node);
 
-            Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty), NodeType.Control));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty), NodeType.Array));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty), NodeType.Group));
+            Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty)));
+            Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty)));
+            Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty)));
         }
 
         [Test]
@@ -51,9 +51,9 @@
             // Arrange
             Assert.NotNull(node);
 
-            Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty), NodeType.Control));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty), NodeType.Array));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty), NodeType.Group));
+            Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty)));
+            Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty)));
+            Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty)));
         }
 
         [Test]
@@ -73,9 +73,9 @@
 
         #region Helpers
 
-        private Node FindNode(FormGroup node, string nodeName, NodeType nodeType)
+        private Node FindNode(FormGroup node, string nodeName)
         {
-            return node.Nodes.FirstOrDefault(x => x.Name == nodeName && x.Type == nodeType);
+            return node.Nodes.GetValueOrDefault(nodeName);
         }
 
         #endregion

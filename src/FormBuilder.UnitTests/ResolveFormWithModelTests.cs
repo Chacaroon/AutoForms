@@ -1,8 +1,8 @@
 ﻿namespace FormBuilder.UnitTests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-    using FormBuilder.Enums;
     using FormBuilder.Extensions;
     using FormBuilder.Models;
     using Microsoft.Extensions.DependencyInjection;
@@ -31,13 +31,13 @@
             // Act
             var node = formResolver.Resolve(model) as FormGroup;
 
-            var arrayPropertyNodes = FindNode(node, nameof(ComplexType.ArrayProperty), NodeType.Array);
+            var arrayPropertyNodes = FindNode(node, nameof(ComplexType.ArrayProperty));
             var arrayPropertyValues = ((FormArray)arrayPropertyNodes).Nodes.Select(x => ((FormControl)x).Value);
 
             // Arrange
             Assert.NotNull(node);
 
-            Assert.AreEqual("value", ((FormControl)FindNode(node, nameof(ComplexType.StringProperty), NodeType.Control)).Value);
+            Assert.AreEqual("value", ((FormControl)FindNode(node, nameof(ComplexType.StringProperty))).Value);
             Assert.That(arrayPropertyValues, Is.EquivalentTo(new[] { 0 }));
         }
 
@@ -73,7 +73,7 @@
             var node = formResolver.Resolve(model) as FormArray;
 
             var stringPropertyNodes = node!.Nodes
-                .Select(x => FindNode(x as FormGroup, nameof(ComplexType.StringProperty), NodeType.Control));
+                .Select(x => FindNode(x as FormGroup, nameof(ComplexType.StringProperty)));
             var stringPropertyNodeValues = stringPropertyNodes
                 .Select(x => ((FormControl)x).Value);
 
@@ -95,9 +95,9 @@
             };
         }
 
-        private Node FindNode(FormGroup node, string nodeName, NodeType nodeType)
+        private Node FindNode(FormGroup node, string nodeName)
         {
-            return node.Nodes.FirstOrDefault(x => x.Name == nodeName && x.Type == nodeType);
+            return node.Nodes.GetValueOrDefault(nodeName);
         }
 
         #endregion

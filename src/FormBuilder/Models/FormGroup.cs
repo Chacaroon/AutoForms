@@ -7,6 +7,6 @@
     {
         public override NodeType Type => NodeType.Group;
 
-        public IEnumerable<Node> Nodes { get; set; }
+        public Dictionary<string, Node> Nodes { get; set; }
     }
 }

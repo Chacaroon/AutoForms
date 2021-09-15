@@ -22,7 +22,7 @@
                    && PropertyFormControlTypeResolver.IsCollection(modelType);
         }
 
-        internal override Node Process(string name, Type type)
+        internal override Node Process(Type type)
         {
             var collectionItemType = GetCollectionItemType(type);
             var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
@@ -33,11 +33,10 @@
                     .EnhanceWithValue(value);
             }
 
-            var nodes = values.Select(x => GetStrategy(x).Process(null, collectionItemType));
+            var nodes = values.Select(x => GetStrategy(x).Process(collectionItemType));
 
             var formArray = new FormArray
             {
-                Name = name,
                 Nodes = nodes
             };
 

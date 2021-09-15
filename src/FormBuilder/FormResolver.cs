@@ -38,7 +38,7 @@ namespace FormBuilder
             var node = _strategyResolver
                 .Resolve(modelType)
                 .EnhanceWithValue(value)
-                .Process(RootNodeName, modelType);
+                .Process(modelType);
 
             return node;
         }

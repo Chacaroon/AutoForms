@@ -20,19 +20,18 @@
             return PropertyFormControlTypeResolver.IsFormGroup(modelType);
         }
 
-        internal override Node Process(string name, Type type)
+        internal override Node Process(Type type)
         {
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-            var nodes = properties.Select(x =>
+            var nodes = properties.ToDictionary(x => x.Name, x =>
                 _strategyResolver
                     .Resolve(x.PropertyType)
                     .EnhanceWithValue(GetPropertyValue(x, Value))
-                    .Process(x.Name, x.PropertyType));
+                    .Process(x.PropertyType));
 
             return new FormGroup
             {
-                Name = name,
                 Nodes = nodes
             };
         }

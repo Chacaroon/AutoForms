@@ -11,11 +11,10 @@
             return PropertyFormControlTypeResolver.IsPrimitive(modelType);
         }
 
-        internal override Node Process(string name, Type type)
+        internal override Node Process(Type type)
         {
             return new FormControl
             {
-                Name = name,
                 Value = Value
             };
         }

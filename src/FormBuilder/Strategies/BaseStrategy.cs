@@ -9,7 +9,7 @@
 
         internal abstract bool IsStrategyApplicable(Type modelType);
 
-        internal abstract Node Process(string name, Type type);
+        internal abstract Node Process(Type type);
 
         internal BaseStrategy EnhanceWithValue(object value)
         {
