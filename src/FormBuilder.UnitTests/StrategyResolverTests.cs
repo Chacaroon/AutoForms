@@ -38,6 +38,7 @@
         }
 
         [TestCase(typeof(int[]))]
+        [TestCase(typeof(TestClass[]))]
         [TestCase(typeof(IEnumerable<int>))]
         [TestCase(typeof(List<int>))]
         public void Resolve_CollectionType_ReturnsFormArrayStrategy(Type type)

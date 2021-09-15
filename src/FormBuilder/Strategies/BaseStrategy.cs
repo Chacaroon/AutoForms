@@ -5,8 +5,17 @@
 
     internal abstract class BaseStrategy
     {
+        private protected object Value { get; private set; }
+
         internal abstract bool IsStrategyApplicable(Type modelType);
 
         internal abstract Node Process(string name, Type type);
+
+        internal BaseStrategy EnhanceWithValue(object value)
+        {
+            Value = value;
+
+            return this;
+        }
     }
 }

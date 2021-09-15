@@ -20,23 +20,24 @@ namespace FormBuilder
 
         public Node Resolve<TModel>()
         {
-            var node = Resolve(typeof(TModel));
-
-            return node;
+            return Resolve(typeof(TModel), null);
         }
 
         public Node Resolve<TModel>(TModel model)
-            where TModel : class
         {
-            var node = Resolve(typeof(TModel));
-
-            return node;
+            return Resolve(typeof(TModel), model);
         }
 
         public Node Resolve(Type modelType)
         {
+            return Resolve(modelType, null);
+        }
+
+        private Node Resolve(Type modelType, object value)
+        {
             var node = _strategyResolver
                 .Resolve(modelType)
+                .EnhanceWithValue(value)
                 .Process(RootNodeName, modelType);
 
             return node;

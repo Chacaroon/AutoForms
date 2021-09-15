@@ -8,8 +8,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using NUnit.Framework;
 
-    [TestFixture]
-    internal class ResolveFormByTypeTests
+    internal class ResolveFormWithModelTests
     {
         private IServiceProvider _serviceProvider;
 
@@ -23,35 +22,28 @@
         }
 
         [Test]
-        public void Resolve_ComplexType_ReturnsFormGroupWithItsChildNodes()
+        public void Resolve_ComplexTypeModel_ReturnsFromGroupWithPopulatedValues()
         {
             // Assert
             var formResolver = _serviceProvider.GetRequiredService<FormResolver>();
+            var model = GetTestModel();
 
             // Act
-            var node = formResolver.Resolve<ComplexType>() as FormGroup;
+            var node = formResolver.Resolve(model) as FormGroup;
 
             // Arrange
             Assert.NotNull(node);
 
-            Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty), NodeType.Control));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty), NodeType.Array));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty), NodeType.Group));
+            Assert.AreEqual("value", FindNode(node, nameof(ComplexType.StringProperty), NodeType.Control).Value);
         }
 
-        [Test]
-        public void Resolve_ComplexTypeArray_ReturnsFromArrayWithoutChildNodes()
+        private ComplexType GetTestModel()
         {
-            // Assert
-            var formResolver = _serviceProvider.GetRequiredService<FormResolver>();
-
-            // Act
-            var node = formResolver.Resolve<ComplexType[]>() as FormArray;
-
-            // Arrange
-            Assert.NotNull(node);
-
-            Assert.IsEmpty(node.Nodes);
+            return new ComplexType
+            {
+                StringProperty = "value",
+                ArrayProperty = new[] { 0 }
+            };
         }
 
         private Node FindNode(FormGroup node, string nodeName, NodeType nodeType)
