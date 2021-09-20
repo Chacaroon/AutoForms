@@ -1,4 +1,4 @@
-﻿namespace FormBuilder.Strategies
+﻿namespace FormBuilder.FormResolverStrategies.Strategies
 {
     using System;
     using System.Collections;
@@ -6,6 +6,7 @@
     using System.Linq;
     using FormBuilder.Helpers;
     using FormBuilder.Models;
+using FormBuilder.Options;
 
     internal class FormArrayStrategy : BaseStrategy
     {
@@ -16,10 +17,10 @@
             _strategyResolver = strategyResolver;
         }
 
-        internal override bool IsStrategyApplicable(Type modelType)
+        internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
         {
-            return !PropertyFormControlTypeResolver.IsPrimitive(modelType)
-                   && PropertyFormControlTypeResolver.IsCollection(modelType);
+            return !PropertyFormControlTypeResolver.IsFormControl(modelType, options)
+                   && PropertyFormControlTypeResolver.IsFormArray(modelType, options);
         }
 
         internal override Node Process(Type type)

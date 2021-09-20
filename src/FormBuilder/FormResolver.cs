@@ -4,8 +4,8 @@
 namespace FormBuilder
 {
     using System;
+    using FormBuilder.FormResolverStrategies;
     using FormBuilder.Models;
-    using FormBuilder.Strategies;
 
     internal class FormResolver
     {

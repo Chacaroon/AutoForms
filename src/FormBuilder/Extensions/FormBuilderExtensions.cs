@@ -1,6 +1,7 @@
 ﻿namespace FormBuilder.Extensions
 {
-    using FormBuilder.Strategies;
+    using FormBuilder.FormResolverStrategies;
+    using FormBuilder.FormResolverStrategies.Strategies;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class FormBuilderExtensions
@@ -14,6 +15,7 @@
             serviceCollection.AddScoped<BaseStrategy, FormGroupStrategy>();
 
             serviceCollection.AddScoped<StrategyResolver>();
+            serviceCollection.AddScoped<StrategyOptionsResolver>();
 
             return serviceCollection;
         }

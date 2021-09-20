@@ -1,10 +1,11 @@
-﻿namespace FormBuilder.Strategies
+﻿namespace FormBuilder.FormResolverStrategies.Strategies
 {
     using System;
     using System.Linq;
     using System.Reflection;
     using FormBuilder.Helpers;
     using FormBuilder.Models;
+    using FormBuilder.Options;
 
     internal class FormGroupStrategy : BaseStrategy
     {
@@ -15,9 +16,9 @@
             _strategyResolver = strategyResolver;
         }
 
-        internal override bool IsStrategyApplicable(Type modelType)
+        internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
         {
-            return PropertyFormControlTypeResolver.IsFormGroup(modelType);
+            return PropertyFormControlTypeResolver.IsFormGroup(modelType, options);
         }
 
         internal override Node Process(Type type)
@@ -26,7 +27,7 @@
 
             var nodes = properties.ToDictionary(x => x.Name, x =>
                 _strategyResolver
-                    .Resolve(x.PropertyType)
+                    .Resolve(x)
                     .EnhanceWithValue(GetPropertyValue(x, Value))
                     .Process(x.PropertyType));
 

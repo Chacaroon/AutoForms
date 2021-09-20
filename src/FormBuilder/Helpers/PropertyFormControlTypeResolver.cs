@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Linq;
+    using FormBuilder.Options;
 
     internal static class PropertyFormControlTypeResolver
     {
@@ -12,21 +13,22 @@
             typeof(DateTime)
         };
 
-        internal static bool IsPrimitive(Type type)
+        internal static bool IsFormControl(Type type, StrategyOptions options)
         {
             return type.IsPrimitive
                    || type.IsEnum
-                   || PrimitiveTypes.Contains(type);
+                   || PrimitiveTypes.Contains(type)
+                   || options.IsFormValue;
         }
 
-        internal static bool IsCollection(Type type)
+        internal static bool IsFormArray(Type type, StrategyOptions options)
         {
-            return typeof(IEnumerable).IsAssignableFrom(type);
+            return !IsFormControl(type, options) && typeof(IEnumerable).IsAssignableFrom(type);
         }
 
-        internal static bool IsFormGroup(Type type)
+        internal static bool IsFormGroup(Type type, StrategyOptions options)
         {
-            return !IsPrimitive(type) && !IsCollection(type);
+            return !IsFormControl(type, options) && !IsFormArray(type, options);
         }
     }
 }

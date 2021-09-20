@@ -3,7 +3,8 @@
     using System;
     using System.Collections.Generic;
     using FormBuilder.Extensions;
-    using FormBuilder.Strategies;
+    using FormBuilder.FormResolverStrategies;
+    using FormBuilder.FormResolverStrategies.Strategies;
     using Microsoft.Extensions.DependencyInjection;
     using NUnit.Framework;
 
