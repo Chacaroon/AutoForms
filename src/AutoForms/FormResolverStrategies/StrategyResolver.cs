@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Reflection;
 
-    internal class StrategyResolver
+    public class StrategyResolver
     {
         private readonly StrategyOptionsResolver _strategyOptionsResolver;
         private readonly Lazy<IEnumerable<BaseStrategy>> _strategies;

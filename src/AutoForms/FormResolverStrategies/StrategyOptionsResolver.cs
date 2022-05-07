@@ -5,7 +5,7 @@
     using System;
     using System.Reflection;
 
-    internal class StrategyOptionsResolver
+    public class StrategyOptionsResolver
     {
         public StrategyOptions GetStrategyOptions(PropertyInfo propertyInfo)
         {

@@ -10,11 +10,11 @@
 
     internal class FormArrayStrategy : BaseStrategy
     {
-        private readonly StrategyResolver _strategyResolver;
+        private readonly FormResolver _formResolver;
 
-        public FormArrayStrategy(StrategyResolver strategyResolver)
+        public FormArrayStrategy(FormResolver formResolver)
         {
-            _strategyResolver = strategyResolver;
+            _formResolver = formResolver;
         }
 
         internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
@@ -28,13 +28,10 @@
             var collectionItemType = GetCollectionItemType(type);
             var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
 
-            BaseStrategy GetStrategy(object value)
-            {
-                return _strategyResolver.Resolve(collectionItemType)
-                    .EnhanceWithValue(value);
-            }
+            Node GetStrategy(object value) =>
+                _formResolver.Resolve(collectionItemType, value);
 
-            var nodes = values.Select(x => GetStrategy(x).Process(collectionItemType));
+            var nodes = values.Select(GetStrategy);
 
             var formArray = new FormArray
             {

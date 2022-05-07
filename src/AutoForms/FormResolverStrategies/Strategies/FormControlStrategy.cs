@@ -16,7 +16,8 @@
         {
             return new FormControl
             {
-                Value = Value
+                Value = Value,
+                Validators = Validators
             };
         }
     }

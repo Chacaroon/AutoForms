@@ -3,11 +3,13 @@
 [assembly: InternalsVisibleTo("AutoForms.UnitTests")]
 namespace AutoForms
 {
+using AutoForms.Enums;
     using AutoForms.FormResolverStrategies;
     using AutoForms.Models;
     using System;
+    using System.Reflection;
 
-    internal class FormResolver
+    public class FormResolver
     {
         private readonly StrategyResolver _strategyResolver;
 
@@ -31,14 +33,23 @@ namespace AutoForms
             return Resolve(modelType, null);
         }
 
-        private Node Resolve(Type modelType, object value)
+        public Node Resolve(Type modelType, object value)
         {
             var node = _strategyResolver
                 .Resolve(modelType)
                 .EnhanceWithValue(value)
+                .EnhanceWithValidators(modelType)
                 .Process(modelType);
 
             return node;
+        }
+
+        internal Node Resolve(PropertyInfo propertyInfo, object value)
+        {
+            return _strategyResolver.Resolve(propertyInfo)
+                .EnhanceWithValue(value)
+                .EnhanceWithValidators(propertyInfo)
+                .Process(propertyInfo.PropertyType);
         }
     }
 }
