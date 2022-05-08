@@ -1,4 +1,4 @@
-﻿namespace AutoForms.FormResolverStrategies.Strategies
+namespace AutoForms.FormResolverStrategies.Strategies
 {
     using AutoForms.Helpers;
     using AutoForms.Models;
@@ -6,6 +6,7 @@
     using System;
     using System.Linq;
     using System.Reflection;
+    using AutoForms.Extensions;
 
     internal class FormGroupStrategy : BaseStrategy
     {
@@ -25,7 +26,7 @@
         {
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-            var nodes = properties.ToDictionary(x => x.Name, x =>
+            var nodes = properties.ToDictionary(x => x.Name.FirstCharToLowerCase(), x =>
                 _formResolver.Resolve(x, GetPropertyValue(x, Value)));
 
             return new FormGroup

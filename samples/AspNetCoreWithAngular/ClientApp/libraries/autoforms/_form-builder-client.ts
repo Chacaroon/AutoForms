@@ -16,14 +16,14 @@ import { ValidatorFn, Validators } from '@angular/forms';
 export class FormBuilderClient {
     public build<T>(form: AfNode): AfFormNodeType<T> {
         const validators = this.mapValidators(form.validators);
-        switch (form.nodeType) {
+        switch (form.type) {
             case NodeType.Control: {
                 return new AfFormControl<T>((form as FormControlNode).value, validators) as AfFormNodeType<T>;
             }
             case NodeType.Array: {
                 const nodes = (form as FormArrayNode).nodes.map(x => this.build<T[keyof T]>(x));
 
-                return new AfFormArray<T>(nodes, (form as FormArrayNode).nodeSchema, validators) as AfFormNodeType<T>;
+                return new AfFormArray<T>(nodes, (form as FormArrayNode).nodeSchema, this, validators) as AfFormNodeType<T>;
             }
             case NodeType.Group: {
                 const nodes = Object.entries((form as FormGroupNode).nodes)
@@ -39,7 +39,7 @@ export class FormBuilderClient {
 
     private mapValidators(validators: AfValidator[]): ValidatorFn[] {
         const validatorsMap = {
-            [AfValidatorType.Required]: (validator: AfValidator) => Validators.required,
+            [AfValidatorType.Required]: () => Validators.required,
             [AfValidatorType.MinLength]: (validator: AfValidator) => Validators.minLength(validator.value),
             [AfValidatorType.MaxLength]: (validator: AfValidator) => Validators.maxLength(validator.value),
         };

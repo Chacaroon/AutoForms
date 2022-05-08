@@ -2,4 +2,8 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
+<button (click)="addControl()">Add control</button>
+
+<pre>{{ formValue$ | async | json}}</pre>
+
 <pre>{{ data$ | async | json}}</pre>

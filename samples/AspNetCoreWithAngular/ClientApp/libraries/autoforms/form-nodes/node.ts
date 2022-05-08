@@ -1,5 +1,5 @@
 export interface AfNode {
-    nodeType: NodeType,
+    type: NodeType,
     validators: AfValidator[]
 }
 
@@ -10,17 +10,17 @@ export enum NodeType {
 }
 
 export interface FormControlNode extends AfNode {
-    nodeType: NodeType.Control;
+    type: NodeType.Control;
     value: any;
 }
 
 export interface FormGroupNode extends AfNode {
-    nodeType: NodeType.Group;
+    type: NodeType.Group;
     nodes: { [key: string]: AfNode }
 }
 
 export interface FormArrayNode extends AfNode {
-    nodeType: NodeType.Array;
+    type: NodeType.Array;
     nodes: AfNode[];
     nodeSchema: AfNode
 }
