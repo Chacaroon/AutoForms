@@ -1,6 +1,6 @@
 import { AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn } from "@angular/forms";
 
-export class FbFormControl<T> extends FormControl {
+export class AfFormControl<T> extends FormControl {
 
     value: T | undefined;
 

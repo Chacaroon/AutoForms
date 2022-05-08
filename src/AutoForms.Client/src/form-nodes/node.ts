@@ -1,5 +1,6 @@
-export interface FbNode {
-    nodeType: NodeType
+export interface AfNode {
+    nodeType: NodeType,
+    validators: AfValidator[]
 }
 
 export enum NodeType {
@@ -8,17 +9,29 @@ export enum NodeType {
     Array = 3
 }
 
-export interface FormControlNode extends FbNode {
+export interface FormControlNode extends AfNode {
     nodeType: NodeType.Control;
     value: any;
 }
 
-export interface FormGroupNode extends FbNode {
+export interface FormGroupNode extends AfNode {
     nodeType: NodeType.Group;
-    nodes: { [key: string]: FbNode }
+    nodes: { [key: string]: AfNode }
 }
 
-export interface FormArrayNode extends FbNode {
+export interface FormArrayNode extends AfNode {
     nodeType: NodeType.Array;
-    nodes: FbNode[];
+    nodes: AfNode[];
+    nodeSchema: AfNode
+}
+
+export interface AfValidator {
+    type: AfValidatorType
+    value: any
+}
+
+export enum AfValidatorType {
+    Required = 1,
+    MinLength,
+    MaxLength
 }

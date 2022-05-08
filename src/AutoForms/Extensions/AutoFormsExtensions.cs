@@ -4,6 +4,7 @@
     using AutoForms.FormResolverStrategies;
     using AutoForms.FormResolverStrategies.Strategies;
     using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
 
     public static class AutoFormsExtensions
     {
@@ -19,6 +20,16 @@
             serviceCollection.AddScoped<StrategyOptionsResolver>();
 
             return serviceCollection;
+        }
+
+        public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder)
+        {
+            mvcBuilder.AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            });
+
+            return mvcBuilder;
         }
     }
 }

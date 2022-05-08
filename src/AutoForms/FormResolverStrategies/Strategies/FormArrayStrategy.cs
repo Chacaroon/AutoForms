@@ -28,14 +28,12 @@
             var collectionItemType = GetCollectionItemType(type);
             var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
 
-            Node GetStrategy(object value) =>
-                _formResolver.Resolve(collectionItemType, value);
-
-            var nodes = values.Select(GetStrategy);
+            var nodes = values.Select(value => _formResolver.Resolve(collectionItemType, value));
 
             var formArray = new FormArray
             {
-                Nodes = nodes
+                Nodes = nodes,
+                NodeSchema = _formResolver.Resolve(collectionItemType)
             };
 
             return formArray;

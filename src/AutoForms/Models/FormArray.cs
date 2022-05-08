@@ -14,5 +14,7 @@
         public override NodeType Type => NodeType.Array;
 
         public IEnumerable<Node> Nodes { get; set; }
+
+        public Node NodeSchema { get; set; }
     }
 }
