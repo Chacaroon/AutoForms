@@ -2,8 +2,15 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-<button (click)="addControl()">Add control</button>
+<div style="width: 50%; display: inline-block">
+  <app-form-control-root *ngIf="form" [form]="form"></app-form-control-root>
+</div>
 
-<pre>{{ formValue$ | async | json}}</pre>
+<div style="width: 50%; display: inline-block">
+  <pre>{{ formValue$ | async | json}}</pre>
+</div>
 
-<pre>{{ data$ | async | json}}</pre>
+
+
+<!--<pre>{{ data$ | async | json}}</pre>-->
+

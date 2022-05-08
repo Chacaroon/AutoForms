@@ -1,0 +1,4 @@
+<ng-container *ngFor="let control of controls">
+  <app-form-control-root [form]="control"></app-form-control-root>
+</ng-container>
+<button (click)="addControl()">Add Control</button>

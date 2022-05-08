@@ -15,7 +15,7 @@ export class FetchDataComponent implements OnInit {
   data$: Observable<AfNode>;
   formValue$: Observable<SchoolModel>;
   form$: Observable<AfFormGroup<SchoolModel>>;
-  private form: AfFormGroup<SchoolModel>;
+  form: AfFormGroup<SchoolModel>;
 
   constructor(private http: HttpClient,
               @Inject('BASE_URL') private baseUrl: string,
@@ -47,11 +47,5 @@ export class FetchDataComponent implements OnInit {
     this.formValue$ = this.form$.pipe(
       switchMap(x => x.valueChanges.pipe(startWith(x.value))),
     );
-  }
-
-  addControl() {
-    this.form.controls.classes.addControl();
-
-    this.form.controls.classes.controls[0].controls.students.addControl();
   }
 }

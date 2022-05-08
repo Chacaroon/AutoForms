@@ -1,0 +1,6 @@
+<ng-container *ngFor="let keyControl of controls | keyvalue">
+  <div>
+    {{keyControl.key}}:
+    <app-form-control-root [form]="keyControl.value"></app-form-control-root>
+  </div>
+</ng-container>

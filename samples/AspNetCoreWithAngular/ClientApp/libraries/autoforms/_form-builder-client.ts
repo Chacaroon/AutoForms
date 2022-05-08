@@ -21,7 +21,7 @@ export class FormBuilderClient {
                 return new AfFormControl<T>((form as FormControlNode).value, validators) as AfFormNodeType<T>;
             }
             case NodeType.Array: {
-                const nodes = (form as FormArrayNode).nodes.map(x => this.build<T[keyof T]>(x));
+                const nodes = (form as FormArrayNode).nodes.map(x => this.build<T>(x));
 
                 return new AfFormArray<T>(nodes, (form as FormArrayNode).nodeSchema, this, validators) as AfFormNodeType<T>;
             }
