@@ -1,5 +1,5 @@
 import { Component, OnInit, Optional, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl, NgModel } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-form-control',
@@ -8,8 +8,8 @@ import { ControlValueAccessor, NgControl, NgModel } from '@angular/forms';
 export class FormControlComponent implements OnInit, ControlValueAccessor {
 
   value: any;
-  changeFn: (value: any) => void;
-  disabled: boolean;
+  changeFn?: (value: any) => void;
+  disabled?: boolean;
 
   constructor(@Optional() @Self() public ngControl: NgControl) {
     if (this.ngControl) {
@@ -35,4 +35,7 @@ export class FormControlComponent implements OnInit, ControlValueAccessor {
     this.value = obj;
   }
 
+  onChange(value: any) {
+    this.changeFn?.(value);
+  }
 }

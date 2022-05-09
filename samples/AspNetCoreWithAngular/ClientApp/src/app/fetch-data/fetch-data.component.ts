@@ -12,10 +12,10 @@ import { SchoolModel } from '../models';
   templateUrl: './fetch-data.component.html'
 })
 export class FetchDataComponent implements OnInit {
-  data$: Observable<AfNode>;
-  formValue$: Observable<SchoolModel>;
-  form$: Observable<AfFormGroup<SchoolModel>>;
-  form: AfFormGroup<SchoolModel>;
+  data$?: Observable<AfNode>;
+  formValue$?: Observable<SchoolModel>;
+  form$?: Observable<AfFormGroup<SchoolModel>>;
+  form?: AfFormGroup<SchoolModel>;
 
   constructor(private http: HttpClient,
               @Inject('BASE_URL') private baseUrl: string,

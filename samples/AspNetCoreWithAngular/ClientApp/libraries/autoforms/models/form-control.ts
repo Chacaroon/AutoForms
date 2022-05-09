@@ -2,7 +2,7 @@ import { AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn } fr
 
 export class AfFormControl<T> extends FormControl {
 
-    value: T | undefined;
+    public override value: T | undefined;
 
     constructor(formState?: T,
                 validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions,

@@ -1,4 +1,4 @@
-﻿namespace AutoForms.Extensions
+namespace AutoForms.Extensions
 {
     using AutoForms;
     using AutoForms.FormResolverStrategies;

@@ -7,7 +7,7 @@ import { AfFormNodeType } from '../../../../../libraries/autoforms/types/form-no
   templateUrl: './form-group.component.html'
 })
 export class FormGroupComponent implements OnInit {
-  controls: { [key: string]: AfFormNodeType<any> };
+  controls?: { [key: string]: AfFormNodeType<any> };
 
   constructor(@Optional() @Self() public ngModel: FormGroupDirective) {
   }

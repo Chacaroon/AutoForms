@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { FormBuilderClient } from '../../libraries/autoforms/form-builder-client';
 import { FormControlRootComponent } from './components/form-control-root/form-control-root.component';
@@ -20,7 +19,6 @@ import { FormArrayComponent } from './components/form-control-root/form-array/fo
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
     FetchDataComponent,
     FormControlRootComponent,
     FormControlComponent,
@@ -34,11 +32,16 @@ import { FormArrayComponent } from './components/form-control-root/form-array/fo
     ReactiveFormsModule,
     RouterModule.forRoot([
       {path: '', component: HomeComponent, pathMatch: 'full'},
-      {path: 'counter', component: CounterComponent},
       {path: 'fetch-data', component: FetchDataComponent},
     ])
   ],
-  providers: [FormBuilderClient],
+  providers: [
+    FormBuilderClient,
+    {
+      provide: 'BASE_URL',
+      useValue: 'https://localhost:5001/'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

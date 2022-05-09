@@ -10,9 +10,9 @@ import { AfFormArray } from '../../../../libraries/autoforms/models/form-array';
 })
 export class FormControlRootComponent implements OnInit {
 
-  @Input() form: AfFormNodeType<any>;
+  @Input() form!: AfFormNodeType<any>;
 
-  formType: 'control' | 'group' | 'array';
+  formType?: 'control' | 'group' | 'array';
 
   constructor() {
   }

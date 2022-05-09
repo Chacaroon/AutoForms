@@ -8,18 +8,18 @@ import { AfFormNodeType } from '../../../../../libraries/autoforms/types/form-no
 })
 export class FormArrayComponent implements OnInit {
 
-  @Input() formArray: AfFormArray<any>;
+  @Input() formArray?: AfFormArray<any>;
 
-  controls: AfFormNodeType<any>[];
+  controls?: AfFormNodeType<any>[];
 
   constructor() {
   }
 
   ngOnInit() {
-    this.controls = this.formArray.controls;
+    this.controls = this.formArray!.controls;
   }
 
   addControl() {
-    this.formArray.addControl();
+    this.formArray!.addControl();
   }
 }

@@ -5,14 +5,20 @@ import { FormBuilderClient } from '../_form-builder-client';
 
 export class AfFormArray<T> extends FormArray {
 
-  value: T | undefined;
+  override value: T | undefined;
+  public override controls: AfFormNodeType<T>[];
+  public nodeSchema: AfNode;
+  public formBuilder: FormBuilderClient;
 
-  constructor(public controls: AfFormNodeType<T>[],
-              public nodeSchema: AfNode,
-              public formBuilder: FormBuilderClient,
+  constructor(controls: AfFormNodeType<T>[],
+              nodeSchema: AfNode,
+              formBuilder: FormBuilderClient,
               validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions,
               asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[]) {
     super(controls, validatorOrOpts, asyncValidator);
+    this.controls = controls;
+    this.formBuilder = formBuilder;
+    this.nodeSchema = nodeSchema;
   }
 
   public addControl() {
