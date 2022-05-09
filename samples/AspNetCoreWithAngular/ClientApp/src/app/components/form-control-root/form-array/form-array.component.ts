@@ -17,9 +17,14 @@ export class FormArrayComponent implements OnInit {
 
   ngOnInit() {
     this.controls = this.formArray!.controls;
+    this.formArray.valueChanges.subscribe(x => console.log(x));
   }
 
   addControl() {
     this.formArray!.addControl();
+  }
+
+  removeControl(control: AfFormNodeType<any>) {
+    this.formArray.removeAt(this.formArray.controls.findIndex(x => x == control));
   }
 }
