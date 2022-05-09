@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AfNode } from '../../../libraries/autoforms/form-nodes/node';
 import { AfFormGroup } from '../../../libraries/autoforms/models/form-group';
 import { SchoolModel } from '../models';
+import { buildForm } from "../../../libraries/autoforms/pipable-operators/build-form.operator";
 
 @Component({
   selector: 'app-fetch-data',
@@ -15,33 +16,18 @@ export class FetchDataComponent implements OnInit {
   data$?: Observable<AfNode>;
   formValue$?: Observable<SchoolModel>;
   form$?: Observable<AfFormGroup<SchoolModel>>;
-  form?: AfFormGroup<SchoolModel>;
 
   constructor(private http: HttpClient,
-              @Inject('BASE_URL') private baseUrl: string,
-              private formBuilderClient: FormBuilderClient) {
+              @Inject('BASE_URL') private baseUrl: string) {
   }
 
   ngOnInit() {
     this.data$ = this.http.get<AfNode>(this.baseUrl + 'api/form').pipe(
-      tap(x => {
-        const build = this.formBuilderClient.build<any>(x) as AfFormGroup<any>;
-
-        this.form = build;
-
-        return build;
-      }),
       shareReplay(1),
     );
 
     this.form$ = this.data$.pipe(
-      map(x => {
-        const build = this.formBuilderClient.build<any>(x) as AfFormGroup<any>;
-
-        this.form = build;
-
-        return build;
-      })
+      buildForm<SchoolModel>(),
     );
 
     this.formValue$ = this.form$.pipe(

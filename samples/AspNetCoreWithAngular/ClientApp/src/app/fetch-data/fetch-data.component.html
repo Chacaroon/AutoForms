@@ -3,13 +3,12 @@
 <p>This component demonstrates fetching data from the server.</p>
 
 <div style="width: 50%; display: inline-block">
-  <app-form-control-root *ngIf="form" [form]="form"></app-form-control-root>
+  <app-form-control-root *ngIf="form$ | async as form" [form]="form"></app-form-control-root>
 </div>
 
 <div style="width: 50%; display: inline-block">
-  <pre>{{ formValue$ | async | json}}</pre>
+  <pre>{{ formValue$ | async | json }}</pre>
 </div>
-
 
 
 <!--<pre>{{ data$ | async | json}}</pre>-->
