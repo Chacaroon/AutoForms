@@ -1,6 +1,6 @@
-<h1 id="tableLabel">Weather forecast</h1>
+<h1>Form sample</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>This component demonstrates fetching model's structure from the server and building one to a AfFormGroup.</p>
 
 <div class="container">
   <div class="row">
@@ -17,6 +17,9 @@
   </div>
 </div>
 
+<button *ngIf="form$ | async as form" class="btn btn-success" (click)="onSubmit(form)">Submit</button>
 
-<!--<pre>{{ data$ | async | json}}</pre>-->
+<pre>
+  {{ response$ | async | json }}
+</pre>
 

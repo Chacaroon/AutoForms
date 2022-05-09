@@ -7,6 +7,7 @@ import { AfNode } from '../../../libraries/autoforms/form-nodes/node';
 import { AfFormGroup } from '../../../libraries/autoforms/models/form-group';
 import { SchoolModel } from '../models';
 import { buildForm } from "../../../libraries/autoforms/pipable-operators/build-form.operator";
+import { AfFormNodeType } from "../../../libraries/autoforms/types/form-node-type";
 
 @Component({
   selector: 'app-fetch-data',
@@ -16,6 +17,8 @@ export class FetchDataComponent implements OnInit {
   data$?: Observable<AfNode>;
   formValue$?: Observable<SchoolModel>;
   form$?: Observable<AfFormGroup<SchoolModel>>;
+
+  response$?: Observable<SchoolModel>;
 
   constructor(private http: HttpClient,
               @Inject('BASE_URL') private baseUrl: string) {
@@ -27,11 +30,20 @@ export class FetchDataComponent implements OnInit {
     );
 
     this.form$ = this.data$.pipe(
-      buildForm<SchoolModel>(),
+      buildForm<SchoolModel>()
     );
 
     this.formValue$ = this.form$.pipe(
       switchMap(x => x.valueChanges.pipe(startWith(x.value))),
     );
+  }
+
+  onSubmit(form: AfFormNodeType<SchoolModel>) {
+    if (form.invalid) {
+      console.log(form);
+      return;
+    }
+
+    this.response$ = this.http.post<SchoolModel>(this.baseUrl + 'api/form', form.value);
   }
 }
