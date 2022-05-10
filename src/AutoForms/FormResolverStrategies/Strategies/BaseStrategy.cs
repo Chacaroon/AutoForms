@@ -1,4 +1,4 @@
-﻿namespace AutoForms.FormResolverStrategies.Strategies
+namespace AutoForms.FormResolverStrategies.Strategies
 {
     using AutoForms.Models;
     using AutoForms.Options;
@@ -47,16 +47,27 @@
         {
             var validatorsDictionary = new Dictionary<Type, Func<CustomAttributeData, Validator>>
             {
-                { typeof(RequiredAttribute), _ => new Validator(ValidatorType.Required) },
+                {
+                    typeof(RequiredAttribute), _ => new Validator(ValidatorType.Required)
+                    {
+                        Message = "This field is required"
+                    }
+                },
                 {
                     typeof(MinLengthAttribute),
                     attributeData => new Validator(ValidatorType.MinLength)
-                        { Value = attributeData.ConstructorArguments.First().Value }
+                    {
+                      Value = attributeData.ConstructorArguments.First().Value,
+                      Message = $"Min length is {attributeData.ConstructorArguments.First().Value}"
+                    }
                 },
                 {
                     typeof(MaxLengthAttribute),
                     attributeData => new Validator(ValidatorType.MaxLength)
-                        { Value = attributeData.ConstructorArguments.First().Value }
+                    {
+                      Value = attributeData.ConstructorArguments.First().Value,
+                      Message = $"Max length is {attributeData.ConstructorArguments.First().Value}"
+                    }
                 }
             };
 

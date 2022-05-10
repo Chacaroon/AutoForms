@@ -1,5 +1,5 @@
 <ng-container *ngFor="let control of formArray.controls; let i = index">
-  <button class="btn btn-danger d-inline-block" (click)="removeControl(control)"><b>-</b></button>
-  <app-form-control-root [form]="control"></app-form-control-root>
+    <button (click)="removeControl(control)" class="btn btn-danger d-inline-block"><b>-</b></button>
+    <app-form-control-root [form]="control"></app-form-control-root>
 </ng-container>
-<button class="btn btn-success" (click)="addControl()"><b>+</b></button>
+<button (click)="addControl()" class="btn btn-success"><b>+</b></button>

@@ -1,19 +1,19 @@
 export interface SchoolModel {
-  name: string;
-  classes: ClassModel[];
-  options: SchoolOptions;
+    name: string;
+    classes: ClassModel[];
+    options: SchoolOptions;
 }
 
 export interface ClassModel {
-  name: string;
-  students: StudentModel[];
+    name: string;
+    students: StudentModel[];
 }
 
 export interface StudentModel {
-  name: string;
-  age: number;
+    name: string;
+    age: number;
 }
 
 export interface SchoolOptions {
-  isOpened: boolean;
+    isOpened: boolean;
 }

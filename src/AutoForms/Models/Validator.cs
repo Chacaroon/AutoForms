@@ -1,4 +1,4 @@
-﻿namespace AutoForms.Models
+namespace AutoForms.Models
 {
     using AutoForms.Enums;
 
@@ -10,6 +10,8 @@
         }
 
         public ValidatorType Type { get; }
+
+        public string Message { get; set; }
 
         public virtual object Value { get; set; }
     }

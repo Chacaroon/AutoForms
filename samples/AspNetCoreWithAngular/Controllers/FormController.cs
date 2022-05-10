@@ -26,7 +26,7 @@
         [HttpPost]
         public IActionResult Post([FromBody] SchoolModel model)
         {
-            return Ok();
+            return Ok(model);
         }
     }
 }

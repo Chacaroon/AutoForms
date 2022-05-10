@@ -3,27 +3,27 @@ import { AfFormArray } from '../../../../../libraries/autoforms/models/form-arra
 import { AfFormNodeType } from '../../../../../libraries/autoforms/types/form-node-type';
 
 @Component({
-  selector: 'app-form-array',
-  templateUrl: './form-array.component.html'
+    selector: 'app-form-array',
+    templateUrl: './form-array.component.html'
 })
 export class FormArrayComponent implements OnInit {
 
-  @Input() formArray?: AfFormArray<any>;
+    @Input() formArray?: AfFormArray<any>;
 
-  controls?: AfFormNodeType<any>[];
+    controls?: AfFormNodeType<any>[];
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  ngOnInit() {
-    this.controls = this.formArray!.controls;
-  }
+    ngOnInit() {
+        this.controls = this.formArray!.controls;
+    }
 
-  addControl() {
-    this.formArray!.addControl();
-  }
+    addControl() {
+        this.formArray!.addControl();
+    }
 
-  removeControl(control: AfFormNodeType<any>) {
-    this.formArray.removeAt(this.formArray.controls.findIndex(x => x == control));
-  }
+    removeControl(control: AfFormNodeType<any>) {
+        this.formArray.removeAt(this.formArray.controls.findIndex(x => x == control));
+    }
 }

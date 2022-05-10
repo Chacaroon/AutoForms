@@ -27,6 +27,7 @@ export interface FormArrayNode extends AfNode {
 
 export interface AfValidator {
     type: AfValidatorType
+    message: string
     value: any
 }
 

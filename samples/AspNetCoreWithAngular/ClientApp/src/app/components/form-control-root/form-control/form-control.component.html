@@ -1,6 +1,6 @@
 <div class="mb-3">
-  <input type="text" class="form-control" [ngModel]="value" (ngModelChange)="onChange($event)">
-  <div *ngFor="let pair of ngControl.errors | keyvalue" style="color: red">
-    {{pair.key}}
-  </div>
+    <input (ngModelChange)="onChange($event)" [ngModel]="value" class="form-control" type="text">
+    <div *ngFor="let pair of ngControl.errors | keyvalue" style="color: red">
+        {{pair.value}}
+    </div>
 </div>

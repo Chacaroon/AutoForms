@@ -1,17 +1,18 @@
 import { AfFormNodeType } from './types/form-node-type';
 import {
     AfNode,
+    AfValidator,
+    AfValidatorType,
     FormArrayNode,
     FormControlNode,
     FormGroupNode,
-    NodeType,
-    AfValidator,
-    AfValidatorType
+    NodeType
 } from './form-nodes/node';
 import { AfFormControl } from './models/form-control';
 import { AfFormArray } from './models/form-array';
 import { AfFormGroup } from './models/form-group';
-import { ValidatorFn, Validators } from '@angular/forms';
+import { ValidatorFn } from '@angular/forms';
+import { AfValidators } from "./validators";
 
 export class FormBuilderClient {
     public build<T>(form: AfNode): AfFormNodeType<T> {
@@ -39,9 +40,9 @@ export class FormBuilderClient {
 
     private mapValidators(validators: AfValidator[]): ValidatorFn[] {
         const validatorsMap = {
-            [AfValidatorType.Required]: () => Validators.required,
-            [AfValidatorType.MinLength]: (validator: AfValidator) => Validators.minLength(validator.value),
-            [AfValidatorType.MaxLength]: (validator: AfValidator) => Validators.maxLength(validator.value),
+            [AfValidatorType.Required]: (validator: AfValidator) => AfValidators.required(validator.message),
+            [AfValidatorType.MinLength]: (validator: AfValidator) => AfValidators.minLength(validator.value, validator.message),
+            [AfValidatorType.MaxLength]: (validator: AfValidator) => AfValidators.maxLength(validator.value, validator.message),
         };
 
         return validators ? validators.map(x => validatorsMap[x.type](x)) : [];
