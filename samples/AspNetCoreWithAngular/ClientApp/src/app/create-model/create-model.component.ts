@@ -49,8 +49,7 @@ export class CreateModelComponent implements OnInit {
             return;
         }
 
-        const url = this.route.snapshot.url.some(x => x.path === 'create-model') ? 'create' : 'create';
-        this.response$ = this.http.post<SchoolModel>(`${this.baseUrl}api/form/${url}`, form.value).pipe(
+        this.response$ = this.http.post<SchoolModel>(`${this.baseUrl}api/form/create`, form.value).pipe(
             catchError((err) => of(err.error.errors))
         );
     }
