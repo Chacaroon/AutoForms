@@ -8,12 +8,12 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CreateModelComponent } from './create-model/create-model.component';
-import { FormBuilderClient } from '../../libraries/autoforms/form-builder-client';
 import { FormControlRootComponent } from './components/form-control-root/form-control-root.component';
 import { FormControlComponent } from './components/form-control-root/form-control/form-control.component';
 import { FormGroupComponent } from './components/form-control-root/form-group/form-group.component';
 import { FormArrayComponent } from './components/form-control-root/form-array/form-array.component';
 import { PlaygroundComponent } from './playground/playground.component';
+import { AutoFormsModule } from '@auto-forms/client'
 
 @NgModule({
     declarations: [
@@ -29,6 +29,7 @@ import { PlaygroundComponent } from './playground/playground.component';
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        AutoFormsModule.forRoot(),
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
@@ -37,10 +38,9 @@ import { PlaygroundComponent } from './playground/playground.component';
             { path: 'create-model', component: CreateModelComponent },
             { path: 'update-model', component: CreateModelComponent },
             { path: 'playground', component: PlaygroundComponent },
-        ])
+        ]),
     ],
     providers: [
-        FormBuilderClient,
         {
             provide: 'BASE_URL',
             useValue: 'https://localhost:5001/'

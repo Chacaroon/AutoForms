@@ -74,7 +74,7 @@
 
         private Node FindNode(FormGroup node, string nodeName)
         {
-            return node.Nodes.GetValueOrDefault(nodeName);
+            return node.Nodes.GetValueOrDefault(nodeName.FirstCharToLowerCase());
         }
 
         #endregion
