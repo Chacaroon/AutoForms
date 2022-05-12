@@ -2,13 +2,15 @@ import { AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn } from
 import { AfFormNodeType } from '../types/form-node-type';
 import { AfNode } from '../form-nodes/node';
 import { FormBuilderClient } from '../_form-builder-client';
+import { Observable } from "rxjs";
 
 export class AfFormArray<T> extends FormArray {
 
-    override value: T | undefined;
-    public override controls: AfFormNodeType<T>[];
-    public nodeSchema: AfNode;
-    public formBuilder: FormBuilderClient;
+    override value: T[] | undefined;
+    override valueChanges: Observable<T[]>;
+    override controls: AfFormNodeType<T>[];
+    nodeSchema: AfNode;
+    formBuilder: FormBuilderClient;
 
     constructor(controls: AfFormNodeType<T>[],
                 nodeSchema: AfNode,

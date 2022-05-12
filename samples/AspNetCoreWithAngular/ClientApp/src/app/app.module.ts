@@ -13,6 +13,7 @@ import { FormControlRootComponent } from './components/form-control-root/form-co
 import { FormControlComponent } from './components/form-control-root/form-control/form-control.component';
 import { FormGroupComponent } from './components/form-control-root/form-group/form-group.component';
 import { FormArrayComponent } from './components/form-control-root/form-array/form-array.component';
+import { PlaygroundComponent } from './playground/playground.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { FormArrayComponent } from './components/form-control-root/form-array/fo
         FormControlComponent,
         FormGroupComponent,
         FormArrayComponent,
+        PlaygroundComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,6 +36,7 @@ import { FormArrayComponent } from './components/form-control-root/form-array/fo
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'create-model', component: CreateModelComponent },
             { path: 'update-model', component: CreateModelComponent },
+            { path: 'playground', component: PlaygroundComponent },
         ])
     ],
     providers: [
