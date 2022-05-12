@@ -42,9 +42,7 @@ namespace AutoForms.FormResolverStrategies.Strategies
                 return null;
             }
 
-            return propertyInfo.PropertyType.IsValueType 
-                ? Activator.CreateInstance(propertyInfo.PropertyType)
-                : propertyInfo.GetValue(value);
+            return propertyInfo.GetValue(value);
         }
     }
 }

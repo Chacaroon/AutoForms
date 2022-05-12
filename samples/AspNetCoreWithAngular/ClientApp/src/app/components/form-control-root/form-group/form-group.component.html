@@ -1,6 +1,6 @@
 <ng-container *ngFor="let keyControl of controls | keyvalue">
     <div class="mb-3">
         <label class="form-label">{{keyControl.key}}:</label>
-        <app-form-control-root [form]="keyControl.value"></app-form-control-root>
+        <app-form-control-root [form]="keyControl.value" [validationEnabled]="validationEnabled"></app-form-control-root>
     </div>
 </ng-container>

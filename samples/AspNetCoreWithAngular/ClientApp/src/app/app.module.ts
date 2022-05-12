@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { CreateModelComponent } from './create-model/create-model.component';
 import { FormBuilderClient } from '../../libraries/autoforms/form-builder-client';
 import { FormControlRootComponent } from './components/form-control-root/form-control-root.component';
 import { FormControlComponent } from './components/form-control-root/form-control/form-control.component';
@@ -19,11 +19,11 @@ import { FormArrayComponent } from './components/form-control-root/form-array/fo
         AppComponent,
         NavMenuComponent,
         HomeComponent,
-        FetchDataComponent,
+        CreateModelComponent,
         FormControlRootComponent,
         FormControlComponent,
         FormGroupComponent,
-        FormArrayComponent
+        FormArrayComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +32,8 @@ import { FormArrayComponent } from './components/form-control-root/form-array/fo
         ReactiveFormsModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'fetch-data', component: FetchDataComponent },
+            { path: 'create-model', component: CreateModelComponent },
+            { path: 'update-model', component: CreateModelComponent },
         ])
     ],
     providers: [

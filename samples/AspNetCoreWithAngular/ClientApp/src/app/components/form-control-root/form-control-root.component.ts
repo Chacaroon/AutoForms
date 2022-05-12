@@ -11,6 +11,7 @@ import { AfFormArray } from '../../../../libraries/autoforms/models/form-array';
 export class FormControlRootComponent implements OnInit {
 
     @Input() form!: AfFormNodeType<any>;
+    @Input() validationEnabled: boolean;
 
     formType?: 'control' | 'group' | 'array';
 

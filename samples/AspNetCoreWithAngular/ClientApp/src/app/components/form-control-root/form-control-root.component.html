@@ -1,11 +1,11 @@
 <ng-container *ngIf="formType" [ngSwitch]="formType">
     <div *ngSwitchCase="'control'">
-        <app-form-control [formControl]="form"></app-form-control>
+        <app-form-control [formControl]="form" [validationEnabled]="validationEnabled"></app-form-control>
     </div>
     <div *ngSwitchCase="'group'" style="padding-left: 50px">
-        <app-form-group [formGroup]="form"></app-form-group>
+        <app-form-group [formGroup]="form" [validationEnabled]="validationEnabled"></app-form-group>
     </div>
     <div *ngSwitchCase="'array'">
-        <app-form-array [formArray]="form"></app-form-array>
+        <app-form-array [formArray]="form" [validationEnabled]="validationEnabled"></app-form-array>
     </div>
 </ng-container>

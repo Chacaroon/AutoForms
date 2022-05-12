@@ -1,6 +1,8 @@
 <div class="mb-3">
-    <input (ngModelChange)="onChange($event)" [ngModel]="value" class="form-control" type="text">
-    <div *ngFor="let pair of ngControl.errors | keyvalue" style="color: red">
-        {{pair.value}}
-    </div>
+    <input [ngModel]="value" (ngModelChange)="onChange($event)" class="form-control" type="text">
+    <ng-container *ngIf="validationEnabled">
+        <span *ngFor="let pair of ngControl.errors | keyvalue" style="color: red">
+            {{pair.value}}
+        </span>
+    </ng-container>
 </div>

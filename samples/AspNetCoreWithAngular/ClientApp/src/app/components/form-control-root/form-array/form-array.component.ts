@@ -9,6 +9,7 @@ import { AfFormNodeType } from '../../../../../libraries/autoforms/types/form-no
 export class FormArrayComponent implements OnInit {
 
     @Input() formArray?: AfFormArray<any>;
+    @Input() validationEnabled: boolean;
 
     controls?: AfFormNodeType<any>[];
 

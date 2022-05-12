@@ -10,13 +10,13 @@ namespace AutoForms.Extensions
     {
         public static IServiceCollection AddAutoForms(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<FormResolver>();
+            serviceCollection.AddTransient<FormResolver>();
 
-            serviceCollection.AddScoped<BaseStrategy, FormControlStrategy>();
-            serviceCollection.AddScoped<BaseStrategy, FormArrayStrategy>();
-            serviceCollection.AddScoped<BaseStrategy, FormGroupStrategy>();
+            serviceCollection.AddTransient<BaseStrategy, FormControlStrategy>();
+            serviceCollection.AddTransient<BaseStrategy, FormArrayStrategy>();
+            serviceCollection.AddTransient<BaseStrategy, FormGroupStrategy>();
 
-            serviceCollection.AddScoped<StrategyResolver>();
+            serviceCollection.AddTransient<StrategyResolver>();
             serviceCollection.AddScoped<StrategyOptionsResolver>();
 
             return serviceCollection;

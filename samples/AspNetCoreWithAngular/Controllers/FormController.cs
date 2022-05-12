@@ -10,12 +10,14 @@
     {
         private readonly FormResolver _formResolver;
 
+        private static SchoolModel _schoolModel;
+
         public FormController(FormResolver formResolver)
         {
             _formResolver = formResolver;
         }
 
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Get()
         {
             var form = _formResolver.Resolve<SchoolModel>();
@@ -23,10 +25,20 @@
             return Ok(form);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public IActionResult Post([FromBody] SchoolModel model)
         {
+            _schoolModel = model;
+
             return Ok(model);
+        }
+
+        [HttpGet("update")]
+        public IActionResult GetFormWithValue()
+        {
+            var form = _formResolver.Resolve(_schoolModel);
+
+            return Ok(form);
         }
     }
 }

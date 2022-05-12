@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional, Self } from '@angular/core';
+import { Component, Input, OnInit, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -6,6 +6,8 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
     templateUrl: './form-control.component.html'
 })
 export class FormControlComponent implements OnInit, ControlValueAccessor {
+
+    @Input() validationEnabled: boolean;
 
     value: any;
     changeFn?: (value: any) => void;
