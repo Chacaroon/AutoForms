@@ -2,12 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, shareReplay, startWith, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { AfNode } from '../../../libraries/autoforms/form-nodes/node';
-import { AfFormGroup } from '../../../libraries/autoforms/models/form-group';
 import { SchoolModel } from '../models';
-import { buildForm } from "../../../libraries/autoforms/pipable-operators/build-form.operator";
-import { AfFormNodeType } from "../../../libraries/autoforms/types/form-node-type";
-import { ActivatedRoute, ActivatedRouteSnapshot, Route } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
+import { AfNode } from '@auto-forms/client';
+import { AfFormGroup } from '@auto-forms/client';
+import { buildForm } from '@auto-forms/client';
+import { AfFormNodeType } from '@auto-forms/client';
 
 @Component({
     selector: 'app-create-model',

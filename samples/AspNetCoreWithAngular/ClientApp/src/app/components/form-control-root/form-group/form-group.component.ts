@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Optional, Self } from '@angular/core';
 import { FormGroupDirective } from '@angular/forms';
-import { AfFormNodeType } from '../../../../../libraries/autoforms/types/form-node-type';
+import { AfFormNodeType } from '@auto-forms/client';
 
 @Component({
     selector: 'app-form-group',
@@ -16,7 +16,7 @@ export class FormGroupComponent implements OnInit {
 
     ngOnInit() {
         if (this.ngModel) {
-            this.controls = this.ngModel.control.controls as { [key: string]: AfFormNodeType<any> };
+            this.controls = this.ngModel.control.controls as unknown as { [key: string]: AfFormNodeType<any> };
         }
     }
 }

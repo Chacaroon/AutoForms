@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, Optional, Self } from '@angular/core';
+import { Component, Input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
     selector: 'app-form-control',
     templateUrl: './form-control.component.html'
 })
-export class FormControlComponent implements OnInit, ControlValueAccessor {
+export class FormControlComponent implements ControlValueAccessor {
 
     @Input() validationEnabled: boolean;
 
@@ -17,9 +17,6 @@ export class FormControlComponent implements OnInit, ControlValueAccessor {
         if (this.ngControl) {
             this.ngControl.valueAccessor = this;
         }
-    }
-
-    ngOnInit() {
     }
 
     registerOnChange(fn: any): void {

@@ -1,11 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AfNode } from "../../../libraries/autoforms/form-nodes/node";
 import { shareReplay, startWith, switchMap } from "rxjs/operators";
-import { buildForm } from "../../../libraries/autoforms/pipable-operators/build-form.operator";
 import { SchoolModel } from "../models";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { AfFormGroup } from "../../../libraries/autoforms/models/form-group";
+import { AfFormGroup, AfNode, buildForm } from '@auto-forms/client';
 
 @Component({
     selector: 'app-playground',

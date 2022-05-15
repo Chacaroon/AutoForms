@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AfFormArray } from '../../../../../libraries/autoforms/models/form-array';
-import { AfFormNodeType } from '../../../../../libraries/autoforms/types/form-node-type';
+import { AfFormArray, AfFormNodeType } from '@auto-forms/client';
 
 @Component({
     selector: 'app-form-array',

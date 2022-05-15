@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "@auto-forms/client": {
+    "client": {
       "projectType": "library",
-      "root": "projects/auto-forms/client",
-      "sourceRoot": "projects/auto-forms/client/src",
-      "prefix": "lib",
+      "root": "projects/client",
+      "sourceRoot": "projects/client/src",
+      "prefix": "auto-forms",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/auto-forms/client/ng-package.json"
+            "project": "projects/client/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/auto-forms/client/tsconfig.lib.prod.json"
+              "tsConfig": "projects/client/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/auto-forms/client/tsconfig.lib.json"
+              "tsConfig": "projects/client/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,13 +27,13 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/auto-forms/client/src/test.ts",
-            "tsConfig": "projects/auto-forms/client/tsconfig.spec.json",
-            "karmaConfig": "projects/auto-forms/client/karma.conf.js"
+            "main": "projects/client/src/test.ts",
+            "tsConfig": "projects/client/tsconfig.spec.json",
+            "karmaConfig": "projects/client/karma.conf.js"
           }
         }
       }
     }
   },
-  "defaultProject": "@auto-forms/client"
+  "defaultProject": "client"
 }

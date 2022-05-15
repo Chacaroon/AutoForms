@@ -15,6 +15,7 @@ import { FormArrayComponent } from './components/form-control-root/form-array/fo
 import { PlaygroundComponent } from './playground/playground.component';
 import { AutoFormsModule } from '@auto-forms/client'
 
+
 @NgModule({
     declarations: [
         AppComponent,

@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AfFormNodeType } from '../../../../libraries/autoforms/types/form-node-type';
-import { AfFormControl } from '../../../../libraries/autoforms/models/form-control';
-import { AfFormGroup } from '../../../../libraries/autoforms/models/form-group';
-import { AfFormArray } from '../../../../libraries/autoforms/models/form-array';
+import { AfFormArray, AfFormControl, AfFormGroup } from '@auto-forms/client';
+import { AfFormNodeType } from '@auto-forms/client';
 
 @Component({
     selector: 'app-form-control-root',
