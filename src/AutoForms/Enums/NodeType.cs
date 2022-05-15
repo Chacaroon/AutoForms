@@ -1,9 +1,8 @@
-﻿namespace AutoForms.Enums
+namespace AutoForms.Enums;
+
+public enum NodeType
 {
-    public enum NodeType
-    {
-        Control = 1,
-        Group,
-        Array
-    }
+    Control = 1,
+    Group,
+    Array
 }

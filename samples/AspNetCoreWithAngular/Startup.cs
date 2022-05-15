@@ -22,7 +22,7 @@ namespace AspNetCoreWithAngular
             services.AddControllers()
                 .AddAutoFormsSerializer();
 
-            services.AddCors(options => options.AddDefaultPolicy(builder => 
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
                 builder.AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowAnyOrigin()));

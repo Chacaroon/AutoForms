@@ -1,7 +1,6 @@
-﻿namespace AutoForms.Options
+namespace AutoForms.Options;
+
+public class StrategyOptions
 {
-    public class StrategyOptions
-    {
-        public bool IsFormValue { get; set; }
-    }
+    public bool IsFormValue { get; set; }
 }

@@ -4,7 +4,6 @@
     using NUnit.Framework;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using AutoForms.Extensions;
     using AutoForms.Models;
 
@@ -25,19 +24,19 @@
         public void Resolve_ComplexTypeModel_ReturnsFromGroupWithPopulatedValues()
         {
             // Assert
-            var formResolver = _serviceProvider.GetRequiredService<FormResolver>();
+            var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>();
             var model = GetTestModel();
 
             // Act
-            var node = formResolver.Resolve(model) as FormGroup;
+            var node = formResolver.CreateFormBuilder(model).Build() as FormGroup;
 
-            var arrayPropertyNodes = FindNode(node, nameof(ComplexType.ArrayProperty));
+            var arrayPropertyNodes = FindNode(node, nameof(ComplexType.ArrayProperty).FirstCharToLowerCase());
             var arrayPropertyValues = ((FormArray)arrayPropertyNodes).Nodes.Select(x => ((FormControl)x).Value);
 
             // Arrange
             Assert.NotNull(node);
 
-            Assert.AreEqual("value", ((FormControl)FindNode(node, nameof(ComplexType.StringProperty))).Value);
+            Assert.AreEqual("value", ((FormControl)FindNode(node, nameof(ComplexType.StringProperty).FirstCharToLowerCase())).Value);
             Assert.That(arrayPropertyValues, Is.EquivalentTo(new[] { 0 }));
         }
 
@@ -45,11 +44,11 @@
         public void Resolve_PrimitiveTypeModelArray_ReturnsFromArrayWithFormControlsAndPopulatedValues()
         {
             // Assert
-            var formResolver = _serviceProvider.GetRequiredService<FormResolver>();
+            var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>();
             var model = Enumerable.Range(0, 3);
 
             // Act
-            var node = formResolver.Resolve(model) as FormArray;
+            var node = formResolver.CreateFormBuilder(model).Build() as FormArray;
 
             // Arrange
             Assert.NotNull(node);
@@ -62,7 +61,7 @@
         public void Resolve_ComplexTypeModelArray_ReturnsFromArrayWithFormGroupsAndPopulatedValues()
         {
             // Assert
-            var formResolver = _serviceProvider.GetRequiredService<FormResolver>();
+            var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>();
             var model = new[]
             {
                 GetTestModel(1),
@@ -70,10 +69,10 @@
             };
 
             // Act
-            var node = formResolver.Resolve(model) as FormArray;
+            var node = formResolver.CreateFormBuilder(model).Build() as FormArray;
 
             var stringPropertyNodes = node!.Nodes
-                .Select(x => FindNode(x as FormGroup, nameof(ComplexType.StringProperty)));
+                .Select(x => FindNode(x as FormGroup, nameof(ComplexType.StringProperty).FirstCharToLowerCase()));
             var stringPropertyNodeValues = stringPropertyNodes
                 .Select(x => ((FormControl)x).Value);
 

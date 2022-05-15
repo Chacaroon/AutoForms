@@ -1,8 +1,8 @@
 ﻿namespace AutoForms.UnitTests
 {
     using AutoForms.Extensions;
-    using AutoForms.FormResolverStrategies;
-    using AutoForms.FormResolverStrategies.Strategies;
+    using AutoForms.FormBuilderStrategies;
+    using AutoForms.FormBuilderStrategies.Strategies;
     using Microsoft.Extensions.DependencyInjection;
     using NUnit.Framework;
     using System;

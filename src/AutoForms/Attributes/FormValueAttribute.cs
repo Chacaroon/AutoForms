@@ -1,9 +1,6 @@
-﻿namespace AutoForms.Attributes
-{
-    using System;
+namespace AutoForms.Attributes;
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property)]
-    public class FormValueAttribute : Attribute
-    {
-    }
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property)]
+public class FormValueAttribute : Attribute
+{
 }

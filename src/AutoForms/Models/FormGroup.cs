@@ -1,12 +1,11 @@
-﻿namespace AutoForms.Models
+namespace AutoForms.Models;
+
+using AutoForms.Enums;
+using System.Collections.Generic;
+
+internal class FormGroup : Node
 {
-    using AutoForms.Enums;
-    using System.Collections.Generic;
+    public override NodeType Type => NodeType.Group;
 
-    internal class FormGroup : Node
-    {
-        public override NodeType Type => NodeType.Group;
-
-        public Dictionary<string, Node> Nodes { get; set; }
-    }
+    public Dictionary<string, Node> Nodes { get; set; }
 }

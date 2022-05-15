@@ -14,7 +14,7 @@ namespace AspNetCoreWithAngular
         {
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
-                { 
+                {
                     webBuilder.UseStartup<Startup>();
                 });
         }

@@ -1,9 +1,8 @@
-﻿namespace AutoForms.Enums
+namespace AutoForms.Enums;
+
+public enum ValidatorType
 {
-    public enum ValidatorType
-    {
-        Required = 1,
-        MinLength,
-        MaxLength
-    }
+    Required = 1,
+    MinLength,
+    MaxLength
 }

@@ -1,35 +1,34 @@
-namespace AutoForms.Extensions
+namespace AutoForms.Extensions;
+
+using AutoForms;
+using AutoForms.FormBuilderStrategies;
+using AutoForms.FormBuilderStrategies.Strategies;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+
+public static class AutoFormsExtensions
 {
-    using AutoForms;
-    using AutoForms.FormResolverStrategies;
-    using AutoForms.FormResolverStrategies.Strategies;
-    using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json;
-
-    public static class AutoFormsExtensions
+    public static IServiceCollection AddAutoForms(this IServiceCollection serviceCollection)
     {
-        public static IServiceCollection AddAutoForms(this IServiceCollection serviceCollection)
+        serviceCollection.AddTransient<FormBuilderFactory>();
+
+        serviceCollection.AddTransient<BaseStrategy, FormControlStrategy>();
+        serviceCollection.AddTransient<BaseStrategy, FormArrayStrategy>();
+        serviceCollection.AddTransient<BaseStrategy, FormGroupStrategy>();
+
+        serviceCollection.AddTransient<StrategyResolver>();
+        serviceCollection.AddScoped<StrategyOptionsResolver>();
+
+        return serviceCollection;
+    }
+
+    public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder)
+    {
+        mvcBuilder.AddNewtonsoftJson(options =>
         {
-            serviceCollection.AddTransient<FormResolver>();
+            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+        });
 
-            serviceCollection.AddTransient<BaseStrategy, FormControlStrategy>();
-            serviceCollection.AddTransient<BaseStrategy, FormArrayStrategy>();
-            serviceCollection.AddTransient<BaseStrategy, FormGroupStrategy>();
-
-            serviceCollection.AddTransient<StrategyResolver>();
-            serviceCollection.AddScoped<StrategyOptionsResolver>();
-
-            return serviceCollection;
-        }
-
-        public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder)
-        {
-            mvcBuilder.AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            });
-
-            return mvcBuilder;
-        }
+        return mvcBuilder;
     }
 }

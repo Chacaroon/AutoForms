@@ -8,19 +8,21 @@
     [ApiController]
     public class FormController : ControllerBase
     {
-        private readonly FormResolver _formResolver;
+        private readonly FormBuilderFactory _formBuilderFactory;
 
         private static SchoolModel _schoolModel;
 
-        public FormController(FormResolver formResolver)
+        public FormController(FormBuilderFactory formBuilderFactory)
         {
-            _formResolver = formResolver;
+            _formBuilderFactory = formBuilderFactory;
         }
 
         [HttpGet("create")]
         public IActionResult Get()
         {
-            var form = _formResolver.Resolve<SchoolModel>();
+            var form = _formBuilderFactory.CreateFormBuilder<SchoolModel>()
+                .EnhanceWithValidators()
+                .Build();
 
             return Ok(form);
         }
@@ -36,7 +38,10 @@
         [HttpGet("update")]
         public IActionResult GetFormWithValue()
         {
-            var form = _formResolver.Resolve(_schoolModel);
+            var form = _formBuilderFactory.CreateFormBuilder<SchoolModel>()
+                .EnhanceWithValidators()
+                .EnhanceWithValue(_schoolModel)
+                .Build();
 
             return Ok(form);
         }

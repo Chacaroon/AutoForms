@@ -5,12 +5,10 @@ using System;
 namespace AutoForms.UnitTests
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
     using AutoForms.Extensions;
-using AutoForms.FormResolverStrategies.Strategies;
-using AutoForms.FormResolverStrategies;
-using AutoForms.Models;
-using AutoForms.Enums;
+    using AutoForms.Models;
+    using AutoForms.Enums;
+    using AutoForms.FormBuilderStrategies;
 
     public class ValidatorResolverTests
     {
@@ -34,8 +32,8 @@ using AutoForms.Enums;
             // Act
             var node = strategyResolver.Resolve(typeof(TestClass)).Process(typeof(TestClass)) as FormGroup;
 
-            var testPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.TestProperty)).Value;
-            var requiredPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.RequiredProperty)).Value;
+            var testPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.TestProperty).FirstCharToLowerCase()).Value;
+            var requiredPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.RequiredProperty).FirstCharToLowerCase()).Value;
 
             // Assert
             Assert.AreEqual(2, testPropertyNode.Validators.Length);
