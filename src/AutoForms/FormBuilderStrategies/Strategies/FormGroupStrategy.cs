@@ -26,7 +26,7 @@ internal class FormGroupStrategy : BaseStrategy
         var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
         var nodes = properties.ToDictionary(x => x.Name.FirstCharToLowerCase(), x =>
-            Resolve(x, GetPropertyValue(x, Value)));
+            BuildNode(x, GetPropertyValue(x, Value)));
 
         return new FormGroup
         {
@@ -34,7 +34,7 @@ internal class FormGroupStrategy : BaseStrategy
         };
     }
 
-    private Node Resolve(PropertyInfo propertyInfo, object value)
+    private Node BuildNode(PropertyInfo propertyInfo, object value)
     {
         return _strategyResolver.Resolve(propertyInfo)
             .EnhanceWithValue(value)

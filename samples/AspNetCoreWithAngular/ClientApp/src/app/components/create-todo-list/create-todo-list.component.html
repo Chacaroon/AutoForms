@@ -1,0 +1,31 @@
+<div class="container" *ngIf="form$ | async as form" [formGroup]="form">
+    <div class="row">
+        <div class="col">
+            <label>
+                Name:
+                <div class="mb-3">
+                    <input formControlName="name" class="form-control" type="text">
+                    <span *ngFor="let pair of form.controls.name.errors | keyvalue" style="color: red">
+                        {{pair.value}}
+                    </span>
+                </div>
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4>Items:</h4>
+            <span *ngFor="let pair of form.controls.toDoItems.errors | keyvalue" style="color: red">
+                {{pair.value}}
+            </span>
+            <app-todo-item
+                *ngFor="let item of form.controls.toDoItems.controls"
+                [formGroup]="item"
+                (remove)="form.controls.toDoItems.removeAt(form.controls.toDoItems.controls.indexOf($event))">
+            </app-todo-item>
+            <button class="btn btn-success" (click)="form.controls.toDoItems.addControl()"><b>Add item</b></button>
+            <br>
+            <button class="btn btn-success" (click)="onSave(form)">Save</button>
+        </div>
+    </div>
+</div>

@@ -1,100 +1,99 @@
-﻿namespace AutoForms.UnitTests
+﻿namespace AutoForms.UnitTests;
+
+using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using AutoForms.Extensions;
+using AutoForms.Models;
+
+[TestFixture]
+internal class ResolveFormByTypeTests
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using NUnit.Framework;
-    using System;
-    using System.Collections.Generic;
-    using AutoForms.Extensions;
-    using AutoForms.Models;
+    private IServiceProvider _serviceProvider;
 
-    [TestFixture]
-    internal class ResolveFormByTypeTests
+    [SetUp]
+    public void SetUp()
     {
-        private IServiceProvider _serviceProvider;
+        var services = new ServiceCollection()
+            .AddAutoForms();
 
-        [SetUp]
-        public void SetUp()
-        {
-            var services = new ServiceCollection()
-                .AddAutoForms();
-
-            _serviceProvider = services.BuildServiceProvider();
-        }
-
-        [Test]
-        public void Resolve_ComplexTypeAsGenericParameter_ReturnsFormGroupWithItsChildNodes()
-        {
-            // Assert
-            var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>()
-                .CreateFormBuilder<ComplexType>();
-
-            // Act
-            var node = formResolver.Build() as FormGroup;
-
-            // Arrange
-            Assert.NotNull(node);
-
-            Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty)));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty)));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty)));
-        }
-
-        [Test]
-        public void Resolve_ComplexTypeAsMethodParameter_ReturnsFormGroupWithItsChildNodes()
-        {
-            // Assert
-            var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>()
-                .CreateFormBuilder(typeof(ComplexType));
-
-            // Act
-            var node = formResolver.Build() as FormGroup;
-
-            // Arrange
-            Assert.NotNull(node);
-
-            Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty)));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty)));
-            Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty)));
-        }
-
-        [Test]
-        public void Resolve_ComplexTypeArrayAsGenericParameter_ReturnsFromArrayWithoutChildNodes()
-        {
-            // Assert
-            var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>()
-                .CreateFormBuilder<ComplexType[]>();
-
-            // Act
-            var node = formResolver.Build() as FormArray;
-
-            // Arrange
-            Assert.NotNull(node);
-
-            Assert.IsEmpty(node.Nodes);
-        }
-
-        #region Helpers
-
-        private Node FindNode(FormGroup node, string nodeName)
-        {
-            return node.Nodes.GetValueOrDefault(nodeName.FirstCharToLowerCase());
-        }
-
-        #endregion
-
-        #region TestData
-
-        private class ComplexType
-        {
-            public string StringProperty { get; set; }
-
-            public int[] ArrayProperty { get; set; }
-
-            public NestedComplexType ComplexTypeProperty { get; set; }
-        }
-
-        private class NestedComplexType { }
-
-        #endregion
+        _serviceProvider = services.BuildServiceProvider();
     }
+
+    [Test]
+    public void Resolve_ComplexTypeAsGenericParameter_ReturnsFormGroupWithItsChildNodes()
+    {
+        // Assert
+        var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>()
+            .CreateFormBuilder<ComplexType>();
+
+        // Act
+        var node = formResolver.Build() as FormGroup;
+
+        // Arrange
+        Assert.NotNull(node);
+
+        Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty)));
+        Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty)));
+        Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty)));
+    }
+
+    [Test]
+    public void Resolve_ComplexTypeAsMethodParameter_ReturnsFormGroupWithItsChildNodes()
+    {
+        // Assert
+        var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>()
+            .CreateFormBuilder(typeof(ComplexType));
+
+        // Act
+        var node = formResolver.Build() as FormGroup;
+
+        // Arrange
+        Assert.NotNull(node);
+
+        Assert.NotNull(FindNode(node, nameof(ComplexType.StringProperty)));
+        Assert.NotNull(FindNode(node, nameof(ComplexType.ArrayProperty)));
+        Assert.NotNull(FindNode(node, nameof(ComplexType.ComplexTypeProperty)));
+    }
+
+    [Test]
+    public void Resolve_ComplexTypeArrayAsGenericParameter_ReturnsFromArrayWithoutChildNodes()
+    {
+        // Assert
+        var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>()
+            .CreateFormBuilder<ComplexType[]>();
+
+        // Act
+        var node = formResolver.Build() as FormArray;
+
+        // Arrange
+        Assert.NotNull(node);
+
+        Assert.IsEmpty(node.Nodes);
+    }
+
+    #region Helpers
+
+    private Node FindNode(FormGroup node, string nodeName)
+    {
+        return node.Nodes.GetValueOrDefault(nodeName.FirstCharToLowerCase());
+    }
+
+    #endregion
+
+    #region TestData
+
+    private class ComplexType
+    {
+        public string StringProperty { get; set; }
+
+        public int[] ArrayProperty { get; set; }
+
+        public NestedComplexType ComplexTypeProperty { get; set; }
+    }
+
+    private class NestedComplexType { }
+
+    #endregion
 }
