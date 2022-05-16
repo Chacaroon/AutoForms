@@ -1,1 +1,1 @@
-export * from './form-node-type'
+export * from './form-node.type'

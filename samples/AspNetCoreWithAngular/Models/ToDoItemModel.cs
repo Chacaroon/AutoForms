@@ -2,9 +2,11 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class StudentModel
+    public class ToDoItemModel
     {
         [Required]
         public string Name { get; set; }
+
+        public bool Done { get; set; }
     }
 }

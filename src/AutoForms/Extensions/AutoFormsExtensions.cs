@@ -13,6 +13,7 @@ public static class AutoFormsExtensions
         serviceCollection.AddTransient<FormBuilderFactory>();
 
         serviceCollection.AddTransient<BaseStrategy, FormControlStrategy>();
+        serviceCollection.AddTransient<BaseStrategy, DictionaryFormGroupStrategy>();
         serviceCollection.AddTransient<BaseStrategy, FormArrayStrategy>();
         serviceCollection.AddTransient<BaseStrategy, FormGroupStrategy>();
 

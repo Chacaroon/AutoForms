@@ -1,0 +1,16 @@
+<div [formGroup]="formGroup">
+    <label class="form-label m-2">
+        <input formControlName="done" type="checkbox" class="form-check-input">
+    </label>
+    <label class="form-label">
+        <input formControlName="name" type="text" class="form-control">
+    </label>
+    <button class="btn btn-danger m-1" (click)="remove.emit(formGroup)">
+        <b>Remove</b>
+    </button>
+    <div class="d-block">
+        <span *ngFor="let pair of formGroup.controls.name.errors | keyvalue" style="color: red">
+            {{ pair.value }}
+        </span>
+    </div>
+</div>

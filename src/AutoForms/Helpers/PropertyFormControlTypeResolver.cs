@@ -28,4 +28,9 @@ internal static class PropertyFormControlTypeResolver
     {
         return !IsFormControl(type, options) && !IsFormArray(type, options);
     }
+
+    internal static bool IsDictionary(Type type)
+    {
+        return type.IsAssignableTo(typeof(IDictionary));
+    }
 }

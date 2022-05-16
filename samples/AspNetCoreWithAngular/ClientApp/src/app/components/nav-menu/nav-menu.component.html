@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            <a [routerLink]="['/']" class="navbar-brand">AspNetCoreWithAngular</a>
+            <a [routerLink]="['/']" class="navbar-brand">One More ToDo List</a>
             <button
                 (click)="toggle()"
                 [attr.aria-expanded]="isExpanded"
@@ -16,26 +16,11 @@
                 [ngClass]="{ show: isExpanded }"
                 class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
                 <ul class="navbar-nav flex-grow">
-                    <li
-                        [routerLinkActiveOptions]="{ exact: true }"
-                        [routerLinkActive]="['link-active']"
-                        class="nav-item">
+                    <li class="nav-item">
                         <a [routerLink]="['/']" class="nav-link text-dark">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a [routerLink]="['/create-model']" class="nav-link text-dark">
-                            Create model
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a [routerLink]="['/update-model']" class="nav-link text-dark">
-                            Update model
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a [routerLink]="['/playground']" class="nav-link text-dark">
-                            Playground
-                        </a>
+                        <a [routerLink]="['/create-todo-list']" class="nav-link text-dark">Create ToDo list</a>
                     </li>
                 </ul>
             </div>

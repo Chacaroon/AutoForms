@@ -18,6 +18,7 @@ internal class FormArrayStrategy : BaseStrategy
     internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
     {
         return !PropertyFormControlTypeResolver.IsFormControl(modelType, options)
+               && !PropertyFormControlTypeResolver.IsDictionary(modelType)
                && PropertyFormControlTypeResolver.IsFormArray(modelType, options);
     }
 
