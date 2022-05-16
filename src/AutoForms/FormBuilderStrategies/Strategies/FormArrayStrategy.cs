@@ -1,18 +1,18 @@
-namespace AutoForms.FormBuilderStrategies.Strategies;
-
 using AutoForms.Helpers;
 using AutoForms.Models;
 using AutoForms.Options;
 using System.Collections;
 using System.Collections.Generic;
 
+namespace AutoForms.FormBuilderStrategies.Strategies;
+
 internal class FormArrayStrategy : BaseStrategy
 {
-    private readonly FormBuilderFactory _formBuilderFactory;
+    private readonly StrategyResolver _strategyResolver;
 
-    public FormArrayStrategy(FormBuilderFactory formBuilderFactory)
+    public FormArrayStrategy(StrategyResolver strategyResolver)
     {
-        _formBuilderFactory = formBuilderFactory;
+        _strategyResolver = strategyResolver;
     }
 
     internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
@@ -22,15 +22,17 @@ internal class FormArrayStrategy : BaseStrategy
                && PropertyFormControlTypeResolver.IsFormArray(modelType, options);
     }
 
-    internal override Node Process(Type type)
+    internal override Node Process(Type type, HashSet<Type> hashSet)
     {
+        CheckCircularDependency(ref hashSet, type);
+
         var collectionItemType = GetCollectionItemType(type);
         var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
 
-        Node BuildNode(object value) => _formBuilderFactory.CreateFormBuilder(collectionItemType)
-            .EnhanceWithValidators()
+        Node BuildNode(object value) => _strategyResolver.Resolve(collectionItemType)
+            .EnhanceWithValidators(collectionItemType)
             .EnhanceWithValue(value)
-            .Build();
+            .Process(collectionItemType, hashSet);
 
         var nodes = values.Select(BuildNode);
 

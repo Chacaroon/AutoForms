@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Reflection;
 using AutoForms.FormBuilderStrategies.Strategies;
+using AutoForms.Options;
 
 public class StrategyResolver
 {
@@ -19,15 +20,20 @@ public class StrategyResolver
     public BaseStrategy Resolve(Type modelType)
     {
         var strategyOptions = _strategyOptionsResolver.GetStrategyOptions(modelType);
-        var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(modelType, strategyOptions));
 
-        return strategy;
+        return Resolve(modelType, strategyOptions);
     }
 
     public BaseStrategy Resolve(PropertyInfo propertyInfo)
     {
         var strategyOptions = _strategyOptionsResolver.GetStrategyOptions(propertyInfo);
-        var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(propertyInfo.PropertyType, strategyOptions));
+
+        return Resolve(propertyInfo.PropertyType, strategyOptions);
+    }
+
+    private BaseStrategy Resolve(Type modelType, StrategyOptions strategyOptions)
+    {
+        var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(modelType, strategyOptions));
 
         return strategy;
     }

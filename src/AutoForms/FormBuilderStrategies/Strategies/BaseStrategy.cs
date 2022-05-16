@@ -6,6 +6,7 @@ using AutoForms.Options;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using AutoForms.Exceptions;
 using Validator = Models.Validator;
 
 public abstract class BaseStrategy
@@ -16,7 +17,7 @@ public abstract class BaseStrategy
 
     internal abstract bool IsStrategyApplicable(Type modelType, StrategyOptions options);
 
-    internal abstract Node Process(Type type);
+    internal abstract Node Process(Type type, HashSet<Type> hashSet);
 
     internal BaseStrategy EnhanceWithValue(object value)
     {
@@ -39,6 +40,19 @@ public abstract class BaseStrategy
         Validators = ResolveValidators(type.CustomAttributes);
 
         return this;
+    }
+
+    protected void CheckCircularDependency(ref HashSet<Type> hashSet, Type type)
+    {
+        if (hashSet.Contains(type))
+        {
+            var typesArray = hashSet.Concat(new[] { type }).ToArray();
+            typesArray = typesArray[Array.IndexOf(typesArray, type)..];
+            var path = string.Join("->", typesArray.Select(x => x.Name));
+            throw new CircularDependencyException($"Circular dependency: {path}");
+        }
+
+        hashSet = hashSet.Union(new[] { type }).ToHashSet();
     }
 
     private Validator[] ResolveValidators(IEnumerable<CustomAttributeData> attributes)

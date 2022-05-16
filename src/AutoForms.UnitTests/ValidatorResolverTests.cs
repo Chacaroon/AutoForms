@@ -31,7 +31,7 @@ public class ValidatorResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var node = strategyResolver.Resolve(typeof(TestClass)).Process(typeof(TestClass)) as FormGroup;
+        var node = strategyResolver.Resolve(typeof(TestClass)).Process(typeof(TestClass), new()) as FormGroup;
 
         var testPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.TestProperty).FirstCharToLowerCase()).Value;
         var requiredPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.RequiredProperty).FirstCharToLowerCase()).Value;

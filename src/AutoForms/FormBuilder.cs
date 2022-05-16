@@ -1,5 +1,6 @@
 namespace AutoForms;
 
+using System.Collections.Generic;
 using AutoForms.FormBuilderStrategies.Strategies;
 using AutoForms.Models;
 
@@ -30,6 +31,6 @@ public class FormBuilder
 
     public Node Build()
     {
-        return _strategy.Process(_type);
+        return _strategy.Process(_type, new HashSet<Type>());
     }
 }
