@@ -1,6 +1,8 @@
 namespace AutoForms.Helpers;
 
+using AutoForms.Enums;
 using AutoForms.Options;
+using Microsoft.Extensions.Options;
 using System.Collections;
 
 internal static class PropertyFormControlTypeResolver
@@ -21,7 +23,9 @@ internal static class PropertyFormControlTypeResolver
 
     internal static bool IsFormArray(Type type, StrategyOptions options)
     {
-        return !IsFormControl(type, options) && typeof(IEnumerable).IsAssignableFrom(type);
+        return !IsFormControl(type, options)
+               && !IsDictionary(type, options)
+               && typeof(IEnumerable).IsAssignableFrom(type);
     }
 
     internal static bool IsFormGroup(Type type, StrategyOptions options)
@@ -29,8 +33,8 @@ internal static class PropertyFormControlTypeResolver
         return !IsFormControl(type, options) && !IsFormArray(type, options);
     }
 
-    internal static bool IsDictionary(Type type)
+    internal static bool IsDictionary(Type type, StrategyOptions options)
     {
-        return type.IsAssignableTo(typeof(IDictionary));
+        return !IsFormControl(type, options) && type.IsAssignableTo(typeof(IDictionary));
     }
 }

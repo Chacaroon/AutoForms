@@ -18,7 +18,7 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
 
     internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
     {
-        return PropertyFormControlTypeResolver.IsDictionary(modelType);
+        return PropertyFormControlTypeResolver.IsDictionary(modelType, options);
     }
 
     internal override Node Process(Type type, HashSet<Type> hashSet)
