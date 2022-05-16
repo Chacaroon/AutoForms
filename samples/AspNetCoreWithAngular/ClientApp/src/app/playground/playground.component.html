@@ -1,0 +1,11 @@
+<ng-container *ngIf="form$ | async as form" [formGroup]="form">
+    <label>
+        Name:
+        <app-form-control formControlName="name" [validationEnabled]="true">
+        </app-form-control>
+    </label>
+</ng-container>
+
+<pre>
+    {{ formValue$ | async | json }}
+</pre>

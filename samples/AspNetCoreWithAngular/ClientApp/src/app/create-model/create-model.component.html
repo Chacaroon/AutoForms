@@ -1,0 +1,39 @@
+<h1>Form sample</h1>
+
+<p>This component demonstrates fetching model's structure from the server and building one to a AfFormGroup.</p>
+
+<label>
+    <input type="checkbox"
+           #validationCheckbox
+           [checked]="validationEnabled"
+           (change)="validationEnabled = validationCheckbox.checked">
+    Validation
+</label>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="w-50 d-inline-block">
+                <app-form-control-root
+                    *ngIf="form$ | async as form"
+                    [form]="form"
+                    [validationEnabled]="validationEnabled">
+                </app-form-control-root>
+            </div>
+        </div>
+        <div class="col">
+            <div class="w-50 d-inline-block">
+                <pre>{{ formValue$ | async | json }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button (click)="onSubmit(form, validationEnabled)" *ngIf="form$ | async as form" class="btn btn-success">
+    Submit
+</button>
+
+<pre>
+  {{ response$ | async | json }}
+</pre>
+
