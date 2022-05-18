@@ -3,6 +3,9 @@
         <div class="col">
             <h2 class="d-inline-block">{{toDoList.name}}</h2>
             <a routerLink="/update-todo-list/{{toDoList.id}}" class="btn btn-success btn-sm d-inline-block">Edit</a>
+            <div *ngIf="toDoList.tags?.length">
+                Tags: {{mapTags(toDoList.tags)}}
+            </div>
             <div *ngFor="let toDoItem of toDoList.toDoItems">
                 <label>
                     <input type="checkbox" [checked]="toDoItem.done" [disabled]="true">

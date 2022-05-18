@@ -12,6 +12,7 @@ public class ToDoListModel
     public string Name { get; set; }
 
     [FormValue]
+    [MinLength(2)]
     public IEnumerable<int> Tags { get; set; }
 
     public IEnumerable<ToDoItemModel> ToDoItems { get; set; }

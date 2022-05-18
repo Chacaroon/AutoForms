@@ -23,7 +23,7 @@
                         bindValue="id"
                         [multiple]="true">
                     </ng-select>
-                    <span *ngFor="let pair of form.controls.name.errors | keyvalue" style="color: red">
+                    <span *ngFor="let pair of form.controls.tags.errors | keyvalue" style="color: red">
                         {{pair.value}}
                     </span>
                 </div>
@@ -32,7 +32,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <h4>Items:</h4>
+            Items:
             <span *ngFor="let pair of form.controls.toDoItems.errors | keyvalue" style="color: red">
                 {{pair.value}}
             </span>
@@ -42,7 +42,7 @@
                 (remove)="form.controls.toDoItems.removeAt(form.controls.toDoItems.controls.indexOf($event))">
             </app-todo-item>
             <button class="btn btn-success" (click)="form.controls.toDoItems.addControl()"><b>Add item</b></button>
-            <br>
+            <br><br>
             <button class="btn btn-success" (click)="onSave(form)">Save</button>
         </div>
     </div>

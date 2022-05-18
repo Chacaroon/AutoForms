@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { AfFormGroup, AfNode, buildForm } from "@auto-forms/client";
-import { SelectListItem, ToDoListModel } from "../../models";
+import { SelectListItem, tags, ToDoListModel } from "../../models";
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -14,8 +14,7 @@ export class CreateTodoListComponent implements OnInit {
     form$: Observable<AfFormGroup<ToDoListModel>>;
     id: string;
 
-    tags: SelectListItem<string>[] = [...Array(5).keys()]
-        .map(x => ({ id: x + 1, value: `Item ${x + 1}` }))
+    tags: SelectListItem<string>[] = tags;
 
     constructor(private http: HttpClient,
                 private router: Router,
