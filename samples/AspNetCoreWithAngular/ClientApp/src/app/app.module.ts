@@ -15,6 +15,7 @@ import { AutoFormsModule } from '@auto-forms/client'
 import { BaseUrlInterceptor } from "./interceptors/base-url.interceptor";
 import { CreateTodoListComponent } from './components/create-todo-list/create-todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
+import { NgSelectModule } from "@ng-select/ng-select";
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { TodoItemComponent } from './components/todo-item/todo-item.component';
             { path: 'create-todo-list', component: CreateTodoListComponent },
             { path: 'update-todo-list/:id', component: CreateTodoListComponent }
         ]),
+        NgSelectModule
     ],
     providers: [
         {

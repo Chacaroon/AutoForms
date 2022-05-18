@@ -1,10 +1,28 @@
 <div class="container" *ngIf="form$ | async as form" [formGroup]="form">
     <div class="row">
         <div class="col">
-            <label>
+            <label class="w-50">
                 Name:
                 <div class="mb-3">
                     <input formControlName="name" class="form-control" type="text">
+                    <span *ngFor="let pair of form.controls.name.errors | keyvalue" style="color: red">
+                        {{pair.value}}
+                    </span>
+                </div>
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label class="w-50"> Tags:
+                <div class="mb-3">
+                    <ng-select
+                        formControlName="tags"
+                        [items]="tags"
+                        bindLabel="value"
+                        bindValue="id"
+                        [multiple]="true">
+                    </ng-select>
                     <span *ngFor="let pair of form.controls.name.errors | keyvalue" style="color: red">
                         {{pair.value}}
                     </span>
