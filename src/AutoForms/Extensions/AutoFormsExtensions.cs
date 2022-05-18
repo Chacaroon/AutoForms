@@ -18,7 +18,7 @@ public static class AutoFormsExtensions
         serviceCollection.AddTransient<BaseStrategy, FormGroupStrategy>();
 
         serviceCollection.AddTransient<StrategyResolver>();
-        serviceCollection.AddScoped<StrategyOptionsResolver>();
+        serviceCollection.AddSingleton<StrategyOptionsResolver>();
 
         return serviceCollection;
     }
