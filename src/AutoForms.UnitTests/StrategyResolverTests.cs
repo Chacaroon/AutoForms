@@ -6,6 +6,7 @@ using AutoForms.FormBuilderStrategies.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 [TestFixture]
@@ -22,6 +23,7 @@ internal class StrategyResolverTests
         _serviceProvider = services.BuildServiceProvider();
     }
 
+    [TestCase(typeof(object))]
     [TestCase(typeof(string))]
     [TestCase(typeof(int))]
     [TestCase(typeof(DateTime))]
@@ -35,9 +37,11 @@ internal class StrategyResolverTests
         var strategy = strategyResolver.Resolve(type);
 
         // Assert
-        Assert.AreEqual(typeof(FormControlStrategy), strategy.GetType());
+        Assert.IsInstanceOf<FormControlStrategy>(strategy);
     }
 
+    [TestCase(typeof(IEnumerable))]
+    [TestCase(typeof(object[]))]
     [TestCase(typeof(int[]))]
     [TestCase(typeof(TestClass[]))]
     [TestCase(typeof(IEnumerable<int>))]
@@ -51,7 +55,7 @@ internal class StrategyResolverTests
         var strategy = strategyResolver.Resolve(type);
 
         // Assert
-        Assert.AreEqual(typeof(FormArrayStrategy), strategy.GetType());
+        Assert.IsInstanceOf<FormArrayStrategy>(strategy);
     }
 
     [TestCase(typeof(TestClass))]
@@ -64,7 +68,7 @@ internal class StrategyResolverTests
         var strategy = strategyResolver.Resolve(type);
 
         // Assert
-        Assert.AreEqual(typeof(FormGroupStrategy), strategy.GetType());
+        Assert.IsInstanceOf<FormGroupStrategy>(strategy);
     }
 
     #region TestData

@@ -9,6 +9,7 @@ internal static class PropertyFormControlTypeResolver
 {
     private static readonly Type[] PrimitiveTypes =
     {
+        typeof(object),
         typeof(string),
         typeof(DateTime)
     };

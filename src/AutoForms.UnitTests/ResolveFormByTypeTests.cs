@@ -43,6 +43,24 @@ internal class ResolveFormByTypeTests
     }
 
     [Test]
+    public void Resolve_ComplexValueTypeAsGenericParameter_ReturnsFormGroupWithItsChildNodes()
+    {
+        // Assert
+        var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>()
+            .CreateFormBuilder<ComplexStruct>();
+
+        // Act
+        var node = formResolver.Build() as FormGroup;
+
+        // Arrange
+        Assert.NotNull(node);
+
+        Assert.NotNull(FindNode(node, nameof(ComplexStruct.StringProperty)));
+        Assert.NotNull(FindNode(node, nameof(ComplexStruct.ArrayProperty)));
+        Assert.NotNull(FindNode(node, nameof(ComplexStruct.ComplexTypeProperty)));
+    }
+
+    [Test]
     public void Resolve_ComplexTypeAsMethodParameter_ReturnsFormGroupWithItsChildNodes()
     {
         // Assert
@@ -111,6 +129,17 @@ internal class ResolveFormByTypeTests
 
         public NestedComplexType ComplexTypeProperty { get; set; }
     }
+
+    private struct ComplexStruct
+    {
+        public string StringProperty { get; set; }
+
+        public int[] ArrayProperty { get; set; }
+
+        public NestedComplexStruct ComplexTypeProperty { get; set; }
+    }
+
+    private struct NestedComplexStruct { }
 
     private class NestedComplexType { }
 

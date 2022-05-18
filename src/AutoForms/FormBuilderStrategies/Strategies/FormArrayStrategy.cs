@@ -25,19 +25,19 @@ internal class FormArrayStrategy : BaseStrategy
         CheckCircularDependency(ref hashSet, type);
 
         var collectionItemType = GetCollectionItemType(type);
-        var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
 
-        Node BuildNode(object value) => _strategyResolver.Resolve(collectionItemType)
+        Node BuildNode(object value = null) => _strategyResolver.Resolve(collectionItemType)
             .EnhanceWithValidators(collectionItemType)
             .EnhanceWithValue(value)
             .Process(collectionItemType, hashSet);
 
+        var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
         var nodes = values.Select(BuildNode);
 
         var formArray = new FormArray
         {
             Nodes = nodes,
-            NodeSchema = BuildNode(null)
+            NodeSchema = BuildNode()
         };
 
         return formArray;
@@ -47,14 +47,14 @@ internal class FormArrayStrategy : BaseStrategy
     {
         var interfaces = collectionType.GetInterfaces().Union(new[] { collectionType });
 
-        var enumerableInterfaceType = interfaces.First(x =>
+        var enumerableInterfaceType = interfaces.FirstOrDefault(x =>
             x.IsGenericType
             && x.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 
-        var collectionItemType = enumerableInterfaceType
+        var collectionItemType = enumerableInterfaceType?
             .GetGenericArguments()
             .Single();
 
-        return collectionItemType;
+        return collectionItemType ?? typeof(object);
     }
 }
