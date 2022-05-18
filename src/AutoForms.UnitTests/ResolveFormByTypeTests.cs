@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using AutoForms.Comparers;
 using AutoForms.Exceptions;
 using AutoForms.Extensions;
 using AutoForms.Models;
@@ -86,7 +87,7 @@ internal class ResolveFormByTypeTests
         var strategy = strategyResolver.Resolve(type);
 
         // Assert
-        var exception = Assert.Throws<CircularDependencyException>(() => strategy.Process(type, new()));
+        var exception = Assert.Throws<CircularDependencyException>(() => strategy.Process(type, new(new TypeEqualityComparer())));
         Assert.AreEqual(expectedMessage, exception.Message);
     }
 

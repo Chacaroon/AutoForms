@@ -1,6 +1,7 @@
 namespace AutoForms;
 
 using System.Collections.Generic;
+using AutoForms.Comparers;
 using AutoForms.FormBuilderStrategies.Strategies;
 using AutoForms.Models;
 
@@ -31,6 +32,6 @@ public class FormBuilder
 
     public Node Build()
     {
-        return _strategy.Process(_type, new HashSet<Type>());
+        return _strategy.Process(_type, new(new TypeEqualityComparer()));
     }
 }
