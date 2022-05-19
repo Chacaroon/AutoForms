@@ -1,4 +1,4 @@
-import { AfFormNodeType } from "./types";
+import { AfFormNodeType } from './types';
 import {
   AfNode,
   AfValidator,
