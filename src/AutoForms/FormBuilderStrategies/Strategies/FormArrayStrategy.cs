@@ -45,7 +45,7 @@ internal class FormArrayStrategy : BaseStrategy
 
     private Type GetCollectionItemType(Type collectionType)
     {
-        var interfaces = collectionType.GetInterfaces().Union(new[] { collectionType });
+        var interfaces = collectionType.GetInterfaces().Concat(new[] { collectionType });
 
         var enumerableInterfaceType = interfaces.FirstOrDefault(x =>
             x.IsGenericType

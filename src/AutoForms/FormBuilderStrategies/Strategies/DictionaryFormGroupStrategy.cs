@@ -30,19 +30,32 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
             return new FormGroup();
         }
 
+        var valueType = GetDictionaryValueType(type);
+
         Node BuildNode(object value) =>
-            _strategyResolver.Resolve(value.GetType())
+            _strategyResolver.Resolve(valueType)
                 .EnhanceWithValue(value)
-                .EnhanceWithValidators(value.GetType())
+                .EnhanceWithValidators(valueType)
                 .Process(value.GetType(), hashSet);
 
         var value = (Value as IDictionary)!;
 
-        var result = value.Keys.Cast<object>().ToDictionary(key => key.ToString(), key => BuildNode(value[key]));
+        var result = value.Keys.Cast<object>().ToDictionary(key => key.ToString(),
+            key => BuildNode(value[key]));
 
         return new FormGroup
         {
             Nodes = result
         };
+    }
+
+    private Type GetDictionaryValueType(Type type)
+    {
+        var genericArguments = type.GetInterfaces()
+            .Concat(new[] { type })
+            .First(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+            .GetGenericArguments();
+
+        return genericArguments[1];
     }
 }

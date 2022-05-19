@@ -4,6 +4,7 @@ using AutoForms.Enums;
 using AutoForms.Options;
 using Microsoft.Extensions.Options;
 using System.Collections;
+using System.Collections.Generic;
 
 internal static class PropertyFormControlTypeResolver
 {
@@ -36,6 +37,10 @@ internal static class PropertyFormControlTypeResolver
 
     internal static bool IsDictionary(Type type, StrategyOptions options)
     {
-        return !IsFormControl(type, options) && type.IsAssignableTo(typeof(IDictionary));
+        return !IsFormControl(type, options)
+               && type.IsGenericType
+               && type.GetInterfaces()
+                   .Concat(new[] { type })
+                   .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IDictionary<,>));
     }
 }

@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoForms.Enums;
 using AutoForms.Extensions;
 using AutoForms.Models;
 
@@ -82,6 +83,30 @@ internal class ResolveFormWithModelTests
 
         Assert.AreEqual(2, node.Nodes.Count());
         Assert.That(stringPropertyNodeValues, Is.EquivalentTo(new[] { "value1", "value2" }));
+    }
+
+    [Test]
+    public void Resolve_Dictionary_ReturnsFromGroupWithPopulatedValues()
+    {
+        // Assert
+        var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>();
+        var model = new Dictionary<string, int>
+        {
+            { "first", 1 },
+            { "second", 2 }
+        };
+
+        // Act
+        var node = formResolver.CreateFormBuilder(model).Build() as FormGroup;
+
+        // Arrange
+        Assert.NotNull(node);
+
+        Assert.AreEqual(NodeType.Group, node.Type);
+        Assert.AreEqual(2, node.Nodes.Count);
+        Assert.That(node.Nodes.Keys, Is.EquivalentTo(new[] { "first", "second" }));
+        Assert.AreEqual((node.Nodes["first"] as FormControl)!.Value, 1);
+        Assert.AreEqual((node.Nodes["second"] as FormControl)!.Value, 2);
     }
 
     #region Helpers
