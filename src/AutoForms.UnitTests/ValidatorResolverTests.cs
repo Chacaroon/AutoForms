@@ -29,15 +29,17 @@ public class ValidatorResolverTests
     public void Resolve_StringPropertyWithValidators_ReturnsNodeWithValidators()
     {
         // Arrange
-        var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
+        var formBuilder = _serviceProvider.GetRequiredService<FormBuilderFactory>()
+            .CreateFormBuilder<TestClass>()
+            .EnhanceWithValidators();
 
         // Act
-        var node = strategyResolver.Resolve(typeof(TestClass)).Process(typeof(TestClass), new(new TypeEqualityComparer())) as FormGroup;
+        var node = (formBuilder.Build() as FormGroup)!;
 
+        // Assert
         var testPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.TestProperty).FirstCharToLowerCase()).Value;
         var requiredPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.RequiredProperty).FirstCharToLowerCase()).Value;
 
-        // Assert
         Assert.AreEqual(2, testPropertyNode.Validators.Length);
         Assert.NotNull(testPropertyNode.Validators.FirstOrDefault(x => x.Type == ValidatorType.MinLength));
         Assert.NotNull(testPropertyNode.Validators.FirstOrDefault(x => x.Type == ValidatorType.MaxLength));

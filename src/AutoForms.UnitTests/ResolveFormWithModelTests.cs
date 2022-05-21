@@ -32,13 +32,13 @@ internal class ResolveFormWithModelTests
         // Act
         var node = formResolver.CreateFormBuilder(model).Build() as FormGroup;
 
-        var arrayPropertyNodes = FindNode(node, nameof(ComplexType.ArrayProperty).FirstCharToLowerCase());
+        // Arrange
+        var arrayPropertyNodes = FindNode(node, nameof(ComplexType.ArrayProperty));
         var arrayPropertyValues = ((FormArray)arrayPropertyNodes).Nodes.Select(x => ((FormControl)x).Value);
 
-        // Arrange
         Assert.NotNull(node);
 
-        Assert.AreEqual("value", ((FormControl)FindNode(node, nameof(ComplexType.StringProperty).FirstCharToLowerCase())).Value);
+        Assert.AreEqual("value", ((FormControl)FindNode(node, nameof(ComplexType.StringProperty))).Value);
         Assert.That(arrayPropertyValues, Is.EquivalentTo(new[] { 0 }));
     }
 
@@ -73,12 +73,12 @@ internal class ResolveFormWithModelTests
         // Act
         var node = formResolver.CreateFormBuilder(model).Build() as FormArray;
 
+        // Arrange
         var stringPropertyNodes = node!.Nodes
-            .Select(x => FindNode(x as FormGroup, nameof(ComplexType.StringProperty).FirstCharToLowerCase()));
+            .Select(x => FindNode(x as FormGroup, nameof(ComplexType.StringProperty)));
         var stringPropertyNodeValues = stringPropertyNodes
             .Select(x => ((FormControl)x).Value);
 
-        // Arrange
         Assert.NotNull(node);
 
         Assert.AreEqual(2, node.Nodes.Count());
@@ -122,7 +122,7 @@ internal class ResolveFormWithModelTests
 
     private Node FindNode(FormGroup node, string nodeName)
     {
-        return node.Nodes.GetValueOrDefault(nodeName);
+        return node.Nodes.GetValueOrDefault(nodeName.FirstCharToLowerCase());
     }
 
     #endregion

@@ -70,6 +70,19 @@ internal class StrategyResolverTests
         // Assert
         Assert.IsInstanceOf<FormGroupStrategy>(strategy);
     }
+    
+    [TestCase(typeof(Dictionary<string, int>))]
+    public void Resolve_ComplexType_ReturnsDictionaryFormGroupStrategy(Type type)
+    {
+        // Arrange
+        var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
+
+        // Act
+        var strategy = strategyResolver.Resolve(type);
+
+        // Assert
+        Assert.IsInstanceOf<DictionaryFormGroupStrategy>(strategy);
+    }
 
     #region TestData
 
