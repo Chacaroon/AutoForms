@@ -3,11 +3,12 @@ import { Observable } from "rxjs";
 import { AfFormNodeType } from "../types";
 import { FormBuilderClient } from "../form-builder-client";
 import { AfNode } from "../form-nodes";
+import { FormValueDescriptor } from "./form-value.model";
 
 export class AfFormArray<T> extends FormArray {
 
-    override value: T[] | undefined;
-    override valueChanges!: Observable<T[]>;
+    override value: FormValueDescriptor<T>[] | undefined;
+    override valueChanges!: Observable<FormValueDescriptor<T>[]>;
     override controls: AfFormNodeType<T>[];
     nodeSchema: AfNode;
     formBuilder: FormBuilderClient;

@@ -1,3 +1,5 @@
+import { FormValue } from "@auto-forms/client";
+
 export interface SelectListItem<T> {
     id: number;
     value: T;
@@ -6,7 +8,7 @@ export interface SelectListItem<T> {
 export interface ToDoListModel {
     id: number;
     name: string;
-    tags: number[];
+    tags: FormValue<number[]>;
     toDoItems: ToDoItemModel[];
 }
 
