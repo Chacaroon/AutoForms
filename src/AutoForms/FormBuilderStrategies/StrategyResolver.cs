@@ -1,9 +1,10 @@
-namespace AutoForms.FormBuilderStrategies;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Reflection;
 using AutoForms.FormBuilderStrategies.Strategies;
 using AutoForms.Options;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace AutoForms.FormBuilderStrategies;
 
 public class StrategyResolver
 {

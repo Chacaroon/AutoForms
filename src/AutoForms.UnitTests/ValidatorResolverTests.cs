@@ -1,16 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
-using System;
-
-namespace AutoForms.UnitTests;
-
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using AutoForms.Comparers;
+using AutoForms.Enums;
 using AutoForms.Extensions;
 using AutoForms.Models;
-using AutoForms.Enums;
-using AutoForms.FormBuilderStrategies;
+using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
+
+namespace AutoForms.UnitTests;
 
 public class ValidatorResolverTests
 {

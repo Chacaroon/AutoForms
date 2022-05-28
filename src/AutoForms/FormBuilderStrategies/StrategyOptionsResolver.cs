@@ -1,8 +1,8 @@
-namespace AutoForms.FormBuilderStrategies;
-
 using System.Reflection;
 using AutoForms.Attributes;
 using AutoForms.Options;
+
+namespace AutoForms.FormBuilderStrategies;
 
 public class StrategyOptionsResolver
 {

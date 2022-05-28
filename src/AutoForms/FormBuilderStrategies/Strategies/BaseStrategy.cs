@@ -1,19 +1,18 @@
-namespace AutoForms.FormBuilderStrategies.Strategies;
-
-using AutoForms.Enums;
-using AutoForms.Models;
-using AutoForms.Options;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using AutoForms.Enums;
 using AutoForms.Exceptions;
-using Validator = Models.Validator;
+using AutoForms.Models;
+using AutoForms.Options;
+
+namespace AutoForms.FormBuilderStrategies.Strategies;
 
 public abstract class BaseStrategy
 {
     private protected object Value { get; private set; }
 
-    private protected Validator[] Validators { get; private set; }
+    private protected Models.Validator[] Validators { get; private set; }
 
     internal abstract bool IsStrategyApplicable(Type modelType, StrategyOptions options);
 
@@ -55,19 +54,19 @@ public abstract class BaseStrategy
         return this;
     }
 
-    private Validator[] ResolveValidators(IEnumerable<CustomAttributeData> attributes)
+    private Models.Validator[] ResolveValidators(IEnumerable<CustomAttributeData> attributes)
     {
-        var validatorsDictionary = new Dictionary<Type, Func<CustomAttributeData, Validator>>
+        var validatorsDictionary = new Dictionary<Type, Func<CustomAttributeData, Models.Validator>>
         {
             {
-                typeof(RequiredAttribute), _ => new Validator(ValidatorType.Required)
+                typeof(RequiredAttribute), _ => new Models.Validator(ValidatorType.Required)
                 {
                     Message = "This field is required"
                 }
             },
             {
                 typeof(MinLengthAttribute),
-                attributeData => new Validator(ValidatorType.MinLength)
+                attributeData => new Models.Validator(ValidatorType.MinLength)
                 {
                     Value = attributeData.ConstructorArguments.First().Value,
                     Message = $"Min length is {attributeData.ConstructorArguments.First().Value}"
@@ -75,7 +74,7 @@ public abstract class BaseStrategy
             },
             {
                 typeof(MaxLengthAttribute),
-                attributeData => new Validator(ValidatorType.MaxLength)
+                attributeData => new Models.Validator(ValidatorType.MaxLength)
                 {
                     Value = attributeData.ConstructorArguments.First().Value,
                     Message = $"Max length is {attributeData.ConstructorArguments.First().Value}"

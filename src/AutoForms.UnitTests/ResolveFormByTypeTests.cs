@@ -1,14 +1,14 @@
-﻿namespace AutoForms.UnitTests;
-
-using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using AutoForms.Comparers;
 using AutoForms.Exceptions;
 using AutoForms.Extensions;
-using AutoForms.Models;
 using AutoForms.FormBuilderStrategies;
+using AutoForms.Models;
+using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
+
+namespace AutoForms.UnitTests;
 
 [TestFixture]
 internal class ResolveFormByTypeTests

@@ -1,9 +1,8 @@
-namespace AutoForms;
-
-using System.Collections.Generic;
 using AutoForms.Comparers;
 using AutoForms.FormBuilderStrategies.Strategies;
 using AutoForms.Models;
+
+namespace AutoForms;
 
 public class FormBuilder
 {

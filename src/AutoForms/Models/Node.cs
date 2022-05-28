@@ -1,7 +1,7 @@
-namespace AutoForms.Models;
-
-using AutoForms.Enums;
 using System.Runtime.Serialization;
+using AutoForms.Enums;
+
+namespace AutoForms.Models;
 
 [KnownType(typeof(FormControl))]
 [KnownType(typeof(FormGroup))]

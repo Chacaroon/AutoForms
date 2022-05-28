@@ -1,7 +1,7 @@
-namespace AutoForms.Models;
-
-using AutoForms.Enums;
 using System.Collections.Generic;
+using AutoForms.Enums;
+
+namespace AutoForms.Models;
 
 internal class FormArray : Node
 {

@@ -1,10 +1,8 @@
-namespace AutoForms.Helpers;
-
-using AutoForms.Enums;
-using AutoForms.Options;
-using Microsoft.Extensions.Options;
 using System.Collections;
 using System.Collections.Generic;
+using AutoForms.Options;
+
+namespace AutoForms.Helpers;
 
 internal static class PropertyFormControlTypeResolver
 {

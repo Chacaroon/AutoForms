@@ -1,11 +1,10 @@
-using System.Collections.Generic;
-
-namespace AutoForms.FormBuilderStrategies.Strategies;
-
 using System.Collections;
+using System.Collections.Generic;
 using AutoForms.Helpers;
 using AutoForms.Models;
 using AutoForms.Options;
+
+namespace AutoForms.FormBuilderStrategies.Strategies;
 
 internal class DictionaryFormGroupStrategy : BaseStrategy
 {

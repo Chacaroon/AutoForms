@@ -1,10 +1,9 @@
-namespace AutoForms.Extensions;
-
-using AutoForms;
 using AutoForms.FormBuilderStrategies;
 using AutoForms.FormBuilderStrategies.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+
+namespace AutoForms.Extensions;
 
 public static class AutoFormsExtensions
 {

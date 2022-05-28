@@ -1,13 +1,13 @@
-﻿namespace AutoForms.UnitTests;
-
-using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoForms.Enums;
 using AutoForms.Extensions;
 using AutoForms.Models;
+using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
+
+namespace AutoForms.UnitTests;
 
 internal class ResolveFormWithModelTests
 {

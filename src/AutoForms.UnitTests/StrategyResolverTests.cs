@@ -1,13 +1,13 @@
-﻿namespace AutoForms.UnitTests;
-
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using AutoForms.Extensions;
 using AutoForms.FormBuilderStrategies;
 using AutoForms.FormBuilderStrategies.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
+namespace AutoForms.UnitTests;
 
 [TestFixture]
 internal class StrategyResolverTests

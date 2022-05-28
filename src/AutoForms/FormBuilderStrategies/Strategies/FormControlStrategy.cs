@@ -1,9 +1,9 @@
-namespace AutoForms.FormBuilderStrategies.Strategies;
-
 using System.Collections.Generic;
 using AutoForms.Helpers;
 using AutoForms.Models;
 using AutoForms.Options;
+
+namespace AutoForms.FormBuilderStrategies.Strategies;
 
 internal class FormControlStrategy : BaseStrategy
 {
