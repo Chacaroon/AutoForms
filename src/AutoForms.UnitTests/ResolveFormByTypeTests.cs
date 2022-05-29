@@ -102,7 +102,7 @@ internal class ResolveFormByTypeTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type);
+        var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
         var exception = Assert.Throws<CircularDependencyException>(() => strategy.Process(type, new(new TypeEqualityComparer())));

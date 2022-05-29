@@ -2,5 +2,5 @@ namespace AutoForms.Options;
 
 internal class StrategyOptions
 {
-    public bool IsFormValue { get; set; }
+    public bool EnhanceWithValidators { get; set; }
 }

@@ -15,7 +15,7 @@ internal class FormArrayStrategy : BaseStrategy
         _strategyResolver = strategyResolver;
     }
 
-    internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
+    internal override bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options)
     {
         return PropertyFormControlTypeResolver.IsFormArray(modelType, options);
     }
@@ -26,8 +26,7 @@ internal class FormArrayStrategy : BaseStrategy
 
         var collectionItemType = GetCollectionItemType(type);
 
-        Node BuildNode(object value = null) => _strategyResolver.Resolve(collectionItemType)
-            .EnhanceWithValidators(collectionItemType)
+        Node BuildNode(object value = null) => _strategyResolver.Resolve(collectionItemType, Options)
             .EnhanceWithValue(value)
             .Process(collectionItemType, hashSet);
 

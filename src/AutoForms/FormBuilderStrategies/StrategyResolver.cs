@@ -18,23 +18,25 @@ internal class StrategyResolver
         _strategies = new Lazy<IEnumerable<BaseStrategy>>(serviceProvider.GetServices<BaseStrategy>);
     }
 
-    internal BaseStrategy Resolve(Type modelType)
+    internal BaseStrategy Resolve(Type modelType, StrategyOptions strategyOptions)
     {
-        var strategyOptions = _strategyOptionsResolver.GetStrategyOptions(modelType);
+        var resolvingStrategyOptions = _strategyOptionsResolver.GetStrategyOptions(modelType);
 
-        return Resolve(modelType, strategyOptions);
+        return Resolve(modelType, resolvingStrategyOptions)
+            .PopulateOptions(strategyOptions);
     }
 
-    internal BaseStrategy Resolve(PropertyInfo propertyInfo)
+    internal BaseStrategy Resolve(PropertyInfo propertyInfo, StrategyOptions strategyOptions)
     {
-        var strategyOptions = _strategyOptionsResolver.GetStrategyOptions(propertyInfo);
+        var resolvingStrategyOptions = _strategyOptionsResolver.GetStrategyOptions(propertyInfo);
 
-        return Resolve(propertyInfo.PropertyType, strategyOptions);
+        return Resolve(propertyInfo.PropertyType, resolvingStrategyOptions)
+            .PopulateOptions(strategyOptions);
     }
 
-    private BaseStrategy Resolve(Type modelType, StrategyOptions strategyOptions)
+    private BaseStrategy Resolve(Type modelType, ResolvingStrategyOptions resolvingStrategyOptions)
     {
-        var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(modelType, strategyOptions));
+        var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(modelType, resolvingStrategyOptions));
 
         return strategy;
     }

@@ -17,14 +17,21 @@ public class FormBuilder
 
     public FormBuilder EnhanceWithValue(object value)
     {
+        if (value != null && !value.GetType().IsAssignableTo(_type))
+            throw new ArgumentException("The value type does not match the type the FormBuilder was created for.", nameof(value));
+
         _strategy.EnhanceWithValue(value);
 
         return this;
     }
 
-    public FormBuilder EnhanceWithValidators()
+    /// <summary>
+    /// Set whether to add validation to the generated data structure.
+    /// </summary>
+    /// <returns>The same instance of the <see cref="FormBuilder"/> for chaining.</returns>
+    public FormBuilder EnhanceWithValidators(bool enhanceWithValidators = true)
     {
-        _strategy.EnhanceWithValidators(_type);
+        _strategy.Options.EnhanceWithValidators = enhanceWithValidators;
 
         return this;
     }

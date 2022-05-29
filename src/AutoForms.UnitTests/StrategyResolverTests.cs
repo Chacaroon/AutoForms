@@ -34,7 +34,7 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type);
+        var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
         Assert.IsInstanceOf<FormControlStrategy>(strategy);
@@ -52,7 +52,7 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type);
+        var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
         Assert.IsInstanceOf<FormArrayStrategy>(strategy);
@@ -65,7 +65,7 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type);
+        var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
         Assert.IsInstanceOf<FormGroupStrategy>(strategy);
@@ -78,7 +78,7 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type);
+        var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
         Assert.IsInstanceOf<DictionaryFormGroupStrategy>(strategy);
