@@ -43,7 +43,7 @@ public class FormBuilderFactory
     /// <returns><see cref="FormBuilder"/> without any additional configurations</returns>
     public FormBuilder CreateFormBuilder(Type modelType)
     {
-        var formBuilder = new FormBuilder(modelType, _strategyResolver.Resolve(modelType));
+        var formBuilder = new FormBuilder(modelType, _strategyResolver.Resolve(modelType, new()));
 
         return formBuilder;
     }

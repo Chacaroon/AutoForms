@@ -14,9 +14,43 @@ internal abstract class BaseStrategy
 
     private protected Models.Validator[] Validators { get; private set; }
 
-    internal abstract bool IsStrategyApplicable(Type modelType, StrategyOptions options);
+    internal StrategyOptions Options { get; private set; } = new();
+
+    #region AbstractMethods
+
+    internal abstract bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options);
 
     internal abstract Node Process(Type type, HashSet<Type> hashSet);
+
+    #endregion
+
+    internal BaseStrategy EnhanceWithValue(object value)
+    {
+        Value = value;
+
+        return this;
+    }
+
+    internal BaseStrategy EnhanceWithValidators(PropertyInfo propertyInfo)
+    {
+        if (!Options.EnhanceWithValidators)
+            return this;
+
+        Validators = EnhanceWithValidators(propertyInfo.CustomAttributes)
+            .Union(EnhanceWithValidators(propertyInfo.PropertyType.CustomAttributes))
+            .ToArray();
+
+        return this;
+    }
+
+    internal BaseStrategy PopulateOptions(StrategyOptions options)
+    {
+        Options = options;
+
+        return this;
+    }
+
+    #region Helpers
 
     protected void CheckCircularDependency(ref HashSet<Type> hashSet, Type type)
     {
@@ -30,31 +64,10 @@ internal abstract class BaseStrategy
 
         hashSet = hashSet.Union(new[] { type }).ToHashSet(hashSet.Comparer);
     }
-    
-    internal BaseStrategy EnhanceWithValue(object value)
-    {
-        Value = value;
 
-        return this;
-    }
+    #endregion
 
-    internal BaseStrategy EnhanceWithValidators(PropertyInfo propertyInfo)
-    {
-        Validators = ResolveValidators(propertyInfo.CustomAttributes)
-            .Union(ResolveValidators(propertyInfo.PropertyType.CustomAttributes))
-            .ToArray();
-
-        return this;
-    }
-
-    internal BaseStrategy EnhanceWithValidators(Type type)
-    {
-        Validators = ResolveValidators(type.CustomAttributes);
-
-        return this;
-    }
-
-    private Models.Validator[] ResolveValidators(IEnumerable<CustomAttributeData> attributes)
+    private Models.Validator[] EnhanceWithValidators(IEnumerable<CustomAttributeData> attributes)
     {
         var validatorsDictionary = new Dictionary<Type, Func<CustomAttributeData, Models.Validator>>
         {

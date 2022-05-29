@@ -15,7 +15,7 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
         _strategyResolver = strategyResolver;
     }
 
-    internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
+    internal override bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options)
     {
         return PropertyFormControlTypeResolver.IsDictionary(modelType, options);
     }
@@ -32,10 +32,9 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
         var valueType = GetDictionaryValueType(type);
 
         Node BuildNode(object value) =>
-            _strategyResolver.Resolve(valueType)
+            _strategyResolver.Resolve(valueType, Options)
                 .EnhanceWithValue(value)
-                .EnhanceWithValidators(valueType)
-                .Process(value.GetType(), hashSet);
+                .Process(valueType, hashSet);
 
         var value = (Value as IDictionary)!;
 

@@ -7,7 +7,7 @@ namespace AutoForms.FormBuilderStrategies.Strategies;
 
 internal class FormControlStrategy : BaseStrategy
 {
-    internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
+    internal override bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options)
     {
         return PropertyFormControlTypeResolver.IsFormControl(modelType, options);
     }

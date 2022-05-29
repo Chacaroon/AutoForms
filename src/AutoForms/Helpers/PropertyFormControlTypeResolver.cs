@@ -13,7 +13,7 @@ internal static class PropertyFormControlTypeResolver
         typeof(DateTime)
     };
 
-    internal static bool IsFormControl(Type type, StrategyOptions options)
+    internal static bool IsFormControl(Type type, ResolvingStrategyOptions options)
     {
         return type.IsPrimitive
                || type.IsEnum
@@ -21,19 +21,19 @@ internal static class PropertyFormControlTypeResolver
                || options.IsFormValue;
     }
 
-    internal static bool IsFormArray(Type type, StrategyOptions options)
+    internal static bool IsFormArray(Type type, ResolvingStrategyOptions options)
     {
         return !IsFormControl(type, options)
                && !IsDictionary(type, options)
                && typeof(IEnumerable).IsAssignableFrom(type);
     }
 
-    internal static bool IsFormGroup(Type type, StrategyOptions options)
+    internal static bool IsFormGroup(Type type, ResolvingStrategyOptions options)
     {
         return !IsFormControl(type, options) && !IsFormArray(type, options);
     }
 
-    internal static bool IsDictionary(Type type, StrategyOptions options)
+    internal static bool IsDictionary(Type type, ResolvingStrategyOptions options)
     {
         return !IsFormControl(type, options)
                && type.IsGenericType

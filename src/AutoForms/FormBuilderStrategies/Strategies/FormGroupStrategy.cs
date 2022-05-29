@@ -16,7 +16,7 @@ internal class FormGroupStrategy : BaseStrategy
         _strategyResolver = strategyResolver;
     }
 
-    internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
+    internal override bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options)
     {
         return PropertyFormControlTypeResolver.IsFormGroup(modelType, options);
     }
@@ -27,7 +27,7 @@ internal class FormGroupStrategy : BaseStrategy
 
         Node BuildNode(PropertyInfo propertyInfo, object value)
         {
-            return _strategyResolver.Resolve(propertyInfo)
+            return _strategyResolver.Resolve(propertyInfo, Options)
                 .EnhanceWithValue(value)
                 .EnhanceWithValidators(propertyInfo)
                 .Process(propertyInfo.PropertyType, hashSet);
