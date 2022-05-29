@@ -6,26 +6,26 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AutoForms.FormBuilderStrategies;
 
-public class StrategyResolver
+internal class StrategyResolver
 {
     private readonly StrategyOptionsResolver _strategyOptionsResolver;
     private readonly Lazy<IEnumerable<BaseStrategy>> _strategies;
 
-    public StrategyResolver(IServiceProvider serviceProvider,
+    internal StrategyResolver(IServiceProvider serviceProvider,
         StrategyOptionsResolver strategyOptionsResolver)
     {
         _strategyOptionsResolver = strategyOptionsResolver;
         _strategies = new Lazy<IEnumerable<BaseStrategy>>(serviceProvider.GetServices<BaseStrategy>);
     }
 
-    public BaseStrategy Resolve(Type modelType)
+    internal BaseStrategy Resolve(Type modelType)
     {
         var strategyOptions = _strategyOptionsResolver.GetStrategyOptions(modelType);
 
         return Resolve(modelType, strategyOptions);
     }
 
-    public BaseStrategy Resolve(PropertyInfo propertyInfo)
+    internal BaseStrategy Resolve(PropertyInfo propertyInfo)
     {
         var strategyOptions = _strategyOptionsResolver.GetStrategyOptions(propertyInfo);
 

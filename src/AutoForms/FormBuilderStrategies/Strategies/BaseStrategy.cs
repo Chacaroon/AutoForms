@@ -8,7 +8,7 @@ using AutoForms.Options;
 
 namespace AutoForms.FormBuilderStrategies.Strategies;
 
-public abstract class BaseStrategy
+internal abstract class BaseStrategy
 {
     private protected object Value { get; private set; }
 

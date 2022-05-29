@@ -8,7 +8,7 @@ public class FormBuilderFactory
 {
     private readonly StrategyResolver _strategyResolver;
 
-    public FormBuilderFactory(StrategyResolver strategyResolver)
+    internal FormBuilderFactory(StrategyResolver strategyResolver)
     {
         _strategyResolver = strategyResolver;
     }

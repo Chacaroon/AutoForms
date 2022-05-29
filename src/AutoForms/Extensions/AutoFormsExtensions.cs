@@ -9,15 +9,20 @@ public static class AutoFormsExtensions
 {
     public static IServiceCollection AddAutoForms(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddTransient<FormBuilderFactory>();
+        serviceCollection.AddScoped(services =>
+            new StrategyResolver(
+                services.GetRequiredService<IServiceProvider>(),
+                services.GetRequiredService<StrategyOptionsResolver>()));
+
+        serviceCollection.AddScoped(services =>
+            new FormBuilderFactory(services.GetRequiredService<StrategyResolver>()));
+
+        serviceCollection.AddSingleton(_ => new StrategyOptionsResolver());
 
         serviceCollection.AddTransient<BaseStrategy, FormControlStrategy>();
         serviceCollection.AddTransient<BaseStrategy, DictionaryFormGroupStrategy>();
         serviceCollection.AddTransient<BaseStrategy, FormArrayStrategy>();
         serviceCollection.AddTransient<BaseStrategy, FormGroupStrategy>();
-
-        serviceCollection.AddTransient<StrategyResolver>();
-        serviceCollection.AddSingleton<StrategyOptionsResolver>();
 
         return serviceCollection;
     }

@@ -3,7 +3,7 @@ using AutoForms.Enums;
 
 namespace AutoForms.Models;
 
-internal class FormGroup : Node
+public class FormGroup : Node
 {
     public override NodeType Type => NodeType.Group;
 

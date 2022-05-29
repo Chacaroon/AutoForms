@@ -3,7 +3,7 @@ using AutoForms.Enums;
 
 namespace AutoForms.Models;
 
-internal class FormArray : Node
+public class FormArray : Node
 {
     public FormArray()
     {

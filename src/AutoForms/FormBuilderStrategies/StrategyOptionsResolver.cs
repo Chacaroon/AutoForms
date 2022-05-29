@@ -4,9 +4,9 @@ using AutoForms.Options;
 
 namespace AutoForms.FormBuilderStrategies;
 
-public class StrategyOptionsResolver
+internal class StrategyOptionsResolver
 {
-    public StrategyOptions GetStrategyOptions(PropertyInfo propertyInfo)
+    internal StrategyOptions GetStrategyOptions(PropertyInfo propertyInfo)
     {
         return new StrategyOptions
         {
@@ -15,7 +15,7 @@ public class StrategyOptionsResolver
         };
     }
 
-    public StrategyOptions GetStrategyOptions(Type type)
+    internal StrategyOptions GetStrategyOptions(Type type)
     {
         return new StrategyOptions
         {
