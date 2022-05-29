@@ -4,6 +4,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
