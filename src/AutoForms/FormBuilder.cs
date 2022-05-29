@@ -15,6 +15,11 @@ public class FormBuilder
         _strategy = strategy;
     }
 
+    /// <summary>
+    /// Populate nodes with the value of the <paramref name="model"/>
+    /// </summary>
+    /// <param name="value">The value with which the nodes will be populated</param>
+    /// <returns>The same instance of the <see cref="FormBuilder"/></returns>
     public FormBuilder EnhanceWithValue(object value)
     {
         _strategy.EnhanceWithValue(value);
@@ -22,6 +27,10 @@ public class FormBuilder
         return this;
     }
 
+    /// <summary>
+    /// Populate nodes with the validators based on validation attributes/>
+    /// </summary>
+    /// <returns>The same instance of the <see cref="FormBuilder"/></returns>
     public FormBuilder EnhanceWithValidators()
     {
         _strategy.EnhanceWithValidators(_type);
@@ -29,6 +38,12 @@ public class FormBuilder
         return this;
     }
 
+    /// <summary>
+    /// Build data structure
+    /// </summary>
+    /// <returns>The root <see cref="Node"/> of the built data structure.
+    /// Each node is instance of <seealso cref="FormControl"/>, <seealso cref="FormGroup"/> or <seealso cref="FormArray"/>
+    /// </returns>
     public Node Build()
     {
         return _strategy.Process(_type, new(new TypeEqualityComparer()));
