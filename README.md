@@ -1,3 +1,3 @@
 # FormBuilder
 
-[![Publish NuGet Package](https://github.com/Chacaroon/FormBuilder/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/Chacaroon/FormBuilder/actions/workflows/dotnet.yml)
+[![Build and test](https://github.com/Chacaroon/FormBuilder/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Chacaroon/FormBuilder/actions/workflows/dotnet.yml)
