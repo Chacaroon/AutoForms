@@ -7,6 +7,11 @@ namespace AutoForms.Extensions;
 
 public static class AutoFormsExtensions
 {
+    /// <summary>
+    /// Register services required by AutoForms
+    /// </summary>
+    /// <param name="serviceCollection">.</param>
+    /// <returns>The same instance of the <see cref="IServiceCollection"/> for chaining.</returns>
     public static IServiceCollection AddAutoForms(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped(services =>

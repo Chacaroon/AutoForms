@@ -3,6 +3,10 @@ using AutoForms.Enums;
 
 namespace AutoForms.Models;
 
+
+/// <summary>
+/// Represents control that holds collection of values.
+/// </summary>
 public class FormArray : Node
 {
     public FormArray()

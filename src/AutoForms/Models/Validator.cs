@@ -2,6 +2,7 @@ using AutoForms.Enums;
 
 namespace AutoForms.Models;
 
+
 public class Validator
 {
     public Validator(ValidatorType type)
