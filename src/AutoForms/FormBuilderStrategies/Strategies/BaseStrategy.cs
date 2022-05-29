@@ -1,22 +1,28 @@
-namespace AutoForms.FormBuilderStrategies.Strategies;
-
-using AutoForms.Enums;
-using AutoForms.Models;
-using AutoForms.Options;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Validator = Models.Validator;
+using AutoForms.Enums;
+using AutoForms.Exceptions;
+using AutoForms.Models;
+using AutoForms.Options;
 
-public abstract class BaseStrategy
+namespace AutoForms.FormBuilderStrategies.Strategies;
+
+internal abstract class BaseStrategy
 {
     private protected object Value { get; private set; }
 
-    private protected Validator[] Validators { get; private set; }
+    private protected Models.Validator[] Validators { get; private set; }
 
-    internal abstract bool IsStrategyApplicable(Type modelType, StrategyOptions options);
+    internal StrategyOptions Options { get; private set; } = new();
 
-    internal abstract Node Process(Type type);
+    #region AbstractMethods
+
+    internal abstract bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options);
+
+    internal abstract Node Process(Type type, HashSet<Type> hashSet);
+
+    #endregion
 
     internal BaseStrategy EnhanceWithValue(object value)
     {
@@ -27,33 +33,53 @@ public abstract class BaseStrategy
 
     internal BaseStrategy EnhanceWithValidators(PropertyInfo propertyInfo)
     {
-        Validators = ResolveValidators(propertyInfo.CustomAttributes)
-            .Union(ResolveValidators(propertyInfo.PropertyType.CustomAttributes))
+        if (!Options.EnhanceWithValidators)
+            return this;
+
+        Validators = EnhanceWithValidators(propertyInfo.CustomAttributes)
+            .Union(EnhanceWithValidators(propertyInfo.PropertyType.CustomAttributes))
             .ToArray();
 
         return this;
     }
 
-    internal BaseStrategy EnhanceWithValidators(Type type)
+    internal BaseStrategy PopulateOptions(StrategyOptions options)
     {
-        Validators = ResolveValidators(type.CustomAttributes);
+        Options = options;
 
         return this;
     }
 
-    private Validator[] ResolveValidators(IEnumerable<CustomAttributeData> attributes)
+    #region Helpers
+
+    protected void CheckCircularDependency(ref HashSet<Type> hashSet, Type type)
     {
-        var validatorsDictionary = new Dictionary<Type, Func<CustomAttributeData, Validator>>
+        if (hashSet.Contains(type))
+        {
+            var typesArray = hashSet.Concat(new[] { type }).ToArray();
+            typesArray = typesArray[Array.IndexOf(typesArray, type)..];
+            var path = string.Join("->", typesArray.Select(x => x.Name));
+            throw new CircularDependencyException($"Circular dependency: {path}");
+        }
+
+        hashSet = hashSet.Union(new[] { type }).ToHashSet(hashSet.Comparer);
+    }
+
+    #endregion
+
+    private Models.Validator[] EnhanceWithValidators(IEnumerable<CustomAttributeData> attributes)
+    {
+        var validatorsDictionary = new Dictionary<Type, Func<CustomAttributeData, Models.Validator>>
         {
             {
-                typeof(RequiredAttribute), _ => new Validator(ValidatorType.Required)
+                typeof(RequiredAttribute), _ => new Models.Validator(ValidatorType.Required)
                 {
                     Message = "This field is required"
                 }
             },
             {
                 typeof(MinLengthAttribute),
-                attributeData => new Validator(ValidatorType.MinLength)
+                attributeData => new Models.Validator(ValidatorType.MinLength)
                 {
                     Value = attributeData.ConstructorArguments.First().Value,
                     Message = $"Min length is {attributeData.ConstructorArguments.First().Value}"
@@ -61,7 +87,7 @@ public abstract class BaseStrategy
             },
             {
                 typeof(MaxLengthAttribute),
-                attributeData => new Validator(ValidatorType.MaxLength)
+                attributeData => new Models.Validator(ValidatorType.MaxLength)
                 {
                     Value = attributeData.ConstructorArguments.First().Value,
                     Message = $"Max length is {attributeData.ConstructorArguments.First().Value}"

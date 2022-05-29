@@ -7,14 +7,11 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { FormControlRootComponent } from './components/form-control-root/form-control-root.component';
-import { FormControlComponent } from './components/form-control-root/form-control/form-control.component';
-import { FormGroupComponent } from './components/form-control-root/form-group/form-group.component';
-import { FormArrayComponent } from './components/form-control-root/form-array/form-array.component';
 import { AutoFormsModule } from '@auto-forms/client'
 import { BaseUrlInterceptor } from "./interceptors/base-url.interceptor";
 import { CreateTodoListComponent } from './components/create-todo-list/create-todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
+import { NgSelectModule } from "@ng-select/ng-select";
 
 
 @NgModule({
@@ -22,10 +19,6 @@ import { TodoItemComponent } from './components/todo-item/todo-item.component';
         AppComponent,
         NavMenuComponent,
         HomeComponent,
-        FormControlRootComponent,
-        FormControlComponent,
-        FormGroupComponent,
-        FormArrayComponent,
         CreateTodoListComponent,
         TodoItemComponent,
     ],
@@ -40,6 +33,7 @@ import { TodoItemComponent } from './components/todo-item/todo-item.component';
             { path: 'create-todo-list', component: CreateTodoListComponent },
             { path: 'update-todo-list/:id', component: CreateTodoListComponent }
         ]),
+        NgSelectModule
     ],
     providers: [
         {

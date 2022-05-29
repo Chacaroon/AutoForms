@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { AfFormGroup, AfNode, buildForm } from "@auto-forms/client";
-import { ToDoListModel } from "../../models";
+import { SelectListItem, tags, ToDoListModel } from "../../models";
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -14,15 +14,15 @@ export class CreateTodoListComponent implements OnInit {
     form$: Observable<AfFormGroup<ToDoListModel>>;
     id: string;
 
+    tags: SelectListItem<string>[] = tags;
+
     constructor(private http: HttpClient,
                 private router: Router,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
-        const url = this.id ? `/ToDoItems/update/${this.id}` : '/ToDoItems/create';
-        this.form$ = this.http.get<AfNode>(url).pipe(
+        this.form$ = this.http.get<AfNode>(this.getUrl()).pipe(
             buildForm<ToDoListModel>()
         )
     }
@@ -35,5 +35,10 @@ export class CreateTodoListComponent implements OnInit {
         const url = this.id ? `/ToDoItems/update/${this.id}` : '/ToDoItems/create';
 
         this.http.post(url, form.value).subscribe(() => this.router.navigateByUrl(''))
+    }
+
+    private getUrl(): string {
+        this.id = this.route.snapshot.paramMap.get('id');
+        return this.id ? `/ToDoItems/update/${this.id}` : '/ToDoItems/create';
     }
 }

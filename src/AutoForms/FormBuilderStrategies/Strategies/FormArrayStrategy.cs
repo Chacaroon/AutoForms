@@ -1,43 +1,42 @@
-namespace AutoForms.FormBuilderStrategies.Strategies;
-
+using System.Collections;
+using System.Collections.Generic;
 using AutoForms.Helpers;
 using AutoForms.Models;
 using AutoForms.Options;
-using System.Collections;
-using System.Collections.Generic;
+
+namespace AutoForms.FormBuilderStrategies.Strategies;
 
 internal class FormArrayStrategy : BaseStrategy
 {
-    private readonly FormBuilderFactory _formBuilderFactory;
+    private readonly StrategyResolver _strategyResolver;
 
-    public FormArrayStrategy(FormBuilderFactory formBuilderFactory)
+    public FormArrayStrategy(StrategyResolver strategyResolver)
     {
-        _formBuilderFactory = formBuilderFactory;
+        _strategyResolver = strategyResolver;
     }
 
-    internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
+    internal override bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options)
     {
-        return !PropertyFormControlTypeResolver.IsFormControl(modelType, options)
-               && !PropertyFormControlTypeResolver.IsDictionary(modelType)
-               && PropertyFormControlTypeResolver.IsFormArray(modelType, options);
+        return PropertyFormControlTypeResolver.IsFormArray(modelType, options);
     }
 
-    internal override Node Process(Type type)
+    internal override Node Process(Type type, HashSet<Type> hashSet)
     {
+        CheckCircularDependency(ref hashSet, type);
+
         var collectionItemType = GetCollectionItemType(type);
-        var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
 
-        Node BuildNode(object value) => _formBuilderFactory.CreateFormBuilder(collectionItemType)
-            .EnhanceWithValidators()
+        Node BuildNode(object value = null) => _strategyResolver.Resolve(collectionItemType, Options)
             .EnhanceWithValue(value)
-            .Build();
+            .Process(collectionItemType, hashSet);
 
+        var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
         var nodes = values.Select(BuildNode);
 
         var formArray = new FormArray
         {
             Nodes = nodes,
-            NodeSchema = BuildNode(null)
+            NodeSchema = BuildNode()
         };
 
         return formArray;
@@ -45,16 +44,16 @@ internal class FormArrayStrategy : BaseStrategy
 
     private Type GetCollectionItemType(Type collectionType)
     {
-        var interfaces = collectionType.GetInterfaces().Union(new[] { collectionType });
+        var interfaces = collectionType.GetInterfaces().Concat(new[] { collectionType });
 
-        var enumerableInterfaceType = interfaces.First(x =>
+        var enumerableInterfaceType = interfaces.FirstOrDefault(x =>
             x.IsGenericType
             && x.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 
-        var collectionItemType = enumerableInterfaceType
+        var collectionItemType = enumerableInterfaceType?
             .GetGenericArguments()
             .Single();
 
-        return collectionItemType;
+        return collectionItemType ?? typeof(object);
     }
 }

@@ -1,23 +1,23 @@
-namespace AutoForms.FormBuilderStrategies;
-
 using System.Reflection;
 using AutoForms.Attributes;
 using AutoForms.Options;
 
-public class StrategyOptionsResolver
+namespace AutoForms.FormBuilderStrategies;
+
+internal class StrategyOptionsResolver
 {
-    public StrategyOptions GetStrategyOptions(PropertyInfo propertyInfo)
+    internal ResolvingStrategyOptions GetStrategyOptions(PropertyInfo propertyInfo)
     {
-        return new StrategyOptions
+        return new ResolvingStrategyOptions
         {
             IsFormValue = HasAttribute<FormValueAttribute>(propertyInfo)
                           || HasAttribute<FormValueAttribute>(propertyInfo.PropertyType)
         };
     }
 
-    public StrategyOptions GetStrategyOptions(Type type)
+    internal ResolvingStrategyOptions GetStrategyOptions(Type type)
     {
-        return new StrategyOptions
+        return new ResolvingStrategyOptions
         {
             IsFormValue = HasAttribute<FormValueAttribute>(type)
         };

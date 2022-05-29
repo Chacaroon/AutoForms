@@ -1,33 +1,42 @@
-namespace AutoForms.FormBuilderStrategies;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Reflection;
 using AutoForms.FormBuilderStrategies.Strategies;
+using AutoForms.Options;
+using Microsoft.Extensions.DependencyInjection;
 
-public class StrategyResolver
+namespace AutoForms.FormBuilderStrategies;
+
+internal class StrategyResolver
 {
     private readonly StrategyOptionsResolver _strategyOptionsResolver;
     private readonly Lazy<IEnumerable<BaseStrategy>> _strategies;
 
-    public StrategyResolver(IServiceProvider serviceProvider,
+    internal StrategyResolver(IServiceProvider serviceProvider,
         StrategyOptionsResolver strategyOptionsResolver)
     {
         _strategyOptionsResolver = strategyOptionsResolver;
         _strategies = new Lazy<IEnumerable<BaseStrategy>>(serviceProvider.GetServices<BaseStrategy>);
     }
 
-    public BaseStrategy Resolve(Type modelType)
+    internal BaseStrategy Resolve(Type modelType, StrategyOptions strategyOptions)
     {
-        var strategyOptions = _strategyOptionsResolver.GetStrategyOptions(modelType);
-        var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(modelType, strategyOptions));
+        var resolvingStrategyOptions = _strategyOptionsResolver.GetStrategyOptions(modelType);
 
-        return strategy;
+        return Resolve(modelType, resolvingStrategyOptions)
+            .PopulateOptions(strategyOptions);
     }
 
-    public BaseStrategy Resolve(PropertyInfo propertyInfo)
+    internal BaseStrategy Resolve(PropertyInfo propertyInfo, StrategyOptions strategyOptions)
     {
-        var strategyOptions = _strategyOptionsResolver.GetStrategyOptions(propertyInfo);
-        var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(propertyInfo.PropertyType, strategyOptions));
+        var resolvingStrategyOptions = _strategyOptionsResolver.GetStrategyOptions(propertyInfo);
+
+        return Resolve(propertyInfo.PropertyType, resolvingStrategyOptions)
+            .PopulateOptions(strategyOptions);
+    }
+
+    private BaseStrategy Resolve(Type modelType, ResolvingStrategyOptions resolvingStrategyOptions)
+    {
+        var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(modelType, resolvingStrategyOptions));
 
         return strategy;
     }

@@ -1,8 +1,11 @@
+using System.Runtime.Serialization;
+using AutoForms.Enums;
+
 namespace AutoForms.Models;
 
-using AutoForms.Enums;
-using System.Runtime.Serialization;
-
+/// <summary>
+/// Base class from all types of controls.
+/// </summary>
 [KnownType(typeof(FormControl))]
 [KnownType(typeof(FormGroup))]
 [KnownType(typeof(FormArray))]

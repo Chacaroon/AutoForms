@@ -1,9 +1,13 @@
+using System.Collections.Generic;
+using AutoForms.Enums;
+
 namespace AutoForms.Models;
 
-using AutoForms.Enums;
-using System.Collections.Generic;
 
-internal class FormGroup : Node
+/// <summary>
+/// Represents control that holds object-like value.
+/// </summary>
+public class FormGroup : Node
 {
     public override NodeType Type => NodeType.Group;
 

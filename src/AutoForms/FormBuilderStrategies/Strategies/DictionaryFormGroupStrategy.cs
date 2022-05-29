@@ -1,54 +1,59 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoForms.Helpers;
+using AutoForms.Models;
+using AutoForms.Options;
 
-namespace AutoForms.FormBuilderStrategies.Strategies
+namespace AutoForms.FormBuilderStrategies.Strategies;
+
+internal class DictionaryFormGroupStrategy : BaseStrategy
 {
-    using System.Collections;
-using System.Reflection;
-    using AutoForms.Helpers;
-    using AutoForms.Models;
-    using AutoForms.Options;
+    private readonly StrategyResolver _strategyResolver;
 
-    internal class DictionaryFormGroupStrategy : BaseStrategy
+    public DictionaryFormGroupStrategy(StrategyResolver strategyResolver)
     {
-        private readonly StrategyResolver _strategyResolver;
+        _strategyResolver = strategyResolver;
+    }
 
-        public DictionaryFormGroupStrategy(StrategyResolver strategyResolver)
+    internal override bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options)
+    {
+        return PropertyFormControlTypeResolver.IsDictionary(modelType, options);
+    }
+
+    internal override Node Process(Type type, HashSet<Type> hashSet)
+    {
+        CheckCircularDependency(ref hashSet, type);
+
+        if (Value == null)
         {
-            _strategyResolver = strategyResolver;
+            return new FormGroup();
         }
 
-        internal override bool IsStrategyApplicable(Type modelType, StrategyOptions options)
-        {
-            return PropertyFormControlTypeResolver.IsDictionary(modelType);
-        }
+        var valueType = GetDictionaryValueType(type);
 
-        internal override Node Process(Type type)
-        {
-            if (Value == null)
-            {
-                return new FormGroup();
-            }
-
-            var value = (Value as IDictionary)!;
-
-            var result = value.Keys.Cast<object>().ToDictionary(key => key.ToString(), key => BuildNode(value[key]));
-
-            return new FormGroup
-            {
-                Nodes = result
-            };
-        }
-
-        private Node BuildNode(object value)
-        {
-            return _strategyResolver.Resolve(value.GetType())
+        Node BuildNode(object value) =>
+            _strategyResolver.Resolve(valueType, Options)
                 .EnhanceWithValue(value)
-                .EnhanceWithValidators(value.GetType())
-                .Process(value.GetType());
-        }
+                .Process(valueType, hashSet);
+
+        var value = (Value as IDictionary)!;
+
+        var result = value.Keys.Cast<object>().ToDictionary(key => key.ToString(),
+            key => BuildNode(value[key]));
+
+        return new FormGroup
+        {
+            Nodes = result
+        };
+    }
+
+    private Type GetDictionaryValueType(Type type)
+    {
+        var genericArguments = type.GetInterfaces()
+            .Concat(new[] { type })
+            .First(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+            .GetGenericArguments();
+
+        return genericArguments[1];
     }
 }

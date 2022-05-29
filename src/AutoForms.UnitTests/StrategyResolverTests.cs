@@ -1,12 +1,13 @@
-﻿namespace AutoForms.UnitTests;
-
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using AutoForms.Extensions;
 using AutoForms.FormBuilderStrategies;
 using AutoForms.FormBuilderStrategies.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
+
+namespace AutoForms.UnitTests;
 
 [TestFixture]
 internal class StrategyResolverTests
@@ -22,6 +23,7 @@ internal class StrategyResolverTests
         _serviceProvider = services.BuildServiceProvider();
     }
 
+    [TestCase(typeof(object))]
     [TestCase(typeof(string))]
     [TestCase(typeof(int))]
     [TestCase(typeof(DateTime))]
@@ -32,12 +34,14 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type);
+        var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
-        Assert.AreEqual(typeof(FormControlStrategy), strategy.GetType());
+        Assert.IsInstanceOf<FormControlStrategy>(strategy);
     }
 
+    [TestCase(typeof(IEnumerable))]
+    [TestCase(typeof(object[]))]
     [TestCase(typeof(int[]))]
     [TestCase(typeof(TestClass[]))]
     [TestCase(typeof(IEnumerable<int>))]
@@ -48,10 +52,10 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type);
+        var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
-        Assert.AreEqual(typeof(FormArrayStrategy), strategy.GetType());
+        Assert.IsInstanceOf<FormArrayStrategy>(strategy);
     }
 
     [TestCase(typeof(TestClass))]
@@ -61,10 +65,23 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type);
+        var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
-        Assert.AreEqual(typeof(FormGroupStrategy), strategy.GetType());
+        Assert.IsInstanceOf<FormGroupStrategy>(strategy);
+    }
+    
+    [TestCase(typeof(Dictionary<string, int>))]
+    public void Resolve_ComplexType_ReturnsDictionaryFormGroupStrategy(Type type)
+    {
+        // Arrange
+        var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
+
+        // Act
+        var strategy = strategyResolver.Resolve(type, new());
+
+        // Assert
+        Assert.IsInstanceOf<DictionaryFormGroupStrategy>(strategy);
     }
 
     #region TestData

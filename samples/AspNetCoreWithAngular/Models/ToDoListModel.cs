@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AutoForms.Attributes;
 
 public class ToDoListModel
 {
@@ -9,6 +10,10 @@ public class ToDoListModel
 
     [Required]
     public string Name { get; set; }
+
+    [FormValue]
+    [MinLength(2)]
+    public IEnumerable<int> Tags { get; set; }
 
     public IEnumerable<ToDoItemModel> ToDoItems { get; set; }
 }

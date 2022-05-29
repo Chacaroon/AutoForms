@@ -1,15 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
-using System;
-
-namespace AutoForms.UnitTests;
-
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using AutoForms.Enums;
 using AutoForms.Extensions;
 using AutoForms.Models;
-using AutoForms.Enums;
-using AutoForms.FormBuilderStrategies;
+using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
+
+namespace AutoForms.UnitTests;
 
 public class ValidatorResolverTests
 {
@@ -28,15 +26,17 @@ public class ValidatorResolverTests
     public void Resolve_StringPropertyWithValidators_ReturnsNodeWithValidators()
     {
         // Arrange
-        var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
+        var formBuilder = _serviceProvider.GetRequiredService<FormBuilderFactory>()
+            .CreateFormBuilder<TestClass>()
+            .EnhanceWithValidators();
 
         // Act
-        var node = strategyResolver.Resolve(typeof(TestClass)).Process(typeof(TestClass)) as FormGroup;
+        var node = (formBuilder.Build() as FormGroup)!;
 
+        // Assert
         var testPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.TestProperty).FirstCharToLowerCase()).Value;
         var requiredPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.RequiredProperty).FirstCharToLowerCase()).Value;
 
-        // Assert
         Assert.AreEqual(2, testPropertyNode.Validators.Length);
         Assert.NotNull(testPropertyNode.Validators.FirstOrDefault(x => x.Type == ValidatorType.MinLength));
         Assert.NotNull(testPropertyNode.Validators.FirstOrDefault(x => x.Type == ValidatorType.MaxLength));

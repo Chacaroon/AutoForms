@@ -1,17 +1,19 @@
-namespace AutoForms.Helpers;
-
-using AutoForms.Options;
 using System.Collections;
+using System.Collections.Generic;
+using AutoForms.Options;
+
+namespace AutoForms.Helpers;
 
 internal static class PropertyFormControlTypeResolver
 {
     private static readonly Type[] PrimitiveTypes =
     {
+        typeof(object),
         typeof(string),
         typeof(DateTime)
     };
 
-    internal static bool IsFormControl(Type type, StrategyOptions options)
+    internal static bool IsFormControl(Type type, ResolvingStrategyOptions options)
     {
         return type.IsPrimitive
                || type.IsEnum
@@ -19,18 +21,24 @@ internal static class PropertyFormControlTypeResolver
                || options.IsFormValue;
     }
 
-    internal static bool IsFormArray(Type type, StrategyOptions options)
+    internal static bool IsFormArray(Type type, ResolvingStrategyOptions options)
     {
-        return !IsFormControl(type, options) && typeof(IEnumerable).IsAssignableFrom(type);
+        return !IsFormControl(type, options)
+               && !IsDictionary(type, options)
+               && typeof(IEnumerable).IsAssignableFrom(type);
     }
 
-    internal static bool IsFormGroup(Type type, StrategyOptions options)
+    internal static bool IsFormGroup(Type type, ResolvingStrategyOptions options)
     {
         return !IsFormControl(type, options) && !IsFormArray(type, options);
     }
 
-    internal static bool IsDictionary(Type type)
+    internal static bool IsDictionary(Type type, ResolvingStrategyOptions options)
     {
-        return type.IsAssignableTo(typeof(IDictionary));
+        return !IsFormControl(type, options)
+               && type.IsGenericType
+               && type.GetInterfaces()
+                   .Concat(new[] { type })
+                   .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IDictionary<,>));
     }
 }
