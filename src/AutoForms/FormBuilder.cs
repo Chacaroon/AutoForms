@@ -16,9 +16,9 @@ public class FormBuilder
     }
 
     /// <summary>
-    /// Populate nodes with the value of the <paramref name="value"/>
+    /// Populate nodes with the value of the <paramref name="value"/>.
     /// </summary>
-    /// <param name="value">The value with which the nodes will be populated</param>
+    /// <param name="value">The value with which the nodes will be populated.</param>
     /// <returns>The same instance of the <see cref="FormBuilder"/> for chaining.</returns>
     public FormBuilder EnhanceWithValue(object value)
     {
@@ -42,10 +42,10 @@ public class FormBuilder
     }
 
     /// <summary>
-    /// Build data structure
+    /// Build data structure.
     /// </summary>
     /// <returns>The root <see cref="Node"/> of the built data structure.
-    /// Each node is an instance of a <seealso cref="FormControl"/>, <seealso cref="FormGroup"/> or <seealso cref="FormArray"/>
+    /// Each node is an instance of a <seealso cref="FormControl"/>, <seealso cref="FormGroup"/> or <seealso cref="FormArray"/>.
     /// </returns>
     public Node Build()
     {

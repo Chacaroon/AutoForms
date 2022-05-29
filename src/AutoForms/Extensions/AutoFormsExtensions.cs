@@ -1,5 +1,6 @@
 using AutoForms.FormBuilderStrategies;
 using AutoForms.FormBuilderStrategies.Strategies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
@@ -8,7 +9,7 @@ namespace AutoForms.Extensions;
 public static class AutoFormsExtensions
 {
     /// <summary>
-    /// Register services required by AutoForms
+    /// Register services required by AutoForms.
     /// </summary>
     /// <param name="serviceCollection">.</param>
     /// <returns>The same instance of the <see cref="IServiceCollection"/> for chaining.</returns>
@@ -32,6 +33,11 @@ public static class AutoFormsExtensions
         return serviceCollection;
     }
 
+    /// <summary>
+    /// Register Newtonsoft.Json serializer with predefined settings.
+    /// </summary>
+    /// <param name="mvcBuilder"></param>
+    /// <returns></returns>
     public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder)
     {
         mvcBuilder.AddNewtonsoftJson(options =>
