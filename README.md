@@ -6,7 +6,7 @@ AutoForms is a system of libraries designed to synchronize a data structure betw
 
 ## Get Started
 
-To start using AutoForms you must install packages to your ASP.NET and Angular applications.
+To start using AutoForms you must install necessary packages to your ASP.NET and Angular applications.
 
 ### Setup AutoForms for ASP.NET
 
@@ -35,11 +35,15 @@ Congratulations! Server-side preparations are done!
 
 #### Install AutoForms client library
 
+Install `@auto-forms/client` using NPM.
+
 ```shell
 npm install @auto-forms/client
 ```
 
 #### Import AutoFormsModule to AppModule
+
+Add the `AutoFormsModule` to the `AppModule`, so you'll be able to inject [FormBuilderCllient](https://github.com/Chacaroon/AutoForms/blob/master/src/AutoForms.Client/projects/client/src/form-builder-client.ts).
 
 ```js
 import { AutoFormsModule } from '@auto-forms/client';
@@ -54,7 +58,7 @@ export class AppModule {}
 
 Client-side preparations are done as well!
 
-Now you can build your first model structure, pass one to an Angular application and enjoy using auto-generated strongly-typed FormGroup!
+Now you can build your first model structure, pass one to an Angular application and enjoy using auto-generated strongly-typed forms!
 
 ## First steps
 
@@ -204,7 +208,7 @@ Now it's time to use the obtained form. Let's bind one to the ValuesComponent's 
 ```
 
 Once you've hit the **Submit** button, form value will be sent to the API.
-Let's extend the `ValuesController` to obtain sent value.
+Let's extend the `ValuesController` to receive sent value.
 
 ```csharp
 [Route("api/[controller]")]
@@ -223,4 +227,4 @@ public class ValuesController : ControllerBase
 }
 ```
 
-Finally the `Post()` endpoint obtains exactly those model, the data structure has been built for.
+Finally the `Post()` endpoint receive exactly those model, the data structure has been built for.
