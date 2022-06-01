@@ -8,7 +8,7 @@ using AutoForms.Models;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace AutoForms.UnitTests;
+namespace AutoForms.Tests;
 
 [TestFixture]
 internal class ResolveFormByTypeTests

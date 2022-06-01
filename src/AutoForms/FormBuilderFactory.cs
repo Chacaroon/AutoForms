@@ -1,9 +1,10 @@
-using System.Runtime.CompilerServices;
 using AutoForms.FormBuilderStrategies;
 
-[assembly: InternalsVisibleTo("AutoForms.UnitTests")]
 namespace AutoForms;
 
+/// <summary>
+/// Create <see cref="FormBuilder"/> instances.
+/// </summary>
 public class FormBuilderFactory
 {
     private readonly StrategyResolver _strategyResolver;

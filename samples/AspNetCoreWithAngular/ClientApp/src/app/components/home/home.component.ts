@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { Observable, retry } from "rxjs";
+import { Observable } from "rxjs";
 import { tags, ToDoListModel } from "../../models";
 
 @Component({

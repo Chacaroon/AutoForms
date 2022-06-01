@@ -4,6 +4,10 @@ using AutoForms.Models;
 
 namespace AutoForms;
 
+
+/// <summary>
+/// The class that build a schema of the passed type.
+/// </summary>
 public class FormBuilder
 {
     private readonly Type _type;
@@ -44,9 +48,12 @@ public class FormBuilder
     /// <summary>
     /// Build data structure.
     /// </summary>
-    /// <returns>The root <see cref="Node"/> of the built data structure.
-    /// Each node is an instance of a <seealso cref="FormControl"/>, <seealso cref="FormGroup"/> or <seealso cref="FormArray"/>.
+    /// <returns>The root node of the built data structure.
     /// </returns>
+    /// <remarks>
+    /// Each returned node is an instance of a <seealso cref="FormControl"/>,
+    /// <seealso cref="FormGroup"/> or <seealso cref="FormArray"/>.
+    /// </remarks>
     public Node Build()
     {
         return _strategy.Process(_type, new(new TypeEqualityComparer()));

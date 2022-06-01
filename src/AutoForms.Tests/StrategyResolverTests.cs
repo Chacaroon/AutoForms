@@ -7,7 +7,7 @@ using AutoForms.FormBuilderStrategies.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace AutoForms.UnitTests;
+namespace AutoForms.Tests;
 
 [TestFixture]
 internal class StrategyResolverTests
