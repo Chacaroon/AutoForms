@@ -1,0 +1,36 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Node.js Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Get Build Version
+        run: |
+          Import-Module .\build\GetBuildVersion.psm1
+          $version = GetBuildVersion -VersionString ${{ github.event.release.tag_name }}
+          echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+          shell: pwsh
+      - name: Go to AutoForms.Client
+        run: cd ./src/AutoForms.Client
+      - name: Install dependencies and build 🔧
+        run: npm install && npm version $BUILD_VERSION && ng build --configuration production
+      - name: Publish package on NPM 📦
+        run: | 
+          cd ./dist/client && cat package.json
+          # && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
