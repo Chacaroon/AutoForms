@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/AutoForms.Client
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,8 +21,6 @@ jobs:
         with:
           node-version: '16'
           registry-url: 'https://registry.npmjs.org'
-      - name: Go to AutoForms.Client
-        run: cd ./src/AutoForms.Client
       - name: Set Build Version
         if: ${{ github.event.action }} == 'published'
         run: |
@@ -27,7 +28,7 @@ jobs:
           npm version $version
         shell: pwsh
       - name: Install dependencies and build 🔧
-        run: npm install && npm version $BUILD_VERSION && ng build --configuration production
+        run: npm install && ng build --configuration production
       - name: Publish package on NPM 📦
         run: |
           cd ./dist/client && cat package.json
