@@ -139,10 +139,10 @@ interface ValueModel {
 }
 ```
 
-Now you can create an angular component and send an HTTP request to the `/api/values` endpoint to obtain the built data structure.  
-  
-In order to convert obtained data structure to a `FormGroup` you can use `Observable.pipe()`. Depending on your targets you can either map the data structure with the injected `FormBuilderClient` or use the `buildForm()` operator that is part of the `@auto-forms/client` library.  
-  
+Now you can create an angular component and send an HTTP request to the `/api/values` endpoint to obtain the built data structure.
+<br/><br/>
+In order to convert obtained data structure to a `FormGroup` you can use `Observable.pipe()`. Depending on your targets you can either map the data structure with the injected `FormBuilderClient` or use the `buildForm()` operator that is part of the `@auto-forms/client` library.
+<br/><br/>
 As a result, you have `Observable` that emits values of a type `AfFormGroup<ValuesModel>`. This type extends Angular's [FormGroup](https://angular.io/api/forms/FormGroup).
 
 ```ts
