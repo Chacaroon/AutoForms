@@ -21,9 +21,9 @@ jobs:
       - name: Go to AutoForms.Client
         run: cd ./src/AutoForms.Client
       - name: Set Build Version
-        if: github.event.action == 'published'
+        if: ${{ github.event.action == 'published'
         run: |
-          $version = github.event.release.tag_name -replace '^v',''
+          $version = $GITHUB_CONTEXT.event.release.tag_name -replace '^v',''
           npm version $version
         shell: pwsh
       - name: Install dependencies and build 🔧
