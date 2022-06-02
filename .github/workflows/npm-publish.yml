@@ -32,11 +32,10 @@ jobs:
         run: |
           npm ci
           npm run build:ci
-      - name: Publish package on NPM 📦
+      - name: Publish package on NPM
         run: |
           cd ./dist/client
           npm version $BUILD_VERSION
-          cat package.json
-          # && npm publish
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
