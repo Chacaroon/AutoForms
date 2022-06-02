@@ -18,13 +18,14 @@ jobs:
         with:
           node-version: '16'
           registry-url: 'https://registry.npmjs.org'
-      - name: Get Build Version
-        run: |
-          version = `github.event.release.tag_name | sed 's/^v//'`
-          echo "BUILD_VERSION=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-          shell: pwsh
       - name: Go to AutoForms.Client
         run: cd ./src/AutoForms.Client
+      - name: Set Build Version
+        if: github.event.action == 'published'
+        run: |
+          $version = github.event.release.tag_name -replace '^v',''
+          npm version $version
+        shell: pwsh
       - name: Install dependencies and build 🔧
         run: npm install && npm version $BUILD_VERSION && ng build --configuration production
       - name: Publish package on NPM 📦
