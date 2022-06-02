@@ -28,7 +28,7 @@ jobs:
           npm version $version
         shell: pwsh
       - name: Install dependencies and build 🔧
-        run: npm install && ng build --configuration production
+        run: npm install -d && ng build --configuration production
       - name: Publish package on NPM 📦
         run: |
           cd ./dist/client && cat package.json
