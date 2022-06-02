@@ -36,14 +36,14 @@ jobs:
       with:
         nuget-version: 'latest'
 
-    - name: Restore dependencies
-      run: nuget restore $SOLUTION
-
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x'
         include-prerelease: true
+
+    - name: Restore dependencies
+      run: nuget restore $SOLUTION
 
     - name: Build
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG -p:Version=$BUILD_VERSION --no-restore
