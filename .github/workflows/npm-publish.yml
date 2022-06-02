@@ -23,6 +23,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Set Build Version
         if: ${{ github.event.action }} == 'published'
+        env:
+          GITHUB_CONTEXT: github
         run: |
           $version = $GITHUB_CONTEXT.event.release.tag_name -replace '^v',''
           npm version $version
