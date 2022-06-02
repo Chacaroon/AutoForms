@@ -27,8 +27,10 @@ jobs:
           $version = $GITHUB_CONTEXT.event.release.tag_name -replace '^v',''
           npm version $version
         shell: pwsh
-      - name: Install dependencies and build 🔧
-        run: npm install -d && ng build --configuration production
+      - name: npm install and npm run build
+        run: |
+          npm ci
+          npm run build:ci
       - name: Publish package on NPM 📦
         run: |
           cd ./dist/client && cat package.json
