@@ -2,7 +2,7 @@ name: Build and test
 
 on:
   release:
-    types: [created]
+    types: [published]
   push:
     branches:
     - master
@@ -52,5 +52,5 @@ jobs:
       run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
     
     - name: Publish
-      if: ${{ github.event.action }} == 'published'
-      run: dotnet nuget push **\*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
+      if: github.event_name == 'release'
+      run: dotnet nuget push **\*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}} --skip-duplicate
