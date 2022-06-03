@@ -8,4 +8,4 @@ AutoForms is a system of libraries designed to synchronize a data structure betw
 
 ## Get Started
 
-To start working with AutoForms, check out [get started guide](docs/GetStarted.md)
+To start working with AutoForms, check out the [getting started guide](docs/GetStarted.md).
