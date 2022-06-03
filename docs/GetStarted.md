@@ -151,7 +151,7 @@ Now it's time to use the obtained form. Let's bind one to the ValuesComponent's 
 
 Once you've hit the **Submit** button, the form value will be sent to the API.
 
-## Receive model on the API
+## Get model on API side
 
 Let's extend the `ValuesController` to receive the sent value.
 
