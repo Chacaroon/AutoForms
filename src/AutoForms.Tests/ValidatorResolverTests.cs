@@ -7,7 +7,7 @@ using AutoForms.Models;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace AutoForms.UnitTests;
+namespace AutoForms.Tests;
 
 public class ValidatorResolverTests
 {
