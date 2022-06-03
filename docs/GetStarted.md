@@ -1,6 +1,6 @@
 # Get Started
 
-This guide walks you through the entire process of setting up and using AutoForms.
+This guide walks you through the entire process of using AutoForms.
 
 ## Build data structure
 
