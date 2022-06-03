@@ -2,58 +2,6 @@
 
 This guide walks you through the entire process of setting up and using AutoForms.
 
-## Setup AutoForms for ASP.NET
-
-### Install NuGet package
-
-In order to get AutoForms for ASP.NET, you can [grab the latest NuGet package](https://www.nuget.org/packages/AutoForms/) or just run
-
-```shell
-Install-Package AutoForms
-```
-
-### Register dependencies to IoC container
-
-Register [FormBuilderFactory](https://github.com/Chacaroon/AutoForms/blob/master/src/AutoForms/FormBuilderFactory.cs) and other dependencies.
-
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddAutoForms();
-}
-```
-
-Congratulations! Server-side preparations are done!
-
-## Setup AutoForms for Angular
-
-### Install AutoForms client library
-
-Install `@auto-forms/client` using NPM.
-
-```shell
-npm install @auto-forms/client
-```
-
-### Import AutoFormsModule to AppModule
-
-Add the `AutoFormsModule` to the `AppModule`, so you'll be able to inject [FormBuilderCllient](https://github.com/Chacaroon/AutoForms/blob/feature/readme/src/AutoForms.Client/projects/client/src/form-builder-client.ts).
-
-```js
-import { AutoFormsModule } from '@auto-forms/client';
-
-@NgModule({
-    declarations: [AppComponent],
-    imports: [AutoFormsModule.forRoot()],
-    bootstrap: [AppComponent]
-})
-export class AppModule {}
-```
-
-Client-side preparations are done as well!
-
-Now you can build your first model structure, pass one to an Angular application and enjoy using auto-generated strongly-typed forms!
-
 ## Build data structure
 
 Prepare a model for building its structure.
@@ -174,6 +122,8 @@ export class ValuesComponent implements OnInit {
 }
 ```
 
+## Bind FormGroup to HTML form
+
 Now it's time to use the obtained form. Let's bind one to the ValuesComponent's template. You can use `AfFormGroup`, `AfFormArray` and `AfFormControl` as corresponding [reactive forms](https://angular.io/guide/reactive-forms) classes.
 
 
@@ -200,6 +150,9 @@ Now it's time to use the obtained form. Let's bind one to the ValuesComponent's 
 ```
 
 Once you've hit the **Submit** button, the form value will be sent to the API.
+
+## Receive model on the API
+
 Let's extend the `ValuesController` to receive the sent value.
 
 ```csharp
