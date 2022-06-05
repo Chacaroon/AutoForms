@@ -26,7 +26,7 @@ public class FormBuilder
     /// <returns>The same instance of the <see cref="FormBuilder"/> for chaining.</returns>
     public FormBuilder EnhanceWithValue(object value)
     {
-        if (value != null && !value.GetType().IsAssignableTo(_type))
+        if (value != null && !_type.IsInstanceOfType(value))
             throw new ArgumentException("The value type does not match the type the FormBuilder was created for.", nameof(value));
 
         _strategy.EnhanceWithValue(value);
