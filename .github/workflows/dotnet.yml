@@ -56,5 +56,5 @@ jobs:
     - name: Publish
 #       if: github.event_name == 'release'
 #       run: dotnet nuget push **\*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}} --skip-duplicate
-      run: Get-ChildItem -Path "." -Filter *.nupkg -r
+      run: Get-ChildItem -Path "." -Filter *.nupkg -r | % { $_.Name.Replace( ".js","") }
       shell: pwsh
