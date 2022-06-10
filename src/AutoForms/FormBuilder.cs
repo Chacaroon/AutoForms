@@ -1,4 +1,3 @@
-using AutoForms.Comparers;
 using AutoForms.FormBuilderStrategies.Strategies;
 using AutoForms.Models;
 
@@ -56,6 +55,6 @@ public class FormBuilder
     /// </remarks>
     public Node Build()
     {
-        return _strategy.Process(_type, new(new TypeEqualityComparer()));
+        return _strategy.Process(_type, new());
     }
 }

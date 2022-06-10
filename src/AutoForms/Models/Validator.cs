@@ -1,8 +1,10 @@
 using AutoForms.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AutoForms.Models;
 
 
+[ExcludeFromCodeCoverage]
 public class Validator
 {
     public Validator(ValidatorType type)

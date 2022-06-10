@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using AutoForms.Enums;
 
@@ -9,6 +10,7 @@ namespace AutoForms.Models;
 [KnownType(typeof(FormControl))]
 [KnownType(typeof(FormGroup))]
 [KnownType(typeof(FormArray))]
+[ExcludeFromCodeCoverage]
 public abstract class Node
 {
     public abstract NodeType Type { get; }

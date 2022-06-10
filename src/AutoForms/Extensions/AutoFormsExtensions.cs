@@ -3,6 +3,7 @@ using AutoForms.FormBuilderStrategies.Strategies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AutoForms.Extensions;
 
@@ -38,6 +39,7 @@ public static class AutoFormsExtensions
     /// </summary>
     /// <param name="mvcBuilder"></param>
     /// <returns></returns>
+    [ExcludeFromCodeCoverage]
     public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder)
     {
         mvcBuilder.AddNewtonsoftJson(options =>

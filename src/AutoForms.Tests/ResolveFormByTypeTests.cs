@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutoForms.Comparers;
 using AutoForms.Exceptions;
 using AutoForms.Extensions;
 using AutoForms.FormBuilderStrategies;
@@ -105,7 +104,7 @@ internal class ResolveFormByTypeTests
         var strategy = strategyResolver.Resolve(type, new());
 
         // Assert
-        var exception = Assert.Throws<CircularDependencyException>(() => strategy.Process(type, new(new TypeEqualityComparer())));
+        var exception = Assert.Throws<CircularDependencyException>(() => strategy.Process(type, new()));
         Assert.AreEqual(expectedMessage, exception.Message);
     }
 

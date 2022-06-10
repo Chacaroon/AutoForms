@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AutoForms.Enums;
 
 namespace AutoForms.Models;
@@ -7,6 +8,7 @@ namespace AutoForms.Models;
 /// <summary>
 /// Represents control that holds collection of values.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class FormArray : Node
 {
     public FormArray()
