@@ -6,13 +6,6 @@ namespace AutoForms.Exceptions;
 public class CircularDependencyException : Exception
 {
     /// <summary>
-    /// Create the <see cref="CircularDependencyException"/>
-    /// </summary>
-    public CircularDependencyException()
-    {
-    }
-
-    /// <summary>
     /// Create the <see cref="CircularDependencyException"/> with message
     /// </summary>
     /// <param name="message">The exception message</param>

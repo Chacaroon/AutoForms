@@ -109,6 +109,18 @@ internal class ResolveFormWithModelTests
         Assert.AreEqual((node.Nodes["second"] as FormControl)!.Value, 2);
     }
 
+    [Test]
+    public void Resolve_TypeMismatch_ThrowArgumentException()
+    {
+        // Assert
+        var formResolver = _serviceProvider.GetRequiredService<FormBuilderFactory>();
+        var model = GetTestModel();
+        var formBuilder = formResolver.CreateFormBuilder<string>();
+
+        // Act & Arrange
+        Assert.Throws<ArgumentException>(() => formBuilder.EnhanceWithValue(model));
+    }
+
     #region Helpers
 
     private ComplexType GetTestModel(int? count = null)
