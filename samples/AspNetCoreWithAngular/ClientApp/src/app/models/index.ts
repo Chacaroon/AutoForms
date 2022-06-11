@@ -17,5 +17,8 @@ export interface ToDoItemModel {
     done: boolean;
 }
 
-export const tags = [...Array(5).keys()]
-    .map(x => ({ id: x + 1, value: `Item ${x + 1}` }));
+export const tags: { id: number, value: string }[] = [
+    {id: 1, value: 'Староста'},
+    {id: 2, value: 'Футболіст'},
+    {id: 3, value: 'Волонтер'},
+];
