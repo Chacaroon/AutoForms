@@ -13,17 +13,63 @@ public class ToDoItemsController : ControllerBase
 {
     private readonly FormBuilderFactory _formBuilderFactory;
 
-    private static readonly Dictionary<int, ToDoListModel> ToDoItems = Enumerable.Range(1, 3).ToDictionary(x => x, x => new ToDoListModel
+    private static readonly Dictionary<int, ToDoListModel> ToDoItems = new()
     {
-        Id = x,
-        Name = $"List {x}",
-        ToDoItems = Enumerable.Range(1, 3).Select(x =>
-            new ToDoItemModel
+        {
+            1,
+            new ToDoListModel
             {
-                Name = $"Item {x}",
-                Done = x % 2 == 0
-            })
-    });
+                Id = 1,
+                Name = "Іванов В. О.",
+                Tags = new[] { 1, 2 },
+                ToDoItems = new[]
+                {
+                    new ToDoItemModel
+                    {
+                        Name = "Математика",
+                        Done = false
+                    },
+                    new ToDoItemModel
+                    {
+                        Name = "Фізика",
+                        Done = true
+                    },
+                    new ToDoItemModel
+                    {
+                        Name = "Програмування",
+                        Done = false
+                    },
+                }
+            }
+        },
+        {
+            2,
+            new ToDoListModel
+            {
+                Id = 1,
+                Name = "Петров Б. Б.",
+                Tags = new[] { 2, 3 },
+                ToDoItems = new[]
+                {
+                    new ToDoItemModel
+                    {
+                        Name = "Математика",
+                        Done = true
+                    },
+                    new ToDoItemModel
+                    {
+                        Name = "Фізика",
+                        Done = true
+                    },
+                    new ToDoItemModel
+                    {
+                        Name = "Програмування",
+                        Done = false
+                    },
+                }
+            }
+        }
+    };
 
     public ToDoItemsController(FormBuilderFactory formBuilderFactory)
     {
