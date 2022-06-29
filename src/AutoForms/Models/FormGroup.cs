@@ -9,9 +9,13 @@ namespace AutoForms.Models;
 /// Represents control that holds object-like value.
 /// </summary>
 [ExcludeFromCodeCoverage]
-public class FormGroup : Node
+public class FormGroup : AbstractControl
 {
-    public override NodeType Type => NodeType.Group;
+    /// <inheritdoc />
+    public override ControlType Type => ControlType.Group;
 
-    public Dictionary<string, Node> Nodes { get; set; } = new();
+    /// <summary>
+    /// Dictionary with the child controls.
+    /// </summary>
+    public Dictionary<string, AbstractControl> Controls { get; set; } = new();
 }

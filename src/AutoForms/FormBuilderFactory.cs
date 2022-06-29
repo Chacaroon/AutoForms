@@ -26,10 +26,10 @@ public class FormBuilderFactory
 
     /// <summary>
     /// Create instance of <see cref="FormBuilder"/> for type <typeparamref name="TModel"/>
-    /// and populate nodes with the value of the <paramref name="model"/>.
+    /// and populate controls with the value of the <paramref name="model"/>.
     /// </summary>
     /// <typeparam name="TModel">The type for which the data structure is built.</typeparam>
-    /// <param name="model">The value with which the nodes will be populated.</param>
+    /// <param name="model">The value with which the controls will be populated.</param>
     /// <returns><see cref="FormBuilder"/> with predefined value.</returns>
     public FormBuilder CreateFormBuilder<TModel>(TModel model)
     {

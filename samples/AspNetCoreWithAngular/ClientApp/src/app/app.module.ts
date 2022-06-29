@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -12,6 +11,7 @@ import { BaseUrlInterceptor } from "./interceptors/base-url.interceptor";
 import { CreateTodoListComponent } from './components/create-todo-list/create-todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { NgSelectModule } from "@ng-select/ng-select";
+import { CommonModule } from "@angular/common";
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
         TodoItemComponent,
     ],
     imports: [
-        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        CommonModule,
         AutoFormsModule.forRoot(),
         HttpClientModule,
         FormsModule,
@@ -33,7 +33,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
             { path: 'create-todo-list', component: CreateTodoListComponent },
             { path: 'update-todo-list/:id', component: CreateTodoListComponent }
         ]),
-        NgSelectModule
+        NgSelectModule,
     ],
     providers: [
         {

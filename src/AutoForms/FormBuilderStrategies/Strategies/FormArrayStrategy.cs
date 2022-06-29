@@ -20,23 +20,23 @@ internal class FormArrayStrategy : BaseStrategy
         return PropertyFormControlTypeResolver.IsFormArray(modelType, options);
     }
 
-    internal override Node Process(Type type, HashSet<Type> hashSet)
+    internal override AbstractControl Process(Type type, HashSet<Type> hashSet)
     {
         CheckCircularDependency(ref hashSet, type);
 
         var collectionItemType = GetCollectionItemType(type);
 
-        Node BuildNode(object value = null) => _strategyResolver.Resolve(collectionItemType, Options)
+        AbstractControl BuildControl(object value = null) => _strategyResolver.Resolve(collectionItemType, Options)
             .EnhanceWithValue(value)
             .Process(collectionItemType, hashSet);
 
         var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
-        var nodes = values.Select(BuildNode);
+        var controls = values.Select(BuildControl);
 
         var formArray = new FormArray
         {
-            Nodes = nodes,
-            NodeSchema = BuildNode()
+            Controls = controls,
+            ControlSchema = BuildControl()
         };
 
         return formArray;

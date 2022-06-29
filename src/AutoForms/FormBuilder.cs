@@ -19,9 +19,9 @@ public class FormBuilder
     }
 
     /// <summary>
-    /// Populate nodes with the value of the <paramref name="value"/>.
+    /// Populate controls with the value of the <paramref name="value"/>.
     /// </summary>
-    /// <param name="value">The value with which the nodes will be populated.</param>
+    /// <param name="value">The value with which the controls will be populated.</param>
     /// <returns>The same instance of the <see cref="FormBuilder"/> for chaining.</returns>
     public FormBuilder EnhanceWithValue(object value)
     {
@@ -47,13 +47,13 @@ public class FormBuilder
     /// <summary>
     /// Build data structure.
     /// </summary>
-    /// <returns>The root node of the built data structure.
+    /// <returns>The root control of the built data structure.
     /// </returns>
     /// <remarks>
-    /// Each returned node is an instance of a <seealso cref="FormControl"/>,
+    /// Each returned control is an instance of a <seealso cref="FormControl"/>,
     /// <seealso cref="FormGroup"/> or <seealso cref="FormArray"/>.
     /// </remarks>
-    public Node Build()
+    public AbstractControl Build()
     {
         return _strategy.Process(_type, new());
     }

@@ -12,7 +12,7 @@ internal class FormControlStrategy : BaseStrategy
         return PropertyFormControlTypeResolver.IsFormControl(modelType, options);
     }
 
-    internal override Node Process(Type type, HashSet<Type> hashSet)
+    internal override AbstractControl Process(Type type, HashSet<Type> hashSet)
     {
         CheckCircularDependency(ref hashSet, type);
 

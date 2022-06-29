@@ -5,7 +5,18 @@ namespace AutoForms.Enums;
 /// </summary>
 public enum ValidatorType
 {
+    /// <summary>
+    /// Required validator type
+    /// </summary>
     Required = 1,
-    MinLength,
-    MaxLength
+
+    /// <summary>
+    /// Min length validator type
+    /// </summary>
+    MinLength = 2,
+
+    /// <summary>
+    /// Max length validator type
+    /// </summary>
+    MaxLength = 3,
 }

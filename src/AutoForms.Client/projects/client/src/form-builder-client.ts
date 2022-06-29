@@ -1,12 +1,12 @@
 import { AfFormNodeType } from './types';
 import {
-  AfNode,
+  AfControl,
   AfValidator,
   AfValidatorType,
   FormArrayNode,
   FormControlNode,
   FormGroupNode,
-  NodeType
+  ControlType
 } from "./form-nodes";
 import { AfFormArray, AfFormControl, AfFormGroup } from "./models";
 import { ValidatorFn } from "@angular/forms";
@@ -14,19 +14,19 @@ import * as AfValidators from './validators'
 
 
 export class FormBuilderClient {
-  public build<T>(form: AfNode): AfFormNodeType<T> {
+  public build<T>(form: AfControl): AfFormNodeType<T> {
     const validators = this.mapValidators(form.validators);
     switch (form.type) {
-      case NodeType.Control: {
+      case ControlType.Control: {
         return new AfFormControl<T>((form as FormControlNode).value, validators) as AfFormNodeType<T>;
       }
-      case NodeType.Array: {
-        const nodes = (form as FormArrayNode).nodes.map(x => this.build<T>(x));
+      case ControlType.Array: {
+        const nodes = (form as FormArrayNode).controls.map(x => this.build<T>(x));
 
-        return new AfFormArray<T>(nodes, (form as FormArrayNode).nodeSchema, this, validators) as AfFormNodeType<T>;
+        return new AfFormArray<T>(nodes, (form as FormArrayNode).controlSchema, this, validators) as AfFormNodeType<T>;
       }
-      case NodeType.Group: {
-        const nodes = Object.entries((form as FormGroupNode).nodes)
+      case ControlType.Group: {
+        const nodes = Object.entries((form as FormGroupNode).controls)
           .reduce((prev, [key, node]) => ({
             ...prev,
             [key]: this.build(node)

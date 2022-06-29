@@ -22,7 +22,12 @@
             "es2020",
             "dom"
         ],
-        "skipLibCheck": true
+        "skipLibCheck": true,
+      "paths": {
+        "@auto-forms/*": [
+          "./node_modules/@auto-forms/*"
+        ]
+      }
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,

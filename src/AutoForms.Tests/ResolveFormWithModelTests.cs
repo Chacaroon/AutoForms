@@ -30,15 +30,15 @@ internal class ResolveFormWithModelTests
         var model = GetTestModel();
 
         // Act
-        var node = formResolver.CreateFormBuilder(model).Build() as FormGroup;
+        var formGroup = formResolver.CreateFormBuilder(model).Build() as FormGroup;
 
         // Arrange
-        var arrayPropertyNodes = FindNode(node, nameof(ComplexType.ArrayProperty));
-        var arrayPropertyValues = ((FormArray)arrayPropertyNodes).Nodes.Select(x => ((FormControl)x).Value);
+        var arrayPropertyControls = FindControl(formGroup, nameof(ComplexType.ArrayProperty));
+        var arrayPropertyValues = ((FormArray)arrayPropertyControls).Controls.Select(x => ((FormControl)x).Value);
 
-        Assert.NotNull(node);
+        Assert.NotNull(formGroup);
 
-        Assert.AreEqual("value", ((FormControl)FindNode(node, nameof(ComplexType.StringProperty))).Value);
+        Assert.AreEqual("value", ((FormControl)FindControl(formGroup, nameof(ComplexType.StringProperty))).Value);
         Assert.That(arrayPropertyValues, Is.EquivalentTo(new[] { 0 }));
     }
 
@@ -50,13 +50,13 @@ internal class ResolveFormWithModelTests
         var model = Enumerable.Range(0, 3);
 
         // Act
-        var node = formResolver.CreateFormBuilder(model).Build() as FormArray;
+        var formArray = formResolver.CreateFormBuilder(model).Build() as FormArray;
 
         // Arrange
-        Assert.NotNull(node);
+        Assert.NotNull(formArray);
 
-        Assert.AreEqual(3, node.Nodes.Count());
-        Assert.That(node.Nodes.Select(x => ((FormControl)x).Value).Cast<int>(), Is.EquivalentTo(Enumerable.Range(0, 3)));
+        Assert.AreEqual(3, formArray.Controls.Count());
+        Assert.That(formArray.Controls.Select(x => ((FormControl)x).Value).Cast<int>(), Is.EquivalentTo(Enumerable.Range(0, 3)));
     }
 
     [Test]
@@ -71,18 +71,18 @@ internal class ResolveFormWithModelTests
         };
 
         // Act
-        var node = formResolver.CreateFormBuilder(model).Build() as FormArray;
+        var formArray = formResolver.CreateFormBuilder(model).Build() as FormArray;
 
         // Arrange
-        var stringPropertyNodes = node!.Nodes
-            .Select(x => FindNode(x as FormGroup, nameof(ComplexType.StringProperty)));
-        var stringPropertyNodeValues = stringPropertyNodes
+        var stringPropertyControls = formArray!.Controls
+            .Select(x => FindControl(x as FormGroup, nameof(ComplexType.StringProperty)));
+        var stringPropertyControlValues = stringPropertyControls
             .Select(x => ((FormControl)x).Value);
 
-        Assert.NotNull(node);
+        Assert.NotNull(formArray);
 
-        Assert.AreEqual(2, node.Nodes.Count());
-        Assert.That(stringPropertyNodeValues, Is.EquivalentTo(new[] { "value1", "value2" }));
+        Assert.AreEqual(2, formArray.Controls.Count());
+        Assert.That(stringPropertyControlValues, Is.EquivalentTo(new[] { "value1", "value2" }));
     }
 
     [Test]
@@ -97,16 +97,16 @@ internal class ResolveFormWithModelTests
         };
 
         // Act
-        var node = formResolver.CreateFormBuilder(model).Build() as FormGroup;
+        var formGroup = formResolver.CreateFormBuilder(model).Build() as FormGroup;
 
         // Arrange
-        Assert.NotNull(node);
+        Assert.NotNull(formGroup);
 
-        Assert.AreEqual(NodeType.Group, node.Type);
-        Assert.AreEqual(2, node.Nodes.Count);
-        Assert.That(node.Nodes.Keys, Is.EquivalentTo(new[] { "first", "second" }));
-        Assert.AreEqual((node.Nodes["first"] as FormControl)!.Value, 1);
-        Assert.AreEqual((node.Nodes["second"] as FormControl)!.Value, 2);
+        Assert.AreEqual(ControlType.Group, formGroup.Type);
+        Assert.AreEqual(2, formGroup.Controls.Count);
+        Assert.That(formGroup.Controls.Keys, Is.EquivalentTo(new[] { "first", "second" }));
+        Assert.AreEqual((formGroup.Controls["first"] as FormControl)!.Value, 1);
+        Assert.AreEqual((formGroup.Controls["second"] as FormControl)!.Value, 2);
     }
 
     [Test]
@@ -132,9 +132,9 @@ internal class ResolveFormWithModelTests
         };
     }
 
-    private Node FindNode(FormGroup node, string nodeName)
+    private AbstractControl FindControl(FormGroup formGroup, string formControlName)
     {
-        return node.Nodes.GetValueOrDefault(nodeName.FirstCharToLowerCase());
+        return formGroup.Controls.GetValueOrDefault(formControlName.FirstCharToLowerCase());
     }
 
     #endregion

@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace AutoForms.Extensions;
 
+/// <summary>
+/// Extensions for <see cref="IServiceCollection"/>
+/// </summary>
 public static class AutoFormsExtensions
 {
     /// <summary>
@@ -26,27 +30,16 @@ public static class AutoFormsExtensions
 
         serviceCollection.AddSingleton(_ => new StrategyOptionsResolver());
 
-        serviceCollection.AddTransient<BaseStrategy, FormControlStrategy>();
-        serviceCollection.AddTransient<BaseStrategy, DictionaryFormGroupStrategy>();
-        serviceCollection.AddTransient<BaseStrategy, FormArrayStrategy>();
-        serviceCollection.AddTransient<BaseStrategy, FormGroupStrategy>();
+        var strategies = Assembly.GetAssembly(typeof(BaseStrategy))!
+            .GetTypes()
+            .Where(x => !x.IsAbstract)
+            .Where(x => typeof(BaseStrategy).IsAssignableFrom(x));
+
+        foreach (var strategyType in strategies)
+        {
+            serviceCollection.AddTransient(typeof(BaseStrategy), strategyType);
+        }
 
         return serviceCollection;
-    }
-
-    /// <summary>
-    /// Register Newtonsoft.Json serializer with predefined settings.
-    /// </summary>
-    /// <param name="mvcBuilder"></param>
-    /// <returns></returns>
-    [ExcludeFromCodeCoverage]
-    public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder)
-    {
-        mvcBuilder.AddNewtonsoftJson(options =>
-        {
-            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-        });
-
-        return mvcBuilder;
     }
 }

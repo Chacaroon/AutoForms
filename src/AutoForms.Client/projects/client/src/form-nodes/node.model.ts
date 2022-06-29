@@ -1,27 +1,27 @@
 import { AfValidator } from './validator.model';
 
-export interface AfNode {
-  type: NodeType,
+export interface AfControl {
+  type: ControlType,
   validators: AfValidator[]
 }
 
-export interface FormControlNode extends AfNode {
-  type: NodeType.Control;
+export interface FormControlNode extends AfControl {
+  type: ControlType.Control;
   value: any;
 }
 
-export interface FormGroupNode extends AfNode {
-  type: NodeType.Group;
-  nodes: { [key: string]: AfNode }
+export interface FormGroupNode extends AfControl {
+  type: ControlType.Group;
+  controls: { [key: string]: AfControl }
 }
 
-export interface FormArrayNode extends AfNode {
-  type: NodeType.Array;
-  nodes: AfNode[];
-  nodeSchema: AfNode
+export interface FormArrayNode extends AfControl {
+  type: ControlType.Array;
+  controls: AfControl[];
+  controlSchema: AfControl
 }
 
-export enum NodeType {
+export enum ControlType {
   Control = 1,
   Group = 2,
   Array = 3

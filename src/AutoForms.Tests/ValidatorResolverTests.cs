@@ -23,7 +23,7 @@ public class ValidatorResolverTests
     }
 
     [Test]
-    public void Resolve_StringPropertyWithValidators_ReturnsNodeWithValidators()
+    public void Resolve_StringPropertyWithValidators_ReturnsControlWithValidators()
     {
         // Arrange
         var formBuilder = _serviceProvider.GetRequiredService<FormBuilderFactory>()
@@ -31,17 +31,17 @@ public class ValidatorResolverTests
             .EnhanceWithValidators();
 
         // Act
-        var node = (formBuilder.Build() as FormGroup)!;
+        var formGroup = (formBuilder.Build() as FormGroup)!;
 
         // Assert
-        var testPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.TestProperty).FirstCharToLowerCase()).Value;
-        var requiredPropertyNode = node.Nodes.First(x => x.Key == nameof(TestClass.RequiredProperty).FirstCharToLowerCase()).Value;
+        var testPropertyControl = formGroup.Controls.First(x => x.Key == nameof(TestClass.TestProperty).FirstCharToLowerCase()).Value;
+        var requiredPropertyControl = formGroup.Controls.First(x => x.Key == nameof(TestClass.RequiredProperty).FirstCharToLowerCase()).Value;
 
-        Assert.AreEqual(2, testPropertyNode.Validators.Length);
-        Assert.NotNull(testPropertyNode.Validators.FirstOrDefault(x => x.Type == ValidatorType.MinLength));
-        Assert.NotNull(testPropertyNode.Validators.FirstOrDefault(x => x.Type == ValidatorType.MaxLength));
+        Assert.AreEqual(2, testPropertyControl.Validators.Length);
+        Assert.NotNull(testPropertyControl.Validators.FirstOrDefault(x => x.Type == ValidatorType.MinLength));
+        Assert.NotNull(testPropertyControl.Validators.FirstOrDefault(x => x.Type == ValidatorType.MaxLength));
 
-        Assert.NotNull(requiredPropertyNode.Validators.FirstOrDefault(x => x.Type == ValidatorType.Required));
+        Assert.NotNull(requiredPropertyControl.Validators.FirstOrDefault(x => x.Type == ValidatorType.Required));
     }
 
     #region TestData

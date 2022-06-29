@@ -31,7 +31,8 @@ internal class StrategyResolver
         var resolvingStrategyOptions = _strategyOptionsResolver.GetStrategyOptions(propertyInfo);
 
         return Resolve(propertyInfo.PropertyType, resolvingStrategyOptions)
-            .PopulateOptions(strategyOptions);
+            .PopulateOptions(strategyOptions)
+            .EnhanceWithValidators(propertyInfo);
     }
 
     private BaseStrategy Resolve(Type modelType, ResolvingStrategyOptions resolvingStrategyOptions)
