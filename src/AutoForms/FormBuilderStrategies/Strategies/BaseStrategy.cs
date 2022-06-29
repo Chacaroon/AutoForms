@@ -20,7 +20,7 @@ internal abstract class BaseStrategy
 
     internal abstract bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options);
 
-    internal abstract Node Process(Type type, HashSet<Type> hashSet);
+    internal abstract AbstractControl Process(Type type, HashSet<Type> hashSet);
 
     #endregion
 

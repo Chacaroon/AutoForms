@@ -11,9 +11,15 @@ namespace AutoForms.Models;
 [KnownType(typeof(FormGroup))]
 [KnownType(typeof(FormArray))]
 [ExcludeFromCodeCoverage]
-public abstract class Node
+public abstract class AbstractControl
 {
-    public abstract NodeType Type { get; }
+    /// <summary>
+    /// The control type
+    /// </summary>
+    public abstract ControlType Type { get; }
 
+    /// <summary>
+    /// Validators' metadata
+    /// </summary>
     public Validator[] Validators { get; set; }
 }

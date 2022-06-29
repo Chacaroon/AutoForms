@@ -20,7 +20,7 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
         return PropertyFormControlTypeResolver.IsDictionary(modelType, options);
     }
 
-    internal override Node Process(Type type, HashSet<Type> hashSet)
+    internal override AbstractControl Process(Type type, HashSet<Type> hashSet)
     {
         CheckCircularDependency(ref hashSet, type);
 
@@ -31,7 +31,7 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
 
         var valueType = GetDictionaryValueType(type);
 
-        Node BuildNode(object value) =>
+        AbstractControl BuildControl(object value) =>
             _strategyResolver.Resolve(valueType, Options)
                 .EnhanceWithValue(value)
                 .Process(valueType, hashSet);
@@ -39,11 +39,11 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
         var value = (Value as IDictionary)!;
 
         var result = value.Keys.Cast<object>().ToDictionary(key => key.ToString(),
-            key => BuildNode(value[key]));
+            key => BuildControl(value[key]));
 
         return new FormGroup
         {
-            Nodes = result
+            Controls = result
         };
     }
 

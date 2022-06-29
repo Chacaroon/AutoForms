@@ -7,7 +7,6 @@
       "projectType": "library",
       "root": "projects/client",
       "sourceRoot": "projects/client/src",
-      "prefix": "auto-forms",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",

@@ -9,16 +9,29 @@ namespace AutoForms.Models;
 /// Represents control that holds collection of values.
 /// </summary>
 [ExcludeFromCodeCoverage]
-public class FormArray : Node
+public class FormArray : AbstractControl
 {
+    /// <summary>
+    /// Creates the <see cref="FormArray"/> instance
+    /// </summary>
     public FormArray()
     {
-        Nodes = Array.Empty<Node>();
+        Controls = Array.Empty<AbstractControl>();
     }
 
-    public override NodeType Type => NodeType.Array;
+    /// <inheritdoc/>
+    public override ControlType Type => ControlType.Array;
 
-    public IEnumerable<Node> Nodes { get; set; }
+    /// <summary>
+    /// Collection of the child controls.
+    /// </summary>
+    public IEnumerable<AbstractControl> Controls { get; set; }
 
-    public Node NodeSchema { get; set; }
+    /// <summary>
+    /// The structure of the child control.
+    /// </summary>
+    /// <remarks>
+    /// Uses by another system's part to build and add new controls to the FormArray.
+    /// </remarks>
+    public AbstractControl ControlSchema { get; set; }
 }

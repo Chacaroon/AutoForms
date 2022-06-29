@@ -7,9 +7,13 @@ namespace AutoForms.Models;
 /// Represents control that holds indivisible value.
 /// </summary>
 [ExcludeFromCodeCoverage]
-public class FormControl : Node
+public class FormControl : AbstractControl
 {
-    public override NodeType Type => NodeType.Control;
+    /// <inheritdoc />
+    public override ControlType Type => ControlType.Control;
 
+    /// <summary>
+    /// The FormControl's value
+    /// </summary>
     public object Value { get; set; }
 }

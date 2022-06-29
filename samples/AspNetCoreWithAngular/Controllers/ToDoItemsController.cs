@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-namespace AspNetCoreWithAngular.Controllers;
-
 using System.Collections.Generic;
 using System.Linq;
 using AspNetCoreWithAngular.Models;
 using AutoForms;
 
+namespace AspNetCoreWithAngular.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class ToDoItemsController : ControllerBase

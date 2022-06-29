@@ -1,5 +1,5 @@
 {
-  "name": "auto-forms-client",
+  "name": "auto-forms",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,7 +22,6 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
-    "@auto-forms/client": "^0.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

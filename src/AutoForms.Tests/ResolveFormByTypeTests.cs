@@ -24,73 +24,73 @@ internal class ResolveFormByTypeTests
     }
 
     [Test]
-    public void Resolve_ComplexTypeAsGenericParameter_ReturnsFormGroupWithItsChildNodes()
+    public void Resolve_ComplexTypeAsGenericParameter_ReturnsFormGroupWithItsChildControls()
     {
         // Assert
         var formBuilder = _serviceProvider.GetRequiredService<FormBuilderFactory>()
             .CreateFormBuilder<ComplexType>();
 
         // Act
-        var node = formBuilder.Build() as FormGroup;
+        var formGroup = formBuilder.Build() as FormGroup;
 
         // Arrange
-        Assert.NotNull(node);
+        Assert.NotNull(formGroup);
 
-        Assert.NotNull(FindNode<FormControl>(node, nameof(ComplexType.StringProperty)));
-        Assert.NotNull(FindNode<FormArray>(node, nameof(ComplexType.ArrayProperty)));
-        Assert.NotNull(FindNode<FormGroup>(node, nameof(ComplexType.ComplexTypeProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexType.StringProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexType.ArrayProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexType.ComplexTypeProperty)));
     }
 
     [Test]
-    public void Resolve_ComplexValueTypeAsGenericParameter_ReturnsFormGroupWithItsChildNodes()
+    public void Resolve_ComplexValueTypeAsGenericParameter_ReturnsFormGroupWithItsChildControls()
     {
         // Assert
         var formBuilder = _serviceProvider.GetRequiredService<FormBuilderFactory>()
             .CreateFormBuilder<ComplexStruct>();
 
         // Act
-        var node = formBuilder.Build() as FormGroup;
+        var formGroup = formBuilder.Build() as FormGroup;
 
         // Arrange
-        Assert.NotNull(node);
+        Assert.NotNull(formGroup);
 
-        Assert.NotNull(FindNode<FormControl>(node, nameof(ComplexStruct.StringProperty)));
-        Assert.NotNull(FindNode<FormArray>(node, nameof(ComplexStruct.ArrayProperty)));
-        Assert.NotNull(FindNode<FormGroup>(node, nameof(ComplexStruct.ComplexTypeProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexStruct.StringProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexStruct.ArrayProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexStruct.ComplexTypeProperty)));
     }
 
     [Test]
-    public void Resolve_ComplexTypeAsMethodParameter_ReturnsFormGroupWithItsChildNodes()
+    public void Resolve_ComplexTypeAsMethodParameter_ReturnsFormGroupWithItsChildControls()
     {
         // Assert
         var formBuilder = _serviceProvider.GetRequiredService<FormBuilderFactory>()
             .CreateFormBuilder(typeof(ComplexType));
 
         // Act
-        var node = formBuilder.Build() as FormGroup;
+        var formGroup = formBuilder.Build() as FormGroup;
 
         // Arrange
-        Assert.NotNull(node);
+        Assert.NotNull(formGroup);
 
-        Assert.NotNull(FindNode<FormControl>(node, nameof(ComplexType.StringProperty)));
-        Assert.NotNull(FindNode<FormArray>(node, nameof(ComplexType.ArrayProperty)));
-        Assert.NotNull(FindNode<FormGroup>(node, nameof(ComplexType.ComplexTypeProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexType.StringProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexType.ArrayProperty)));
+        Assert.NotNull(FindControl(formGroup, nameof(ComplexType.ComplexTypeProperty)));
     }
 
     [Test]
-    public void Resolve_ComplexTypeArrayAsGenericParameter_ReturnsFromArrayWithoutChildNodes()
+    public void Resolve_ComplexTypeArrayAsGenericParameter_ReturnsFromArrayWithoutChildControls()
     {
         // Assert
         var formBuilder = _serviceProvider.GetRequiredService<FormBuilderFactory>()
             .CreateFormBuilder<ComplexType[]>();
 
         // Act
-        var node = formBuilder.Build() as FormArray;
+        var formArray = formBuilder.Build() as FormArray;
 
         // Arrange
-        Assert.NotNull(node);
+        Assert.NotNull(formArray);
 
-        Assert.IsEmpty(node.Nodes);
+        Assert.IsEmpty(formArray.Controls);
     }
     
     [TestCase(typeof(FirstClass), "Circular dependency: FirstClass->SecondClass->ThirdClass->FirstClass")]
@@ -111,9 +111,9 @@ internal class ResolveFormByTypeTests
 
     #region Helpers
 
-    private Node FindNode<T>(FormGroup node, string nodeName) where T : Node
+    private AbstractControl FindControl(FormGroup formGroup, string formControlName)
     {
-        return node.Nodes.GetValueOrDefault(nodeName.FirstCharToLowerCase());
+        return formGroup.Controls.GetValueOrDefault(formControlName.FirstCharToLowerCase());
     }
 
     #endregion
