@@ -42,4 +42,38 @@ public static class AutoFormsExtensions
 
         return serviceCollection;
     }
+
+    /// <summary>
+    /// Register Newtonsoft.Json serializer with predefined settings.
+    /// </summary>
+    /// <param name="mvcBuilder"></param>
+    /// <returns><see cref="IMvcBuilder"/></returns>
+    [ExcludeFromCodeCoverage]
+    public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder)
+    {
+        mvcBuilder.AddNewtonsoftJson(options =>
+        {
+            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+        });
+
+        return mvcBuilder;
+    }
+
+    /// <summary>
+    /// Register Newtonsoft.Json serializer with predefined settings.
+    /// </summary>
+    /// <param name="mvcBuilder"></param>
+    /// <param name="action">Callback to configure <see cref="MvcNewtonsoftJsonOptions"/>.</param>
+    /// <returns><see cref="IMvcBuilder"/></returns>
+    [ExcludeFromCodeCoverage]
+    public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder, Action<MvcNewtonsoftJsonOptions> action)
+    {
+        mvcBuilder.AddNewtonsoftJson(options =>
+        {
+            action(options);
+            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+        });
+
+        return mvcBuilder;
+    }
 }

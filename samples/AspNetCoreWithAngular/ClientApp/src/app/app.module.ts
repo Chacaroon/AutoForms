@@ -11,7 +11,7 @@ import { BaseUrlInterceptor } from "./interceptors/base-url.interceptor";
 import { CreateTodoListComponent } from './components/create-todo-list/create-todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { NgSelectModule } from "@ng-select/ng-select";
-import { CommonModule } from "@angular/common";
+import { BrowserModule } from "@angular/platform-browser";
 
 
 @NgModule({
@@ -23,7 +23,6 @@ import { CommonModule } from "@angular/common";
         TodoItemComponent,
     ],
     imports: [
-        CommonModule,
         AutoFormsModule.forRoot(),
         HttpClientModule,
         FormsModule,
@@ -34,6 +33,7 @@ import { CommonModule } from "@angular/common";
             { path: 'update-todo-list/:id', component: CreateTodoListComponent }
         ]),
         NgSelectModule,
+        BrowserModule,
     ],
     providers: [
         {

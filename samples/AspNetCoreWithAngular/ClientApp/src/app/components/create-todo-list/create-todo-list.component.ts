@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { AfFormGroup, AfNode, buildForm } from "@auto-forms/client";
+import { AfControl, AfFormGroup, buildForm } from "@auto-forms/client";
 import { SelectListItem, tags, ToDoListModel } from "../../models";
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -22,7 +22,7 @@ export class CreateTodoListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.form$ = this.http.get<AfNode>(this.getUrl()).pipe(
+        this.form$ = this.http.get<AfControl>(this.getUrl()).pipe(
             buildForm<ToDoListModel>()
         )
     }
