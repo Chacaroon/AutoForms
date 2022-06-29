@@ -173,3 +173,7 @@ public class ValuesController : ControllerBase
 ```
 
 Finally, the `Post` endpoint receives exactly those models for which the data structure has been built.
+
+# What's next
+
+Take a look at the [FormValue](./FormValue.md) attrubute. This attribute allows to override the default logic of AutoForms, so make complex types translate to the `FormControl`.
