@@ -49,7 +49,7 @@ jobs:
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG -p:Version=$BUILD_VERSION --no-restore
 
     - name: Run tests
-      run: dotnet test /p:CollectCoverage=true /p:CoverletOutput=. /p:CoverletOutputFormat=xml /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
+      run: dotnet test /p:CollectCoverage=true /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal --collect:"XPlat Code Coverage" -r ./TestResults/
       
     - name: Upload coverage reports to Codecov
       run: |
