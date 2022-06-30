@@ -4,8 +4,6 @@ on:
   release:
     types: [published]
   push:
-    branches:
-    - master
   pull_request:
     branches:
     - master
@@ -51,7 +49,7 @@ jobs:
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG -p:Version=$BUILD_VERSION --no-restore
 
     - name: Run tests
-      run: dotnet test /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
+      run: dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=xml /p:Configuration=$BUILD_CONFIG --no-restore --no-build --verbosity normal
     
     - name: Publish
       if: github.event_name == 'release'
