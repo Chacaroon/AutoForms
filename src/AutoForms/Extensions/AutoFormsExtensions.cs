@@ -1,5 +1,5 @@
-using AutoForms.FormBuilderStrategies;
-using AutoForms.FormBuilderStrategies.Strategies;
+using AutoForms.Resolvers;
+using AutoForms.Strategies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -22,13 +22,10 @@ public static class AutoFormsExtensions
     {
         serviceCollection.AddScoped(services =>
             new StrategyResolver(
-                services.GetRequiredService<IServiceProvider>(),
-                services.GetRequiredService<StrategyOptionsResolver>()));
+                services.GetRequiredService<IServiceProvider>()));
 
         serviceCollection.AddScoped(services =>
             new FormBuilderFactory(services.GetRequiredService<StrategyResolver>()));
-
-        serviceCollection.AddSingleton(_ => new StrategyOptionsResolver());
 
         var strategies = Assembly.GetAssembly(typeof(BaseStrategy))!
             .GetTypes()

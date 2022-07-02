@@ -26,10 +26,10 @@ public class Validator
     /// <summary>
     /// The validation message
     /// </summary>
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     /// <summary>
     /// Validator additional options
     /// </summary>
-    public virtual object Value { get; set; }
+    public virtual object? Value { get; set; }
 }

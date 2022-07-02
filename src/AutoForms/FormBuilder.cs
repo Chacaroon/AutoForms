@@ -1,5 +1,5 @@
-using AutoForms.FormBuilderStrategies.Strategies;
 using AutoForms.Models;
+using AutoForms.Strategies;
 
 namespace AutoForms;
 
@@ -23,12 +23,12 @@ public class FormBuilder
     /// </summary>
     /// <param name="value">The value with which the controls will be populated.</param>
     /// <returns>The same instance of the <see cref="FormBuilder"/> for chaining.</returns>
-    public FormBuilder EnhanceWithValue(object value)
+    public FormBuilder EnhanceWithValue(object? value)
     {
         if (value != null && !_type.IsInstanceOfType(value))
             throw new ArgumentException("The value type does not match the type the FormBuilder was created for.", nameof(value));
 
-        _strategy.EnhanceWithValue(value);
+        _strategy.Context = _strategy.Context with { Value = value };
 
         return this;
     }
@@ -39,7 +39,7 @@ public class FormBuilder
     /// <returns>The same instance of the <see cref="FormBuilder"/> for chaining.</returns>
     public FormBuilder EnhanceWithValidators(bool enhanceWithValidators = true)
     {
-        _strategy.Options.EnhanceWithValidators = enhanceWithValidators;
+        _strategy.Context = _strategy.Context with { EnhanceWithValidators = enhanceWithValidators };
 
         return this;
     }
@@ -55,6 +55,6 @@ public class FormBuilder
     /// </remarks>
     public AbstractControl Build()
     {
-        return _strategy.Process(_type, new());
+        return _strategy.Process(new());
     }
 }

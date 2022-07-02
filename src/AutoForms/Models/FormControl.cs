@@ -15,5 +15,5 @@ public class FormControl : AbstractControl
     /// <summary>
     /// The FormControl's value
     /// </summary>
-    public object Value { get; set; }
+    public object? Value { get; set; }
 }
