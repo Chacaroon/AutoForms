@@ -6,6 +6,7 @@ export interface AfValidator {
 
 export enum AfValidatorType {
   Required = 1,
-  MinLength,
-  MaxLength
+  MinLength = 2,
+  MaxLength = 3,
+  RegularExpression = 4,
 }

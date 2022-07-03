@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoForms.Exceptions;
 using AutoForms.Extensions;
 using AutoForms.Models;
+using AutoForms.Options;
 using AutoForms.Resolvers;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -99,12 +100,13 @@ internal class ResolveFormByTypeTests
     {
         // Arrange
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
+        var context = new FormBuilderContext(type);
 
         // Act
-        var strategy = strategyResolver.Resolve(new(type));
+        var strategy = strategyResolver.Resolve(context);
 
         // Assert
-        var exception = Assert.Throws<CircularDependencyException>(() => strategy.Process(new()))!;
+        var exception = Assert.Throws<CircularDependencyException>(() => strategy.Process(context, new()))!;
         Assert.AreEqual(expectedMessage, exception.Message);
     }
 

@@ -17,13 +17,13 @@ public class ValidatorResolverTests
     public void SetUp()
     {
         var services = new ServiceCollection()
-            .AddAutoForms();
+            .AddAutoForms()
+            .AddValidationProcessor();
 
         _serviceProvider = services.BuildServiceProvider();
     }
 
     [Test]
-    [Ignore("Validation processing will be implemented as the plugin later")]
     public void Resolve_StringPropertyWithValidators_ReturnsControlWithValidators()
     {
         // Arrange
@@ -37,9 +37,10 @@ public class ValidatorResolverTests
         var testPropertyControl = formGroup.Controls.First(x => x.Key == nameof(TestClass.TestProperty).FirstCharToLowerCase()).Value;
         var requiredPropertyControl = formGroup.Controls.First(x => x.Key == nameof(TestClass.RequiredProperty).FirstCharToLowerCase()).Value;
 
-        Assert.AreEqual(2, testPropertyControl.Validators.Length);
+        Assert.AreEqual(3, testPropertyControl.Validators.Length);
         Assert.NotNull(testPropertyControl.Validators.FirstOrDefault(x => x.Type == ValidatorType.MinLength));
         Assert.NotNull(testPropertyControl.Validators.FirstOrDefault(x => x.Type == ValidatorType.MaxLength));
+        Assert.NotNull(testPropertyControl.Validators.FirstOrDefault(x => x.Type == ValidatorType.RegularExpression));
 
         Assert.NotNull(requiredPropertyControl.Validators.FirstOrDefault(x => x.Type == ValidatorType.Required));
     }
@@ -50,6 +51,7 @@ public class ValidatorResolverTests
     {
         [MinLength(5)]
         [MaxLength(10)]
+        [RegularExpression("([A-z]{0,2})")]
         public string TestProperty { get; set; }
 
         [Required]

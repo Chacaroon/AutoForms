@@ -2,24 +2,36 @@ using System.Collections.Generic;
 using AutoForms.Exceptions;
 using AutoForms.Models;
 using AutoForms.Options;
+using AutoForms.Processors;
 
 namespace AutoForms.Strategies;
 
 internal abstract class BaseStrategy
 {
-    private protected Validator[] Validators { get; } = Array.Empty<Validator>();
+    private readonly IEnumerable<BaseControlProcessor> _controlProcessors;
 
-    internal FormBuilderContext Context { get; set; } = null!;
+    internal BaseStrategy(IEnumerable<BaseControlProcessor> controlProcessors)
+    {
+        _controlProcessors = controlProcessors;
+    }
 
     #region AbstractMethods
 
     internal abstract bool IsStrategyApplicable(FormBuilderContext context);
 
-    internal abstract AbstractControl Process(HashSet<Type> hashSet);
+    internal abstract AbstractControl Process(FormBuilderContext context, HashSet<Type> hashSet);
 
     #endregion
 
     #region Helpers
+
+    protected void ProcessControl(AbstractControl control, FormBuilderContext context)
+    {
+        foreach (var controlProcessor in _controlProcessors)
+        {
+            controlProcessor.Process(control, context);
+        }
+    }
 
     protected void CheckCircularDependency(ref HashSet<Type> hashSet, Type type)
     {

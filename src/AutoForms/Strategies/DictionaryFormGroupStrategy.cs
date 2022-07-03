@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using AutoForms.Models;
 using AutoForms.Options;
+using AutoForms.Processors;
 using AutoForms.Resolvers;
 
 namespace AutoForms.Strategies;
@@ -10,7 +11,9 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
 {
     private readonly StrategyResolver _strategyResolver;
 
-    public DictionaryFormGroupStrategy(StrategyResolver strategyResolver)
+    public DictionaryFormGroupStrategy(StrategyResolver strategyResolver,
+        IEnumerable<BaseControlProcessor> controlProcessors)
+        : base(controlProcessors)
     {
         _strategyResolver = strategyResolver;
     }
@@ -20,35 +23,43 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
         return PropertyFormControlTypeResolver.IsDictionary(context);
     }
 
-    internal override AbstractControl Process(HashSet<Type> hashSet)
+    internal override AbstractControl Process(FormBuilderContext context, HashSet<Type> hashSet)
     {
-        CheckCircularDependency(ref hashSet, Context.ModelType);
+        CheckCircularDependency(ref hashSet, context.ModelType);
 
-        if (Context.Value == null)
+        if (context.Value == null)
         {
             return new FormGroup();
         }
 
-        var valueType = GetDictionaryValueType(Context.ModelType);
+        var valueType = GetDictionaryValueType(context.ModelType);
 
-        AbstractControl BuildControl(object? value) =>
-            _strategyResolver.Resolve(Context with
-                {
-                    ModelType = valueType,
-                    PropertyInfo = null,
-                    Value = value
-                })
-                .Process(hashSet);
+        AbstractControl BuildControl(object? value)
+        {
+            var itemContext = context with
+            {
+                ModelType = valueType,
+                PropertyInfo = null,
+                Value = value
+            };
+            return _strategyResolver
+                .Resolve(itemContext)
+                .Process(itemContext, hashSet);
+        }
 
-        var value = (IDictionary)Context.Value!;
+        var value = (IDictionary)context.Value!;
 
         var result = value.Keys.Cast<object>()
             .ToDictionary(key => key.ToString()!, key => BuildControl(value[key]));
 
-        return new FormGroup
+        var control = new FormGroup
         {
             Controls = result
         };
+
+        ProcessControl(control, context);
+
+        return control;
     }
 
     private Type GetDictionaryValueType(Type type)

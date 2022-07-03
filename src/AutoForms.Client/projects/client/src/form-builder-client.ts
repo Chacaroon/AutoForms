@@ -3,10 +3,10 @@ import {
   AfControl,
   AfValidator,
   AfValidatorType,
+  ControlType,
   FormArrayNode,
   FormControlNode,
-  FormGroupNode,
-  ControlType
+  FormGroupNode
 } from "./form-nodes";
 import { AfFormArray, AfFormControl, AfFormGroup } from "./models";
 import { ValidatorFn } from "@angular/forms";
@@ -42,6 +42,7 @@ export class FormBuilderClient {
       [AfValidatorType.Required]: (validator: AfValidator) => AfValidators.required(validator.message),
       [AfValidatorType.MinLength]: (validator: AfValidator) => AfValidators.minLength(validator.value, validator.message),
       [AfValidatorType.MaxLength]: (validator: AfValidator) => AfValidators.maxLength(validator.value, validator.message),
+      [AfValidatorType.RegularExpression]: (validator: AfValidator) => AfValidators.regex(validator.value, validator.message)
     };
 
     return validators ? validators.map(x => validatorsMap[x.type](x)) : [];

@@ -19,8 +19,6 @@ internal class StrategyResolver
     {
         var strategy = _strategies.Value.First(x => x.IsStrategyApplicable(context));
 
-        strategy.Context = context;
-
         return strategy;
     }
 }

@@ -11,6 +11,7 @@ public class FormBuilder
 {
     private readonly Type _type;
     private readonly BaseStrategy _strategy;
+    private object? _value;
 
     internal FormBuilder(Type type, BaseStrategy strategy)
     {
@@ -28,7 +29,7 @@ public class FormBuilder
         if (value != null && !_type.IsInstanceOfType(value))
             throw new ArgumentException("The value type does not match the type the FormBuilder was created for.", nameof(value));
 
-        _strategy.Context = _strategy.Context with { Value = value };
+        _value = value;
 
         return this;
     }
@@ -44,6 +45,6 @@ public class FormBuilder
     /// </remarks>
     public AbstractControl Build()
     {
-        return _strategy.Process(new());
+        return _strategy.Process(new(_type) { Value = _value }, new());
     }
 }
