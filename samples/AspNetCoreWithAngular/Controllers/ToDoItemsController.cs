@@ -11,7 +11,7 @@ public class ToDoItemsController : ControllerBase
 {
     private readonly FormBuilderFactory _formBuilderFactory;
 
-    private static readonly Dictionary<int, ToDoListModel> ToDoItems = new()
+    private static readonly Dictionary<int, ToDoListModel> _toDoItems = new()
     {
         {
             1,
@@ -77,7 +77,7 @@ public class ToDoItemsController : ControllerBase
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok(ToDoItems.Select(x => x.Value));
+        return Ok(_toDoItems.Select(x => x.Value));
     }
 
 
@@ -85,7 +85,6 @@ public class ToDoItemsController : ControllerBase
     public IActionResult Create()
     {
         var form = _formBuilderFactory.CreateFormBuilder<ToDoListModel>()
-            .EnhanceWithValidators()
             .Build();
 
         return Ok(form);
@@ -94,9 +93,9 @@ public class ToDoItemsController : ControllerBase
     [HttpPost("create")]
     public IActionResult Create([FromBody] ToDoListModel model)
     {
-        var id = ToDoItems.Keys.LastOrDefault() + 1;
+        var id = _toDoItems.Keys.LastOrDefault() + 1;
         model.Id = id;
-        ToDoItems.Add(id, model);
+        _toDoItems.Add(id, model);
 
         return Ok();
     }
@@ -105,8 +104,7 @@ public class ToDoItemsController : ControllerBase
     public IActionResult Update(int id)
     {
         var form = _formBuilderFactory.CreateFormBuilder<ToDoListModel>()
-            .EnhanceWithValidators()
-            .EnhanceWithValue(ToDoItems[id])
+            .EnhanceWithValue(_toDoItems[id])
             .Build();
 
         return Ok(form);
@@ -115,7 +113,7 @@ public class ToDoItemsController : ControllerBase
     [HttpPost("update/{id}")]
     public IActionResult Update([FromRoute] int id, [FromBody] ToDoListModel model)
     {
-        ToDoItems[id] = model;
+        _toDoItems[id] = model;
 
         return Ok();
     }

@@ -21,5 +21,5 @@ public abstract class AbstractControl
     /// <summary>
     /// Validators' metadata
     /// </summary>
-    public Validator[] Validators { get; set; }
+    public Validator[] Validators { get; set; } = Array.Empty<Validator>();
 }

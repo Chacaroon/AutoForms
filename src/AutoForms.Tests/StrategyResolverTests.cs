@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using AutoForms.Extensions;
-using AutoForms.FormBuilderStrategies;
-using AutoForms.FormBuilderStrategies.Strategies;
+using AutoForms.Resolvers;
+using AutoForms.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -34,7 +34,7 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type, new());
+        var strategy = strategyResolver.Resolve(new(type));
 
         // Assert
         Assert.IsInstanceOf<FormControlStrategy>(strategy);
@@ -52,7 +52,7 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type, new());
+        var strategy = strategyResolver.Resolve(new(type));
 
         // Assert
         Assert.IsInstanceOf<FormArrayStrategy>(strategy);
@@ -65,7 +65,7 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type, new());
+        var strategy = strategyResolver.Resolve(new(type));
 
         // Assert
         Assert.IsInstanceOf<FormGroupStrategy>(strategy);
@@ -78,7 +78,7 @@ internal class StrategyResolverTests
         var strategyResolver = _serviceProvider.GetRequiredService<StrategyResolver>();
 
         // Act
-        var strategy = strategyResolver.Resolve(type, new());
+        var strategy = strategyResolver.Resolve(new(type));
 
         // Assert
         Assert.IsInstanceOf<DictionaryFormGroupStrategy>(strategy);

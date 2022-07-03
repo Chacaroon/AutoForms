@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using AutoForms.Helpers;
 using AutoForms.Models;
 using AutoForms.Options;
+using AutoForms.Resolvers;
 
-namespace AutoForms.FormBuilderStrategies.Strategies;
+namespace AutoForms.Strategies;
 
 internal class FormArrayStrategy : BaseStrategy
 {
@@ -15,29 +15,33 @@ internal class FormArrayStrategy : BaseStrategy
         _strategyResolver = strategyResolver;
     }
 
-    internal override bool IsStrategyApplicable(Type modelType, ResolvingStrategyOptions options)
+    internal override bool IsStrategyApplicable(FormBuilderContext context)
     {
-        return PropertyFormControlTypeResolver.IsFormArray(modelType, options);
+        return PropertyFormControlTypeResolver.IsFormArray(context);
     }
 
-    internal override AbstractControl Process(Type type, HashSet<Type> hashSet)
+    internal override AbstractControl Process(HashSet<Type> hashSet)
     {
-        CheckCircularDependency(ref hashSet, type);
+        CheckCircularDependency(ref hashSet, Context.ModelType);
 
-        var collectionItemType = GetCollectionItemType(type);
+        var collectionItemType = GetCollectionItemType(Context.ModelType);
 
-        AbstractControl BuildControl(object value = null) => _strategyResolver.Resolve(collectionItemType, Options)
-            .EnhanceWithValue(value)
-            .Process(collectionItemType, hashSet);
+        AbstractControl BuildControl(object? value = null)
+        {
+            var collectionItemContext = Context with
+            {
+                ModelType = collectionItemType,
+                PropertyInfo = null,
+                Value = value
+            };
+            return _strategyResolver.Resolve(collectionItemContext)
+                .Process(hashSet);
+        }
 
-        var values = ((IEnumerable)Value)?.Cast<object>() ?? Array.Empty<object>();
+        var values = ((IEnumerable?)Context.Value)?.Cast<object>() ?? Array.Empty<object>();
         var controls = values.Select(BuildControl);
 
-        var formArray = new FormArray
-        {
-            Controls = controls,
-            ControlSchema = BuildControl()
-        };
+        var formArray = new FormArray(controls, BuildControl());
 
         return formArray;
     }

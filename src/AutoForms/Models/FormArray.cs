@@ -14,9 +14,10 @@ public class FormArray : AbstractControl
     /// <summary>
     /// Creates the <see cref="FormArray"/> instance
     /// </summary>
-    public FormArray()
+    public FormArray(IEnumerable<AbstractControl> controls, AbstractControl controlSchema)
     {
-        Controls = Array.Empty<AbstractControl>();
+        Controls = controls;
+        ControlSchema = controlSchema;
     }
 
     /// <inheritdoc/>
