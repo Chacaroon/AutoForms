@@ -34,17 +34,6 @@ public class FormBuilder
     }
 
     /// <summary>
-    /// Set whether to add validation to the generated data structure.
-    /// </summary>
-    /// <returns>The same instance of the <see cref="FormBuilder"/> for chaining.</returns>
-    public FormBuilder EnhanceWithValidators(bool enhanceWithValidators = true)
-    {
-        _strategy.Context = _strategy.Context with { EnhanceWithValidators = enhanceWithValidators };
-
-        return this;
-    }
-
-    /// <summary>
     /// Build data structure.
     /// </summary>
     /// <returns>The root control of the built data structure.

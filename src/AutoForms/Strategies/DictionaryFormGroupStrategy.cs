@@ -15,9 +15,9 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
         _strategyResolver = strategyResolver;
     }
 
-    internal override bool IsStrategyApplicable(FormBuilderContext options)
+    internal override bool IsStrategyApplicable(FormBuilderContext context)
     {
-        return PropertyFormControlTypeResolver.IsDictionary(options);
+        return PropertyFormControlTypeResolver.IsDictionary(context);
     }
 
     internal override AbstractControl Process(HashSet<Type> hashSet)

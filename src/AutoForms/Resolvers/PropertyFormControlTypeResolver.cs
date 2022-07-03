@@ -1,24 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using AutoForms.Extensions;
 using AutoForms.Options;
 
 namespace AutoForms.Resolvers;
 
 internal static class PropertyFormControlTypeResolver
 {
-    private static readonly Type[] PrimitiveTypes =
+    private static readonly Type[] _primitiveTypes =
     {
         typeof(object),
         typeof(string),
         typeof(DateTime)
     };
 
-    internal static bool IsFormControl(FormBuilderContext options)
+    internal static bool IsFormControl(FormBuilderContext context)
     {
-        return options.ModelType.IsPrimitive
-               || options.ModelType.IsEnum
-               || PrimitiveTypes.Contains(options.ModelType)
-               || options.IsFormValue();
+        return context.ModelType.IsPrimitive
+               || context.ModelType.IsEnum
+               || _primitiveTypes.Contains(context.ModelType)
+               || context.IsFormValue();
     }
 
     internal static bool IsFormArray(FormBuilderContext context)
@@ -30,7 +31,9 @@ internal static class PropertyFormControlTypeResolver
 
     internal static bool IsFormGroup(FormBuilderContext context)
     {
-        return !IsFormControl(context) && !IsFormArray(context) && !IsDictionary(context);
+        return !IsFormControl(context) 
+               && !IsFormArray(context) 
+               && !IsDictionary(context);
     }
 
     internal static bool IsDictionary(FormBuilderContext context)

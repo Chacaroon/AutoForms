@@ -23,12 +23,12 @@ public class ValidatorResolverTests
     }
 
     [Test]
+    [Ignore("Validation processing will be implemented as the plugin later")]
     public void Resolve_StringPropertyWithValidators_ReturnsControlWithValidators()
     {
         // Arrange
         var formBuilder = _serviceProvider.GetRequiredService<FormBuilderFactory>()
-            .CreateFormBuilder<TestClass>()
-            .EnhanceWithValidators();
+            .CreateFormBuilder<TestClass>();
 
         // Act
         var formGroup = (formBuilder.Build() as FormGroup)!;

@@ -7,7 +7,7 @@ namespace AutoForms.Strategies;
 
 internal abstract class BaseStrategy
 {
-    private protected Models.Validator[] Validators { get; private set; } = Array.Empty<Models.Validator>();
+    private protected Validator[] Validators { get; } = Array.Empty<Validator>();
 
     internal FormBuilderContext Context { get; set; } = null!;
 

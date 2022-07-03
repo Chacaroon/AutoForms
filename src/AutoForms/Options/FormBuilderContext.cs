@@ -1,24 +1,27 @@
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
-using AutoForms.Attributes;
 
 namespace AutoForms.Options;
 
 /// <summary>
 /// Context that contains information for building FormControl
 /// </summary>
+/// <param name="ModelType">Type of processed model</param>
 public record FormBuilderContext(Type ModelType)
 {
-    public object? Value { get; set; }
+    /// <summary>
+    /// The current node's value
+    /// </summary>
+    public object? Value { get; init; }
 
-    public bool EnhanceWithValidators { get; init; }
-
+    /// <summary>
+    /// The <see cref="System.Reflection.PropertyInfo"/> data of the processed field
+    /// </summary>
     public PropertyInfo? PropertyInfo { get; init; }
 
-    public bool IsFormValue() => GetAttributes().Any(x => x.GetType() == typeof(FormValueAttribute));
-
+    /// <summary>
+    /// Returns all ModelType and PropertyInfo (if present) attributes
+    /// </summary>
+    /// <returns>Array with attributes</returns>
     public Attribute[] GetAttributes() =>
         ModelType
             .GetCustomAttributes()
