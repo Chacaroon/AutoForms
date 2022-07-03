@@ -1,3 +1,4 @@
+using AutoForms.Processors;
 using AutoForms.Resolvers;
 using AutoForms.Strategies;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,11 @@ public static class AutoFormsExtensions
     /// Register services required by AutoForms.
     /// </summary>
     /// <param name="serviceCollection">.</param>
-    /// <returns>The same instance of the <see cref="IServiceCollection"/> for chaining.</returns>
+    /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddAutoForms(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped(services =>
-            new StrategyResolver(
-                services.GetRequiredService<IServiceProvider>()));
+            new StrategyResolver(services.GetRequiredService<IServiceProvider>()));
 
         serviceCollection.AddScoped(services =>
             new FormBuilderFactory(services.GetRequiredService<StrategyResolver>()));
@@ -34,7 +34,60 @@ public static class AutoFormsExtensions
 
         foreach (var strategyType in strategies)
         {
-            serviceCollection.AddTransient(typeof(BaseStrategy), strategyType);
+            serviceCollection.AddSingleton(typeof(BaseStrategy), strategyType);
+        }
+
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Register ControlProcessor that processes validation attributes
+    /// </summary>
+    /// <param name="serviceCollection">.</param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddValidationProcessor(this IServiceCollection serviceCollection)
+    {
+        var processors = Assembly.GetAssembly(typeof(BaseControlProcessor))!
+            .GetTypes()
+            .Where(x => !x.IsAbstract)
+            .Where(x => typeof(BaseControlProcessor).IsAssignableFrom(x));
+
+        foreach (var processorType in processors)
+        {
+            serviceCollection.AddSingleton(typeof(BaseControlProcessor), processorType);
+        }
+
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Register ControlProcessors
+    /// </summary>
+    /// <param name="serviceCollection">.</param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddFormBuilderProcessors(this IServiceCollection serviceCollection)
+    {
+        AddFormBuilderProcessors(serviceCollection, Assembly.GetCallingAssembly());
+
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Register ControlProcessors
+    /// </summary>
+    /// <param name="serviceCollection">.</param>
+    /// <param name="assembly">Assembly in which to look for control processors</param>
+    /// <returns><see cref="IServiceCollection"/></returns>
+    public static IServiceCollection AddFormBuilderProcessors(this IServiceCollection serviceCollection, Assembly assembly)
+    {
+        var processors = assembly
+            .GetTypes()
+            .Where(x => !x.IsAbstract)
+            .Where(x => typeof(BaseControlProcessor).IsAssignableFrom(x));
+
+        foreach (var processorType in processors)
+        {
+            serviceCollection.AddSingleton(typeof(BaseControlProcessor), processorType);
         }
 
         return serviceCollection;
@@ -44,7 +97,7 @@ public static class AutoFormsExtensions
     /// Register Newtonsoft.Json serializer with predefined settings.
     /// </summary>
     /// <param name="mvcBuilder"></param>
-    /// <returns><see cref="IMvcBuilder"/></returns>
+    /// <returns><see cref="IMvcBuilder"/>.</returns>
     [ExcludeFromCodeCoverage]
     public static IMvcBuilder AddAutoFormsSerializer(this IMvcBuilder mvcBuilder)
     {

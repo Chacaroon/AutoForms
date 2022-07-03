@@ -19,4 +19,9 @@ public enum ValidatorType
     /// Max length validator type
     /// </summary>
     MaxLength = 3,
+
+    /// <summary>
+    /// Regular expression validator type
+    /// </summary>
+    RegularExpression = 4,
 }
