@@ -12,6 +12,7 @@ namespace AutoForms.Extensions;
 /// <summary>
 /// Extensions for <see cref="IServiceCollection"/>
 /// </summary>
+[ExcludeFromCodeCoverage]
 public static class AutoFormsExtensions
 {
     /// <summary>
