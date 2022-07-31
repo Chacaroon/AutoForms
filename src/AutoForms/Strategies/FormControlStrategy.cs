@@ -20,11 +20,7 @@ internal class FormControlStrategy : BaseStrategy
 
     internal override AbstractControl Process(FormBuilderContext context, HashSet<Type> hashSet)
     {
-        CheckCircularDependency(ref hashSet, context.ModelType);
-
-        var control = new FormControl { Value = context.Value };
-
-        ProcessControl(control, context);
+        var control = new FormControl<object> { Value = context.Value };
 
         return control;
     }

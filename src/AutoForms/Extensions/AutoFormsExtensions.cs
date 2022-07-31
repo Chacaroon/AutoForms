@@ -22,7 +22,7 @@ public static class AutoFormsExtensions
     /// <returns><see cref="IServiceCollection"/></returns>
     public static IServiceCollection AddAutoForms(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped(services =>
+        serviceCollection.AddSingleton(services =>
             new StrategyResolver(services.GetRequiredService<IServiceProvider>()));
 
         serviceCollection.AddScoped(services =>

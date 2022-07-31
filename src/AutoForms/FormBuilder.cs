@@ -45,6 +45,6 @@ public class FormBuilder
     /// </remarks>
     public AbstractControl Build()
     {
-        return _strategy.Process(new(_type) { Value = _value }, new());
+        return _strategy.ProcessInternal(new(_type) { Value = _value }, new());
     }
 }

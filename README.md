@@ -26,6 +26,7 @@ Register [FormBuilderFactory](https://github.com/Chacaroon/AutoForms/blob/master
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddAutoForms();
+	services.AddValidationProcessor();
 }
 ```
 
@@ -41,7 +42,7 @@ npm install @auto-forms/client
 
 ### Import AutoFormsModule to AppModule
 
-Add the `AutoFormsModule` to the `AppModule`, so you'll be able to inject [FormBuilderCllient](https://github.com/Chacaroon/AutoForms/blob/feature/readme/src/AutoForms.Client/projects/client/src/form-builder-client.ts).
+Add the `AutoFormsModule` to the `AppModule`, so you'll be able to inject [FormBuilderCllient](https://github.com/Chacaroon/AutoForms/blob/master/src/AutoForms.Client/projects/client/src/form-builder-client.ts).
 
 ```js
 import { AutoFormsModule } from '@auto-forms/client';

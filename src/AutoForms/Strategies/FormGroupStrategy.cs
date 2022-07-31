@@ -26,8 +26,6 @@ internal class FormGroupStrategy : BaseStrategy
 
     internal override AbstractControl Process(FormBuilderContext context, HashSet<Type> hashSet)
     {
-        CheckCircularDependency(ref hashSet, context.ModelType);
-
         AbstractControl BuildControl(PropertyInfo propertyInfo, object? value)
         {
             var itemContext = context with
@@ -37,7 +35,7 @@ internal class FormGroupStrategy : BaseStrategy
                 Value = value,
             };
             return _strategyResolver.Resolve(itemContext)
-                .Process(itemContext, hashSet);
+                .ProcessInternal(itemContext, hashSet);
         }
 
         var properties = context.ModelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -49,9 +47,7 @@ internal class FormGroupStrategy : BaseStrategy
         {
             Controls = controls
         };
-
-        ProcessControl(control, context);
-
+        
         return control;
     }
 

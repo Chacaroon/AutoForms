@@ -25,8 +25,6 @@ internal class FormArrayStrategy : BaseStrategy
 
     internal override AbstractControl Process(FormBuilderContext context, HashSet<Type> hashSet)
     {
-        CheckCircularDependency(ref hashSet, context.ModelType);
-
         var collectionItemType = GetCollectionItemType(context.ModelType);
 
         AbstractControl BuildControl(object? value = null)
@@ -38,15 +36,13 @@ internal class FormArrayStrategy : BaseStrategy
                 Value = value
             };
             return _strategyResolver.Resolve(collectionItemContext)
-                .Process(collectionItemContext, hashSet);
+                .ProcessInternal(collectionItemContext, hashSet);
         }
 
         var values = ((IEnumerable?)context.Value)?.Cast<object>() ?? Array.Empty<object>();
         var controls = values.Select(BuildControl);
 
         var formArray = new FormArray(controls, BuildControl());
-
-        ProcessControl(formArray, context);
 
         return formArray;
     }

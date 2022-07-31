@@ -25,7 +25,28 @@ internal abstract class BaseStrategy
 
     #region Helpers
 
-    protected void ProcessControl(AbstractControl control, FormBuilderContext context)
+    internal AbstractControl ProcessInternal(FormBuilderContext context, HashSet<Type> hashSet)
+    {
+        PreProcess(context, ref hashSet);
+
+        var control = Process(context, hashSet);
+
+        PostProcess(control, context);
+
+        return control;
+    }
+
+    private void PreProcess(FormBuilderContext context, ref HashSet<Type> hashSet)
+    {
+        CheckCircularDependency(ref hashSet, context.ModelType);
+    }
+
+    private void PostProcess(AbstractControl control, FormBuilderContext context)
+    {
+        ProcessControl(control, context);
+    }
+
+    private void ProcessControl(AbstractControl control, FormBuilderContext context)
     {
         foreach (var controlProcessor in _controlProcessors)
         {
@@ -33,7 +54,7 @@ internal abstract class BaseStrategy
         }
     }
 
-    protected void CheckCircularDependency(ref HashSet<Type> hashSet, Type type)
+    private void CheckCircularDependency(ref HashSet<Type> hashSet, Type type)
     {
         if (hashSet.Contains(type))
         {
