@@ -7,7 +7,7 @@ namespace AutoForms.Models;
 /// <summary>
 /// Base class from all types of controls.
 /// </summary>
-[KnownType(typeof(FormControl))]
+[KnownType(typeof(FormControl<>))]
 [KnownType(typeof(FormGroup))]
 [KnownType(typeof(FormArray))]
 [ExcludeFromCodeCoverage]

@@ -106,7 +106,7 @@ internal class ResolveFormByTypeTests
         var strategy = strategyResolver.Resolve(context);
 
         // Assert
-        var exception = Assert.Throws<CircularDependencyException>(() => strategy.Process(context, new()))!;
+        var exception = Assert.Throws<CircularDependencyException>(() => strategy.ProcessInternal(context, new()))!;
         Assert.AreEqual(expectedMessage, exception.Message);
     }
 

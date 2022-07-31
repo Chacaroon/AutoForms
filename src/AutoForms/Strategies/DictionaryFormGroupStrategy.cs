@@ -25,8 +25,6 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
 
     internal override AbstractControl Process(FormBuilderContext context, HashSet<Type> hashSet)
     {
-        CheckCircularDependency(ref hashSet, context.ModelType);
-
         if (context.Value == null)
         {
             return new FormGroup();
@@ -44,7 +42,7 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
             };
             return _strategyResolver
                 .Resolve(itemContext)
-                .Process(itemContext, hashSet);
+                .ProcessInternal(itemContext, hashSet);
         }
 
         var value = (IDictionary)context.Value!;
@@ -56,8 +54,6 @@ internal class DictionaryFormGroupStrategy : BaseStrategy
         {
             Controls = result
         };
-
-        ProcessControl(control, context);
 
         return control;
     }

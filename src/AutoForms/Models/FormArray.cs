@@ -9,7 +9,7 @@ namespace AutoForms.Models;
 /// Represents control that holds collection of values.
 /// </summary>
 [ExcludeFromCodeCoverage]
-public class FormArray : AbstractControl
+public class FormArray : AbstractControlCollectionBase<IEnumerable<AbstractControl>>
 {
     /// <summary>
     /// Creates the <see cref="FormArray"/> instance
@@ -22,11 +22,6 @@ public class FormArray : AbstractControl
 
     /// <inheritdoc/>
     public override ControlType Type => ControlType.Array;
-
-    /// <summary>
-    /// Collection of the child controls.
-    /// </summary>
-    public IEnumerable<AbstractControl> Controls { get; set; }
 
     /// <summary>
     /// The structure of the child control.

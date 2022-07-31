@@ -34,11 +34,11 @@ internal class ResolveFormWithModelTests
 
         // Arrange
         var arrayPropertyControls = FindControl(formGroup, nameof(ComplexType.ArrayProperty));
-        var arrayPropertyValues = ((FormArray)arrayPropertyControls).Controls.Select(x => ((FormControl)x).Value);
+        var arrayPropertyValues = ((FormArray)arrayPropertyControls).Controls.Select(x => ((FormControl<object>)x).Value);
 
         Assert.NotNull(formGroup);
 
-        Assert.AreEqual("value", ((FormControl)FindControl(formGroup, nameof(ComplexType.StringProperty))).Value);
+        Assert.AreEqual("value", ((FormControl<object>)FindControl(formGroup, nameof(ComplexType.StringProperty))).Value);
         Assert.That(arrayPropertyValues, Is.EquivalentTo(new[] { 0 }));
     }
 
@@ -56,7 +56,7 @@ internal class ResolveFormWithModelTests
         Assert.NotNull(formArray);
 
         Assert.AreEqual(3, formArray.Controls.Count());
-        Assert.That(formArray.Controls.Select(x => ((FormControl)x).Value).Cast<int>(), Is.EquivalentTo(Enumerable.Range(0, 3)));
+        Assert.That(formArray.Controls.Select(x => ((FormControl<object>)x).Value).Cast<int>(), Is.EquivalentTo(Enumerable.Range(0, 3)));
     }
 
     [Test]
@@ -77,7 +77,7 @@ internal class ResolveFormWithModelTests
         var stringPropertyControls = formArray!.Controls
             .Select(x => FindControl(x as FormGroup, nameof(ComplexType.StringProperty)));
         var stringPropertyControlValues = stringPropertyControls
-            .Select(x => ((FormControl)x).Value);
+            .Select(x => ((FormControl<object>)x).Value);
 
         Assert.NotNull(formArray);
 
@@ -105,8 +105,8 @@ internal class ResolveFormWithModelTests
         Assert.AreEqual(ControlType.Group, formGroup.Type);
         Assert.AreEqual(2, formGroup.Controls.Count);
         Assert.That(formGroup.Controls.Keys, Is.EquivalentTo(new[] { "first", "second" }));
-        Assert.AreEqual((formGroup.Controls["first"] as FormControl)!.Value, 1);
-        Assert.AreEqual((formGroup.Controls["second"] as FormControl)!.Value, 2);
+        Assert.AreEqual((formGroup.Controls["first"] as FormControl<object>)!.Value, 1);
+        Assert.AreEqual((formGroup.Controls["second"] as FormControl<object>)!.Value, 2);
     }
 
     [Test]

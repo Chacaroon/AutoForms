@@ -27,7 +27,8 @@ public class Startup
                 .AllowAnyMethod()
                 .AllowAnyOrigin()));
 
-        services.AddAutoForms();
+        services.AddAutoForms()
+            .AddValidationProcessor();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
