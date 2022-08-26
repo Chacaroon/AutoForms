@@ -94,6 +94,8 @@ public static class AutoFormsExtensions
         return serviceCollection;
     }
 
+#if !NETSTANDARD
+
     /// <summary>
     /// Register Newtonsoft.Json serializer with predefined settings.
     /// </summary>
@@ -127,4 +129,6 @@ public static class AutoFormsExtensions
 
         return mvcBuilder;
     }
+
+#endif
 }

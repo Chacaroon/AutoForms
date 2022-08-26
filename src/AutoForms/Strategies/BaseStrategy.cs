@@ -59,12 +59,12 @@ internal abstract class BaseStrategy
         if (hashSet.Contains(type))
         {
             var typesArray = hashSet.Concat(new[] { type }).ToArray();
-            typesArray = typesArray[Array.IndexOf(typesArray, type)..];
+            typesArray = typesArray.Skip(Array.IndexOf(typesArray, type)).ToArray();
             var path = string.Join("->", typesArray.Select(x => x.Name));
             throw new CircularDependencyException($"Circular dependency: {path}");
         }
-
-        hashSet = hashSet.Union(new[] { type }).ToHashSet(hashSet.Comparer);
+        
+        hashSet = new(hashSet.Union(new[] { type }));
     }
 
     #endregion

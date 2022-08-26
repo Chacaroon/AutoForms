@@ -80,14 +80,14 @@ csharp_style_var_for_built_in_types = true
 csharp_style_var_when_type_is_apparent = true
 
 # Expression-bodied members
-csharp_style_expression_bodied_accessors = true
-csharp_style_expression_bodied_constructors = false
-csharp_style_expression_bodied_indexers = true
-csharp_style_expression_bodied_lambdas = true
+csharp_style_expression_bodied_accessors = true:silent
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_indexers = true:silent
+csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false
-csharp_style_expression_bodied_methods = false
-csharp_style_expression_bodied_operators = false
-csharp_style_expression_bodied_properties = true
+csharp_style_expression_bodied_methods = false:silent
+csharp_style_expression_bodied_operators = false:silent
+csharp_style_expression_bodied_properties = true:silent
 
 # Pattern matching preferences
 csharp_style_pattern_matching_over_as_with_null_check = true
@@ -105,9 +105,9 @@ csharp_prefer_static_local_function = true
 csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async
 
 # Code-block preferences
-csharp_prefer_braces = true
-csharp_prefer_simple_using_statement = true
-csharp_style_namespace_declarations = file_scoped
+csharp_prefer_braces = true:silent
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_style_namespace_declarations = file_scoped:silent
 
 # Expression-level preferences
 csharp_prefer_simple_default_expression = true
@@ -235,3 +235,10 @@ dotnet_naming_style.begin_with__.capitalization = camel_case
 
 # CA1822: Mark members as static
 dotnet_diagnostic.CA1822.severity = none
+csharp_style_prefer_method_group_conversion = true:silent
+
+[*.{cs,vb}]
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+tab_width = 4
+indent_size = 4
+end_of_line = crlf

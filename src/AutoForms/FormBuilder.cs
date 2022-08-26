@@ -40,7 +40,7 @@ public class FormBuilder
     /// <returns>The root control of the built data structure.
     /// </returns>
     /// <remarks>
-    /// Each returned control is an instance of a <seealso cref="FormControl"/>,
+    /// Each returned control is an instance of a <seealso cref="FormControl{T}"/>,
     /// <seealso cref="FormGroup"/> or <seealso cref="FormArray"/>.
     /// </remarks>
     public AbstractControl Build()
